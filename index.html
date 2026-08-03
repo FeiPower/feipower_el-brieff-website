@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>El Brieff — Identidad de marca</title>
+  <meta name="description" content="Sistema visual editorial de El Brieff: podcast diario de noticias y análisis breve conducido por Arturo Salazar." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Montserrat:wght@600;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      /* Eje de marca: portada bitono */
+      --primary: #121C16;
+      --ink: #FFFFFF;
+      --muted: #9AA3A0;
+      --surface: #121C16;
+      --surface-elevated: #1A2420;
+      --border: #2A3530;
+      --surface-light: #F5F6F7;
+      --ink-on-light: #121C16;
+
+      /* Solo referencia fotográfica — no CTAs ni UI primaria */
+      --photo-navy: #52577E;
+      --photo-shirt: #A0BFE5;
+
+      --radius-sm: 4px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+
+      --font-display: "Montserrat", sans-serif;
+      --font-body: "Source Sans 3", sans-serif;
+      --font-script: "Caveat", cursive;
+
+      --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--ink);
+      background: var(--primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* ——— Hero ——— */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      background: var(--primary);
+      color: var(--ink);
+    }
+
+    .hero__media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      transform: scale(1.02);
+      animation: hero-settle 1.6s var(--ease-out-expo) forwards;
+    }
+
+    .hero__veil {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          to top,
+          rgba(18, 28, 22, 0.92) 0%,
+          rgba(18, 28, 22, 0.55) 22%,
+          rgba(18, 28, 22, 0.12) 42%,
+          transparent 58%
+        );
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      width: min(1120px, calc(100% - 2 * var(--space-lg)));
+      margin: 0 auto;
+      padding: 0 0 clamp(2.25rem, 5vw, 3.5rem);
+      display: grid;
+      gap: var(--space-md);
+      max-width: 36rem;
+      justify-self: start;
+    }
+
+    .hero__brand {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .hero__lede {
+      margin: 0;
+      max-width: 34ch;
+      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.92);
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fade-up 0.85s var(--ease-out-quart) 0.35s forwards;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fade-up 0.85s var(--ease-out-quart) 0.5s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0.7rem 1.15rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid transparent;
+      transition: background-color 0.25s var(--ease-out-quart), color 0.25s var(--ease-out-quart), border-color 0.25s var(--ease-out-quart);
+    }
+
+    .btn--solid {
+      background: var(--ink);
+      color: var(--primary);
+    }
+
+    .btn--solid:hover {
+      background: var(--surface-light);
+    }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--ink);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .btn--ghost:hover {
+      border-color: var(--ink);
+    }
+
+    .btn--ghost-dark {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--border);
+    }
+
+    .btn--ghost-dark:hover {
+      border-color: var(--muted);
+    }
+
+    /* ——— Shared ——— */
+    .section {
+      padding: clamp(3.5rem, 8vw, 6rem) 0;
+      background: var(--primary);
+    }
+
+    .section--elevated {
+      background: var(--surface-elevated);
+    }
+
+    .section--light {
+      background: var(--surface-light);
+      color: var(--ink-on-light);
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 2 * var(--space-lg)));
+      margin: 0 auto;
+    }
+
+    .section__head {
+      display: grid;
+      gap: var(--space-sm);
+      margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+      max-width: 42rem;
+    }
+
+    .section__title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+
+    .section__copy {
+      margin: 0;
+      color: var(--muted);
+      max-width: 58ch;
+    }
+
+    .section--light .section__copy {
+      color: #4A5550;
+    }
+
+    /* ——— Attributes ——— */
+    .attrs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm) var(--space-md);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: var(--space-lg) 0;
+      margin: 0;
+      padding-left: 0;
+    }
+
+    .attrs li {
+      list-style: none;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ——— Colors ——— */
+    .swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .swatch {
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .swatch__chip {
+      aspect-ratio: 1 / 1.15;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fade-up 0.7s var(--ease-out-quart) forwards;
+    }
+
+    .swatch:nth-child(1) .swatch__chip { animation-delay: 0.05s; }
+    .swatch:nth-child(2) .swatch__chip { animation-delay: 0.1s; }
+    .swatch:nth-child(3) .swatch__chip { animation-delay: 0.15s; }
+    .swatch:nth-child(4) .swatch__chip { animation-delay: 0.2s; }
+    .swatch:nth-child(5) .swatch__chip { animation-delay: 0.25s; }
+    .swatch:nth-child(6) .swatch__chip { animation-delay: 0.3s; }
+    .swatch:nth-child(7) .swatch__chip { animation-delay: 0.35s; }
+    .swatch:nth-child(8) .swatch__chip { animation-delay: 0.4s; }
+
+    .swatch__chip--ink {
+      box-shadow: inset 0 0 0 1px var(--border);
+    }
+
+    .swatch__meta {
+      display: grid;
+      gap: 2px;
+    }
+
+    .swatch__name {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .swatch__hex {
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .swatch__note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .palette-note {
+      margin: var(--space-xl) 0 0;
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--border);
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .photo-swatches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+      opacity: 0.72;
+    }
+
+    /* ——— Type ——— */
+    .type-stack {
+      display: grid;
+      gap: var(--space-xl);
+    }
+
+    .type-row {
+      display: grid;
+      gap: var(--space-md);
+      padding-bottom: var(--space-xl);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .type-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .type-row__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm) var(--space-md);
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .type-sample--wordmark {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 800;
+      line-height: 0.92;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .type-sample--wordmark span {
+      display: block;
+    }
+
+    .type-sample--script {
+      margin: 0;
+      font-family: var(--font-script);
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .type-sample--h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(2.25rem, 6vw, 3rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      text-wrap: balance;
+    }
+
+    .type-sample--h2 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+    }
+
+    .type-sample--body {
+      margin: 0;
+      max-width: 62ch;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .type-sample--label {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ——— Cover ——— */
+    .cover-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: clamp(1.5rem, 4vw, 3rem);
+      align-items: center;
+    }
+
+    .cover-frame {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: var(--radius-lg);
+      background: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    .cover-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cover-notes {
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .cover-notes h3 {
+      margin: 0 0 var(--space-sm);
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .cover-notes p,
+    .cover-notes li {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.975rem;
+    }
+
+    .cover-notes ul {
+      margin: 0;
+      padding-left: 1.15rem;
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    /* ——— System ——— */
+    .system-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+
+    .system-col h3 {
+      margin: 0 0 var(--space-md);
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .system-col ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .system-col li {
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--border);
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .system-col--do li::before,
+    .system-col--dont li::before {
+      display: block;
+      margin-bottom: var(--space-xs);
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .system-col--do li::before {
+      content: "Sí";
+      color: #B8C9BE;
+    }
+
+    .system-col--dont li::before {
+      content: "No";
+      color: #C4A8A4;
+    }
+
+    /* ——— Tokens ——— */
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .token-block h3 {
+      margin: 0 0 var(--space-md);
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .token-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .token-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+
+    .token-list code {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .radius-demo,
+    .space-demo {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-sm);
+      min-height: 56px;
+    }
+
+    .radius-demo span {
+      width: 48px;
+      height: 48px;
+      background: var(--ink);
+    }
+
+    .radius-demo span:nth-child(1) { border-radius: var(--radius-sm); }
+    .radius-demo span:nth-child(2) { border-radius: var(--radius-md); }
+    .radius-demo span:nth-child(3) { border-radius: var(--radius-lg); }
+
+    .space-demo span {
+      width: 12px;
+      background: var(--muted);
+      border-radius: 2px;
+    }
+
+    .space-demo span:nth-child(1) { height: var(--space-xs); }
+    .space-demo span:nth-child(2) { height: var(--space-sm); }
+    .space-demo span:nth-child(3) { height: var(--space-md); }
+    .space-demo span:nth-child(4) { height: var(--space-lg); }
+    .space-demo span:nth-child(5) { height: var(--space-xl); }
+
+    /* ——— Footer ——— */
+    .site-footer {
+      padding: var(--space-xl) 0;
+      background: var(--primary);
+      border-top: 1px solid var(--border);
+    }
+
+    .site-footer p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .site-footer a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+
+    .site-footer a:hover {
+      color: var(--surface-light);
+    }
+
+    /* ——— Motion ——— */
+    @keyframes hero-settle {
+      to { transform: scale(1); }
+    }
+
+    @keyframes fade-up {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      .hero__media img,
+      .hero__lede,
+      .hero__actions,
+      .swatch__chip {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .cover-grid,
+      .system-split {
+        grid-template-columns: 1fr;
+      }
+
+      .hero__content {
+        width: min(1120px, calc(100% - 2 * var(--space-md)));
+      }
+
+      .wrap {
+        width: min(1120px, calc(100% - 2 * var(--space-md)));
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero" id="marca">
+    <div class="hero__media" aria-hidden="true">
+      <img src="elbrieff-cover.png" alt="" width="1000" height="1000" />
+    </div>
+    <div class="hero__veil" aria-hidden="true"></div>
+    <div class="hero__content">
+      <h1 class="hero__brand">El Brieff</h1>
+      <p class="hero__lede">
+        Noticias y análisis breve para informarte en 15 minutos. Conducido por Arturo Salazar.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--solid" href="#portada">Ver portada</a>
+        <a class="btn btn--ghost" href="#sistema">Sistema visual</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section section--elevated" aria-labelledby="attrs-title">
+      <div class="wrap">
+        <div class="section__head">
+          <h2 class="section__title" id="attrs-title">Atributos de marca</h2>
+          <p class="section__copy">
+            Identidad editorial cover-first: claridad, velocidad, confianza y lectura inmediata.
+          </p>
+        </div>
+        <ul class="attrs">
+          <li>Editorial</li>
+          <li>Preciso</li>
+          <li>Actual</li>
+          <li>Sobrio</li>
+          <li>Confiable</li>
+          <li>Ágil</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="colores" aria-labelledby="colors-title">
+      <div class="wrap">
+        <div class="section__head">
+          <h2 class="section__title" id="colors-title">Paleta</h2>
+          <p class="section__copy">
+            Eje bitono de la portada: carbón verdoso + blanco. Elevaciones y bordes derivados del primary. Sin rojo ni azul SaaS.
+          </p>
+        </div>
+        <div class="swatches">
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--primary);"></div>
+            <div class="swatch__meta">
+              <span class="swatch__name">Primary</span>
+              <span class="swatch__hex">#121C16</span>
+              <span class="swatch__note">Fondo de portada</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip swatch__chip--ink" style="background: var(--ink);"></div>
+            <div class="swatch__meta">
+              <span class="swatch__name">Ink</span>
+              <span class="swatch__hex">#FFFFFF</span>
+              <span class="swatch__note">Wordmark / CTAs</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--muted);"></div>
+            <div class="swatch__meta">
+              <span class="swatch__name">Muted</span>
+              <span class="swatch__hex">#9AA3A0</span>
+              <span class="swatch__note">Metadatos</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--surface-elevated);"></div>
+            <div class="swatch__meta">
+              <span class="swatch__name">Elevated</span>
+              <span class="swatch__hex">#1A2420</span>
+              <span class="swatch__note">Lift del primary</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--border);"></div>
+            <div class="swatch__meta">
+              <span class="swatch__name">Border</span>
+              <span class="swatch__hex">#2A3530</span>
+              <span class="swatch__note">Separadores</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--surface-light); border-color: #D7DCE2;"></div>
+            <div class="swatch__meta">
+              <span class="swatch__name">Surface light</span>
+              <span class="swatch__hex">#F5F6F7</span>
+              <span class="swatch__note">Auxiliar, no default</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="palette-note">
+          Azules del blazer y la camisa son color de fotografía, no tokens de UI.
+          No elevarlos a CTAs ni acentos de sistema.
+        </p>
+        <div class="photo-swatches" aria-label="Referencia fotográfica">
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--photo-navy);"></div>
+            <div class="swatch__meta">
+              <span class="swatch__name">Foto · Navy</span>
+              <span class="swatch__hex">#52577E</span>
+            </div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--photo-shirt);"></div>
+            <div class="swatch__meta">
+              <span class="swatch__name">Foto · Camisa</span>
+              <span class="swatch__hex">#A0BFE5</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--elevated" id="tipografia" aria-labelledby="type-title">
+      <div class="wrap">
+        <div class="section__head">
+          <h2 class="section__title" id="type-title">Tipografía</h2>
+          <p class="section__copy">
+            Montserrat para wordmark y titulares. Source Sans 3 para cuerpo. Caveat solo para la firma Brieffy.
+          </p>
+        </div>
+        <div class="type-stack">
+          <div class="type-row">
+            <div class="type-row__meta">
+              <span>Display wordmark</span>
+              <span>Montserrat 800</span>
+              <span>tracking 0.06em</span>
+            </div>
+            <p class="type-sample--wordmark" aria-label="El Brieff">
+              <span>El</span>
+              <span>Bri</span>
+              <span>eff</span>
+            </p>
+          </div>
+          <div class="type-row">
+            <div class="type-row__meta">
+              <span>Producer script</span>
+              <span>Caveat 500</span>
+              <span>solo Brieffy</span>
+            </div>
+            <p class="type-sample--script">Brieffy</p>
+          </div>
+          <div class="type-row">
+            <div class="type-row__meta">
+              <span>H1</span>
+              <span>Montserrat 700</span>
+              <span>3rem / 1.05</span>
+            </div>
+            <p class="type-sample--h1">México y el mundo, en quince minutos.</p>
+          </div>
+          <div class="type-row">
+            <div class="type-row__meta">
+              <span>H2</span>
+              <span>Montserrat 600</span>
+              <span>2rem / 1.1</span>
+            </div>
+            <p class="type-sample--h2">Los temas que marcan la conversación del día.</p>
+          </div>
+          <div class="type-row">
+            <div class="type-row__meta">
+              <span>Body MD</span>
+              <span>Source Sans 3 400</span>
+              <span>1rem / 1.5</span>
+            </div>
+            <p class="type-sample--body">
+              El Brieff es el podcast diario conducido por Arturo Salazar y producido por Brieffy.
+              Informa con precisión sobre los temas de conversación más importantes, de lunes a viernes.
+            </p>
+          </div>
+          <div class="type-row">
+            <div class="type-row__meta">
+              <span>Label Caps</span>
+              <span>Montserrat 600</span>
+              <span>0.75rem / 0.08em</span>
+            </div>
+            <p class="type-sample--label">Episodio · Lunes a viernes · 15 min</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="portada" aria-labelledby="cover-title">
+      <div class="wrap">
+        <div class="section__head">
+          <h2 class="section__title" id="cover-title">Portada canónica</h2>
+          <p class="section__copy">
+            Asset 1:1 para plataformas y share cards. Wordmark apilado, firma Brieffy y retrato del conductor.
+          </p>
+        </div>
+        <div class="cover-grid">
+          <figure class="cover-frame">
+            <img
+              src="elbrieff-cover.png"
+              alt="Portada de El Brieff: tipografía EL BRI EFF en blanco sobre fondo oscuro, firma Brieffy y retrato de Arturo Salazar"
+              width="1000"
+              height="1000"
+            />
+          </figure>
+          <div class="cover-notes">
+            <div>
+              <h3>Composición</h3>
+              <ul>
+                <li>Fondo carbón verdoso (#121C16), no negro puro.</li>
+                <li>Wordmark EL / BRI / EFF en sans extrabold blanca a la izquierda.</li>
+                <li>Firma script Brieffy arriba a la derecha.</li>
+                <li>Retrato de Arturo Salazar a la derecha, solapando el wordmark.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Uso</h3>
+              <ul>
+                <li>Preferir el asset completo en OG, share cards y hero de marca.</li>
+                <li>No recortar el wordmark ni el rostro de forma que rompa la lectura.</li>
+                <li>Colores de UI derivados del fondo y el blanco; no de la vestimenta.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--elevated" id="sistema" aria-labelledby="system-title">
+      <div class="wrap">
+        <div class="section__head">
+          <h2 class="section__title" id="system-title">Sistema visual</h2>
+          <p class="section__copy">
+            Editorial digital cover-first: alto contraste tipográfico sobre fondo oscuro. Mood inteligente, directo y contemporáneo.
+          </p>
+        </div>
+        <div class="system-split">
+          <div class="system-col system-col--do">
+            <h3>Priorizar</h3>
+            <ul>
+              <li>Portada canónica como asset de marca</li>
+              <li>Contraste blanco sobre primary</li>
+              <li>Titulares cortos; stacking EL/BRI/EFF cuando se cite el wordmark</li>
+            </ul>
+          </div>
+          <div class="system-col system-col--dont">
+            <h3>Evitar</h3>
+            <ul>
+              <li>Fondos claros como default de marca</li>
+              <li>Acentos rojo/azul genéricos ajenos a la portada</li>
+              <li>Elevar colores de vestuario a tokens de UI</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tokens" aria-labelledby="tokens-title">
+      <div class="wrap">
+        <div class="section__head">
+          <h2 class="section__title" id="tokens-title">Radios, espaciado e interacción</h2>
+          <p class="section__copy">
+            Escala corta. CTAs en ink sobre primary: el mismo golpe bitono de la portada.
+          </p>
+        </div>
+        <div class="token-grid">
+          <div class="token-block">
+            <h3>Rounded</h3>
+            <div class="radius-demo" aria-hidden="true">
+              <span></span><span></span><span></span>
+            </div>
+            <ul class="token-list">
+              <li><span>sm</span><code>4px</code></li>
+              <li><span>md</span><code>10px</code></li>
+              <li><span>lg</span><code>16px</code></li>
+            </ul>
+          </div>
+          <div class="token-block">
+            <h3>Spacing</h3>
+            <div class="space-demo" aria-hidden="true">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <ul class="token-list">
+              <li><span>xs</span><code>4px</code></li>
+              <li><span>sm</span><code>8px</code></li>
+              <li><span>md</span><code>16px</code></li>
+              <li><span>lg</span><code>24px</code></li>
+              <li><span>xl</span><code>32px</code></li>
+            </ul>
+          </div>
+          <div class="token-block">
+            <h3>Interacción</h3>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;">
+              <a class="btn btn--solid" href="https://www.brieffy.com" target="_blank" rel="noopener noreferrer">Escuchar</a>
+              <a class="btn btn--ghost-dark" href="#marca">Volver</a>
+            </div>
+            <p class="section__copy" style="margin:0;">
+              CTA sólido = ink (#FFFFFF) sobre primary. Ghost = borde #2A3530. Links de pie en ink con underline.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>
+        El Brieff · Producido por
+        <a href="https://www.brieffy.com" target="_blank" rel="noopener noreferrer">Brieffy</a>
+        · Conductor Arturo Salazar (@elchearturo)
+      </p>
+    </div>
+  </footer>
+</body>
+</html>
