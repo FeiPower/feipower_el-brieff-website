@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# build
+dist/
+.astro/
+
+# env
+.env
+.env.*
+!.env.example
+
+# wrangler
+.wrangler/
+.dev.vars
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log

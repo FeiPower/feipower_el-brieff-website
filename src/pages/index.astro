@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Hero from '../components/Hero.astro';
+import SpotifyEmbed from '../components/SpotifyEmbed.astro';
+import JsonLd from '../components/JsonLd.astro';
+
+const title = 'El Brieff — Informarte en 15 minutos | México y el mundo';
+const description =
+  'El Brieff: podcast diario de ~15 minutos sobre los temas de conversación más importantes de México y el mundo, con Arturo Salazar.';
+---
+
+<BaseLayout title={title} description={description}>
+  <JsonLd />
+  <SiteHeader />
+  <main id="contenido">
+    <Hero />
+    <SpotifyEmbed />
+  </main>
+  <SiteFooter />
+</BaseLayout>

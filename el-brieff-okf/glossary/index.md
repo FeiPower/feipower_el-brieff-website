@@ -6,3 +6,4 @@
 * [Conductor](conductor.md) — Rol de quien conduce el podcast.
 * [GEO](geo.md) — Generative Engine Optimization.
 * [E-E-A-T](eeat.md) — Marco de calidad Google (Experience, Expertise, Authoritativeness, Trustworthiness).
+* [Media kit](media-kit.md) — Press kit PDF de El Brieff.

@@ -1,0 +1,34 @@
+:root {
+  /* Bitono UI surface; hero primary listen CTA uses --tertiary (Phase 2) */
+  --primary: #121c16;
+  --ink: #ffffff;
+  --muted: #9aa3a0;
+  --surface-elevated: #1a2420;
+  --border: #2a3530;
+
+  /* Cover-derived accents — tertiary allowed for hero primary listen CTA only */
+  /* --secondary: #566899; blazer navy */
+  --tertiary: #78a08a; /* pañuelo — sage primary CTA */
+  /* --accent: #a0bfe5; camisa / soft highlight */
+
+  --surface: var(--primary);
+  --surface-light: #f5f6f7;
+  --ink-on-light: #121c16;
+
+  --font-display: 'Montserrat', sans-serif;
+  --font-body: 'Source Sans 3', sans-serif;
+  --font-script: 'Caveat', cursive;
+
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-fade: cubic-bezier(0.4, 0, 0.2, 1);
+}

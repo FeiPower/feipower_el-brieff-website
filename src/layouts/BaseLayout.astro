@@ -1,0 +1,71 @@
+---
+import '../styles/global.css';
+import { site } from '../config/site';
+
+type BaseLayoutProps = {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+};
+
+const {
+  title,
+  description,
+  canonicalPath = '/',
+} = Astro.props as BaseLayoutProps;
+
+const canonicalUrl = new URL(canonicalPath, site.siteUrl).href;
+const ogImageUrl = new URL(site.ogImage, site.siteUrl).href;
+const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+const hasGa = typeof gaId === 'string' && gaId.trim().length > 0;
+---
+
+<!doctype html>
+<html lang={site.locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content="index,follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content={site.name} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <link rel="icon" type="image/png" href={site.ogImage} />
+
+    {
+      hasGa && (
+        <>
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          ></script>
+          <script is:inline define:vars={{ gaId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', gaId);
+          </script>
+        </>
+      )
+    }
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <slot />
+  </body>
+</html>

@@ -1,25 +1,28 @@
 ---
 type: User Story
 title: US-007 Download media kit
-description: Como periodista o partner, quiero descargar el media kit en PDF para cubrir o proponer colaboraciones con El Brieff.
-tags: [story, media-kit, press, pdf]
+description: Como periodista o partner, quiero solicitar el media kit en PDF mediante un formulario para cubrir o proponer colaboraciones con El Brieff.
+tags: [story, media-kit, press, pdf, form]
 status: draft
 generated: { by: agent/composer, at: 2026-08-03T20:35:00Z }
+verified: { by: human:stakeholder, at: 2026-08-03T21:00:00Z }
 ---
 
 # Story
 
 **Como** periodista, marca o partner  
-**Quiero** descargar un media kit profesional en PDF  
-**Para** obtener bio, propuesta, assets y contacto sin pedirlos por mensaje.
+**Quiero** completar un formulario y obtener el media kit profesional en PDF  
+**Para** obtener bio, propuesta, assets y contacto de forma trazable.
 
 # Acceptance Criteria
 
 - [ ] AC1: Existe una sección o página “Media kit” / “Prensa” enlazada desde nav o About.
-- [ ] AC2: Un CTA primario descarga el PDF (no abre un editor interno).
-- [ ] AC3: El PDF incluye pitch, conductor, formato, productor, plataformas y contacto (o “contacto pendiente” solo si el stakeholder lo aprueba explícitamente; preferible email real).
-- [ ] AC4: Visual coherente con [DESIGN.md](../../DESIGN.md) y portada canónica.
-- [ ] AC5: En móvil, la descarga funciona (navegador nativo / compartir archivo).
+- [ ] AC2: Un formulario recoge al menos nombre y email; el CTA no entrega el PDF sin envío válido.
+- [ ] AC3: Tras envío válido, el PDF es descargable (y/o llega por email).
+- [ ] AC4: El PDF incluye pitch, conductor (bio aprobada), formato, productor, plataformas y contacto `arturo@strtgy.ai`.
+- [ ] AC5: Visual coherente con [DESIGN.md](../../DESIGN.md) y portada canónica.
+- [ ] AC6: En móvil, formulario y descarga funcionan.
+- [ ] AC7: El equipo recibe el lead por email: To `arturo@strtgy.ai`, Cc `mar@strtgy.ai`.
 
 # Links
 

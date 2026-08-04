@@ -1,0 +1,75 @@
+---
+import { site } from '../config/site';
+
+const LISTEN_HEADING = 'Escuchar en Spotify';
+const FALLBACK_HELPER = 'Si el reproductor no carga, ábrelo en Spotify.';
+const FALLBACK_LINK_LABEL = 'Abrir El Brieff en Spotify';
+const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm_source=generator&theme=${site.spotify.embedTheme}`;
+---
+
+<section class="spotify-embed" id="escuchar" aria-labelledby="escuchar-heading">
+  <div class="spotify-embed__inner">
+    <h2 class="spotify-embed__heading" id="escuchar-heading">{LISTEN_HEADING}</h2>
+    <iframe
+      style="border-radius:12px"
+      src={embedSrc}
+      width="100%"
+      height={site.spotify.embedHeight}
+      frameborder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"
+      title="El Brieff en Spotify"
+    ></iframe>
+    <p class="spotify-embed__fallback">
+      {FALLBACK_HELPER}
+      {' '}
+      <a href={site.spotify.showUrl} rel="noopener noreferrer">
+        {FALLBACK_LINK_LABEL}
+      </a>
+    </p>
+    <noscript>
+      <p class="spotify-embed__fallback">
+        {FALLBACK_HELPER}
+        {' '}
+        <a href={site.spotify.showUrl} rel="noopener noreferrer">
+          {FALLBACK_LINK_LABEL}
+        </a>
+      </p>
+    </noscript>
+  </div>
+</section>
+
+<style>
+  .spotify-embed {
+    scroll-margin-top: 5.5rem;
+    padding: var(--space-xl) var(--space-md) calc(var(--space-xl) * 1.5);
+    border-top: 1px solid var(--border);
+  }
+
+  .spotify-embed__inner {
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .spotify-embed__heading {
+    margin: 0 0 var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .spotify-embed__fallback {
+    margin: var(--space-md) 0 0;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  .spotify-embed__fallback a {
+    color: var(--ink);
+  }
+</style>

@@ -3,8 +3,9 @@ type: Functional Requirement
 title: FR-003 Episode detail
 description: Cada episodio tiene una página con metadatos, resumen y vías de reproducción/escucha.
 tags: [fr, episodes, detail]
-status: draft
+status: deferred
 generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
+notes: "v1.1 — detalle HTML diferido; v1 usa embed Spotify."
 ---
 
 # Statement

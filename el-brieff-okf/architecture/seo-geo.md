@@ -50,18 +50,28 @@ Hacer que El Brieff sea **descubrible, indexable y citable** en Search y en resp
 - [ ] Episodio vigente enlazado (freshness).
 - [ ] FAQ corto opcional (cadencia, duración, plataformas) si el diseño lo admite.
 
-## Episode
+## Episode (v1.1)
 
 - [ ] Título + fecha + resumen autónomo en primer párrafo.
 - [ ] `PodcastEpisode` JSON-LD con `partOfSeries`, `datePublished`, `url`.
 - [ ] Canonical y OG del episodio.
 
+> v1: no hay rutas de episodio propias; freshness vía embed Spotify en home.
+
 ## About
 
 - [ ] Bio del conductor + handle + productor Brieffy.
-- [ ] `Person` + vínculos `sameAs`.
+- [ ] `Person` + vínculos `sameAs` reales: Instagram [elbrieff](https://www.instagram.com/elbrieff/), Spotify show, Brieffy.
 - [ ] Respuestas a “quién conduce” / “quién produce”.
 
+# Site globals (congelados)
+
+| Campo | Valor |
+|-------|--------|
+| `inLanguage` | `es-MX` |
+| Canonical base (interim) | `https://el-brieff.fei-d02.workers.dev` |
+| Analytics | GA4 |
+| OG image default | `elbrieff-cover.png` |
 # Publish ritual
 
 1. Actualizar contenido visible.

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="es-MX"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Acerca de - El Brieff</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&amp;family=Source+Sans+3:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#131313",
+                      "primary-fixed-dim": "#bec9c0",
+                      "inverse-on-surface": "#303030",
+                      "tertiary-fixed": "#f6dce0",
+                      "on-surface": "#e4e2e0",
+                      "surface-bright": "#393938",
+                      "metadata": "#9AA3A0",
+                      "on-tertiary": "#3c2c2f",
+                      "on-primary-fixed-variant": "#3f4942",
+                      "surface-container-low": "#1b1c1b",
+                      "on-secondary": "#1b2e5c",
+                      "background": "#131313",
+                      "inverse-primary": "#566159",
+                      "error": "#ffb4ab",
+                      "on-surface-variant": "#c3c8c2",
+                      "primary-container": "#121c16",
+                      "outline": "#8d928d",
+                      "secondary-container": "#334574",
+                      "on-background": "#e4e2e0",
+                      "on-primary": "#28332c",
+                      "secondary-fixed": "#dae2ff",
+                      "on-tertiary-fixed-variant": "#544245",
+                      "border-subtle": "#2A3530",
+                      "tertiary-container": "#241619",
+                      "surface-container-highest": "#353534",
+                      "error-container": "#93000a",
+                      "surface-container-high": "#2a2a29",
+                      "surface-tint": "#bec9c0",
+                      "tertiary-fixed-dim": "#d9c0c4",
+                      "on-primary-fixed": "#141e18",
+                      "light-ink": "#121C16",
+                      "surface-container": "#1f201f",
+                      "outline-variant": "#434844",
+                      "on-secondary-fixed": "#011946",
+                      "on-error-container": "#ffdad6",
+                      "surface-container-lowest": "#0e0e0e",
+                      "on-secondary-fixed-variant": "#334574",
+                      "on-error": "#690005",
+                      "on-primary-container": "#7a857d",
+                      "inverse-surface": "#e4e2e0",
+                      "light-surface": "#F5F6F7",
+                      "surface-elevated": "#1A2420",
+                      "link-highlight": "#A0BFE5",
+                      "on-tertiary-fixed": "#26181b",
+                      "ink": "#FFFFFF",
+                      "on-secondary-container": "#a2b4ea",
+                      "surface": "#131313",
+                      "primary": "#bec9c0",
+                      "primary-fixed": "#dae5db",
+                      "on-tertiary-container": "#937d81",
+                      "tertiary": "#d9c0c4",
+                      "surface-variant": "#353534",
+                      "secondary": "#b3c5fc",
+                      "sage-accent": "#78A08A",
+                      "secondary-fixed-dim": "#b3c5fc"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "stack-lg": "3rem",
+                      "margin-mobile": "1rem",
+                      "stack-md": "1.5rem",
+                      "margin-desktop": "2.5rem",
+                      "stack-sm": "0.5rem",
+                      "gutter": "1.5rem"
+              },
+              "fontFamily": {
+                      "caption": [
+                              "\"Source Sans 3\""
+                      ],
+                      "headline-lg": [
+                              "Montserrat"
+                      ],
+                      "wordmark": [
+                              "Montserrat"
+                      ],
+                      "headline-xl": [
+                              "Montserrat"
+                      ],
+                      "headline-md": [
+                              "Montserrat"
+                      ],
+                      "body-md": [
+                              "\"Source Sans 3\""
+                      ],
+                      "body-lg": [
+                              "\"Source Sans 3\""
+                      ],
+                      "label-md": [
+                              "\"Source Sans 3\""
+                      ],
+                      "headline-xl-mobile": [
+                              "Montserrat"
+                      ]
+              },
+              "fontSize": {
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "1.4",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "wordmark": [
+                              "48px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "letterSpacing": "0.06em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-xl": [
+                              "40px",
+                              {
+                                      "lineHeight": "1.2",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "800"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "1.3",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "1.6",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "1.0",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-xl-mobile": [
+                              "32px",
+                              {
+                                      "lineHeight": "1.1",
+                                      "fontWeight": "800"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface antialiased flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<nav class="bg-background dark:bg-background border-b border-border-subtle docked full-width top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop py-stack-sm max-w-7xl mx-auto">
+<a class="font-wordmark text-wordmark text-ink dark:text-ink tracking-tight uppercase" href="#">EL BRIEFF</a>
+<!-- Desktop Nav -->
+<ul class="hidden md:flex items-center gap-6">
+<li><a class="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md uppercase tracking-wider hover:text-sage-accent transition-colors duration-200 cursor-pointer active:opacity-80" href="#">Home</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md uppercase tracking-wider hover:text-sage-accent transition-colors duration-200 cursor-pointer active:opacity-80" href="#">Episodes</a></li>
+<li><a class="text-on-surface-variant dark:text-on-surface-variant font-body-md text-body-md uppercase tracking-wider hover:text-sage-accent transition-colors duration-200 cursor-pointer active:opacity-80" href="#">Newsletter</a></li>
+<li><a class="text-sage-accent font-bold border-b-2 border-sage-accent pb-1 font-body-md text-body-md uppercase tracking-wider hover:text-sage-accent transition-colors duration-200 cursor-pointer active:opacity-80" href="#">About</a></li>
+</ul>
+<div class="flex items-center gap-4">
+<button class="text-primary dark:text-primary-fixed-dim hover:text-sage-accent transition-colors duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">search</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Hero Section: Grid Layout for Broadhseet Feel -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-stack-lg items-center">
+<!-- Left Column: Typography Anchor & Bio -->
+<div class="md:col-span-6 flex flex-col gap-stack-md order-2 md:order-1">
+<div class="flex flex-col gap-2">
+<span class="font-caption text-caption text-metadata uppercase tracking-widest">Sobre el Host</span>
+<h1 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-ink uppercase">Arturo Salazar</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+                        Conducido por Arturo Salazar, El Brieff es un espacio de información ágil y profunda. Diseñado para quienes necesitan estar informados con contexto, sin sacrificar la agilidad.
+                    </p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 mt-4">
+<a class="bg-sage-accent text-light-ink font-label-md text-label-md px-6 py-3 rounded-DEFAULT hover:opacity-90 transition-opacity flex items-center justify-center gap-2" href="#">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+                        Escuchar el último episodio
+                    </a>
+<div class="flex gap-2">
+<!-- Platform Links (Stylized as ghost buttons) -->
+<a aria-label="Spotify" class="border border-border-subtle bg-surface-elevated text-ink p-3 rounded-DEFAULT hover:bg-surface-dim transition-colors flex items-center justify-center" href="#">
+<span class="font-label-md text-label-md">Spotify</span>
+</a>
+<a aria-label="Apple Podcasts" class="border border-border-subtle bg-surface-elevated text-ink p-3 rounded-DEFAULT hover:bg-surface-dim transition-colors flex items-center justify-center" href="#">
+<span class="font-label-md text-label-md">Apple</span>
+</a>
+<a aria-label="YouTube" class="border border-border-subtle bg-surface-elevated text-ink p-3 rounded-DEFAULT hover:bg-surface-dim transition-colors flex items-center justify-center" href="#">
+<span class="font-label-md text-label-md">YouTube</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Right Column: High Contrast Portrait -->
+<div class="md:col-span-6 order-1 md:order-2">
+<div class="aspect-[3/4] md:aspect-square relative overflow-hidden bg-primary-container border border-border-subtle rounded-DEFAULT">
+<img class="w-full h-full object-cover filter grayscale contrast-125 brightness-90" data-alt="A high-quality, high-contrast black and white editorial portrait of Arturo Salazar, the host of a news podcast. He is dressed in smart casual attire, looking directly at the camera with a confident, sober, and trustworthy expression. The lighting is dramatic, with deep shadows on one side of his face, set against a dark green-charcoal background (#121C16) to match a premium, modern corporate editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtq0FP-Tfo5Q_c_FuV3sNuJIt4ydHwaL6ImN6VMYZ0_1h43Ra5qj9cYNze9ORdF_0uRVaq1171HLCrnB3Z0tcs6wVLDjQSnOySM4VTgqdZzaT-GJtf0i6f4QH57z4JB3lr35U7FYqsvEja3rwfWwdg3r3In_6js2AojcNSGt3mOPIi4cYmM2qN5l2_NzWG6XFPhbk75sNuypHEUVF1MlisPskV-xxUHzSRjrSyTk3JaUqy5c6_GoO5dA"/>
+</div>
+</div>
+</section>
+<!-- Separation Line -->
+<hr class="border-t border-border-subtle my-stack-lg"/>
+<!-- Format & Vision Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-stack-lg">
+<!-- Main Vision Card -->
+<div class="md:col-span-8 bg-surface-elevated border border-border-subtle p-stack-md rounded-DEFAULT flex flex-col gap-4">
+<h2 class="font-headline-md text-headline-md text-ink uppercase">Nuestra Visión</h2>
+<div class="font-body-md text-body-md text-on-surface-variant flex flex-col gap-4">
+<p>
+                        El Brieff nació de la necesidad de combatir la infoxicación. En un mundo donde las noticias sobran pero el contexto falta, nuestro objetivo es destilar lo esencial. Arturo Salazar selecciona rigurosamente los temas que importan, ofreciendo un análisis sobrio y confiable.
+                    </p>
+<p>
+                        No buscamos ser los primeros en dar la noticia, sino los más precisos en explicarla. Cubrimos desde política y economía en México hasta los eventos geopolíticos que moldean el panorama global, manteniendo un estándar editorial de excelencia.
+                    </p>
+</div>
+</div>
+<!-- Format Details Stack -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<!-- Cadence -->
+<div class="bg-surface-elevated border border-border-subtle p-stack-md rounded-DEFAULT flex items-start gap-4">
+<span class="material-symbols-outlined text-sage-accent mt-1">calendar_month</span>
+<div>
+<h3 class="font-label-md text-label-md text-ink uppercase">Frecuencia</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Lunes a Viernes</p>
+</div>
+</div>
+<!-- Duration -->
+<div class="bg-surface-elevated border border-border-subtle p-stack-md rounded-DEFAULT flex items-start gap-4">
+<span class="material-symbols-outlined text-sage-accent mt-1">timer</span>
+<div>
+<h3 class="font-label-md text-label-md text-ink uppercase">Duración Promedio</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">~15 Minutos</p>
+</div>
+</div>
+<!-- Focus -->
+<div class="bg-surface-elevated border border-border-subtle p-stack-md rounded-DEFAULT flex items-start gap-4">
+<span class="material-symbols-outlined text-sage-accent mt-1">public</span>
+<div>
+<h3 class="font-label-md text-label-md text-ink uppercase">Enfoque</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">México &amp; Mundo</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Production Mention -->
+<section class="flex flex-col items-center justify-center py-stack-md border-t border-border-subtle">
+<p class="font-body-md text-body-md text-metadata text-center">
+                Una producción original de <a class="text-ink hover:text-link-highlight underline decoration-border-subtle hover:decoration-link-highlight transition-colors" href="#">Brieffy</a>.
+            </p>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-dim dark:bg-surface-container-lowest border-t border-border-subtle full-width mt-auto">
+<div class="w-full px-margin-desktop py-stack-lg flex flex-col md:flex-row justify-between items-center gap-6">
+<span class="font-wordmark text-headline-md text-ink tracking-tight uppercase">EL BRIEFF</span>
+<ul class="flex flex-wrap justify-center gap-6">
+<li><a class="font-caption text-caption text-metadata hover:text-on-surface transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="font-caption text-caption text-metadata hover:text-on-surface transition-colors" href="#">Terms of Service</a></li>
+<li><a class="font-caption text-caption text-metadata hover:text-on-surface transition-colors" href="#">Contact</a></li>
+<li><a class="font-caption text-caption text-metadata hover:text-on-surface transition-colors" href="#">RSS</a></li>
+</ul>
+<span class="font-caption text-caption text-metadata dark:text-metadata">© 2024 Brieffy. All rights reserved.</span>
+</div>
+</footer>
+</body></html>

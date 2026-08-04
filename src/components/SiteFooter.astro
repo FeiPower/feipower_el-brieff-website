@@ -1,0 +1,45 @@
+---
+import { site } from '../config/site';
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <p class="site-footer__credit">
+      Producción por
+      <a class="site-footer__link" href={site.producer.url} rel="noopener noreferrer">
+        {site.producer.name}
+      </a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .site-footer__inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .site-footer__credit {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .site-footer__link {
+    font-family: var(--font-script);
+    font-size: 1.25rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .site-footer__link:hover {
+    text-decoration: underline;
+  }
+</style>

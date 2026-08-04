@@ -5,6 +5,7 @@ description: Arquitectura de referencia para el sitio marketing/editorial del po
 tags: [architecture, web, static-first]
 status: draft
 generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
+notes: "Phase 1 foundation live 2026-08-03 — Home Astro + Worker assets; About/Media kit siguen Phase 3."
 sources:
   - id: brief
     resource: ../../brieff.md
@@ -26,20 +27,25 @@ Sitio público de bajo acoplamiento: contenido editorial (episodios) + marketing
 
 | Contexto | Responsabilidad |
 |----------|-----------------|
-| Brand & Marketing | Home, about, crossover Brieffy, plataformas |
+| Brand & Marketing | Home, about, crossover Brieffy, plataformas, media kit |
 | Episodes | Catálogo, detalle, metadatos de episodio |
-| Content source | Origen de episodios (CMS headless, MD, o feed RSS) — a concretar |
-| Delivery | Build estático / edge hosting, CDN, analytics |
+| Content source | v1: embed Spotify + copy estático; catálogo MD/CMS → v1.1 |
+| Press assets | Media kit PDF + formulario de lead (`arturo@strtgy.ai`) |
+| Delivery | Cloudflare Workers (`el-brieff` / fei-d02), GA4 |
 
 # Componentes propuestos (v1)
 
 ```text
 Browser
-  └─ Site (SSR/SSG)
-       ├─ Pages: Home, Episodes, Episode, About
-       ├─ Content layer: episodes + site config (platforms, copy)
-       └─ Integrations: Spotify official embed (playback), platform deep links, Brieffy (external)
+  └─ Site (Astro SSG → Cloudflare Workers Static Assets)
+       ├─ Pages: Home (Phase 1 live); About / Media kit (form) → Phase 3
+       ├─ Static assets: cover art (public/); media-kit PDF → Phase 3
+       ├─ Site config: src/config/site.ts (platforms, copy, GA4 hook, sameAs)
+       ├─ Worker handlers: media-kit form POST (+ mail/CRM) → Phase 3
+       └─ Integrations: Spotify embed (live), platform deep links (config only Phase 1), Brieffy, Instagram
 ```
+
+**Phase 1 (live):** [https://el-brieff.fei-d02.workers.dev/](https://el-brieff.fei-d02.workers.dev/) — Hero + Spotify show embed + JSON-LD. Media kit: [media-kit.md](media-kit.md). Deploy: [deployment.md](deployment.md).
 
 # Design system (entrada)
 
@@ -48,6 +54,8 @@ Identidad **cover-first** congelada en [`DESIGN.md`](../../DESIGN.md) a partir d
 Prototipado de UI: [Google Stitch](https://stitch.withgoogle.com/projects/16391393389959999592) — ver [stitch-ui.md](stitch-ui.md).
 
 Playback v1: embed oficial Spotify — [ADR-0002](../decisions/adr-0002-spotify-official-embed.md), [spotify-embed.md](spotify-embed.md).
+
+Deploy: [deployment.md](deployment.md). Plataformas: [platforms.md](platforms.md).
 
 | Token | Hex | Uso |
 |-------|-----|-----|
@@ -72,8 +80,11 @@ Descubrimiento Search / AI: playbook [seo-geo.md](seo-geo.md).
 
 # Open questions
 
-1. ~~¿Fuente canónica de episodios?~~ → v1: **embed Spotify del show** ([ADR-0002](../decisions/adr-0002-spotify-official-embed.md)); catálogo propio/RSS diferible a v1.1.
+1. ~~¿Fuente canónica de episodios?~~ → v1: **embed Spotify del show** ([ADR-0002](../decisions/adr-0002-spotify-official-embed.md)); catálogo HTML propio → **v1.1** (stakeholder: opción A).
 2. ~~¿URL / Show ID definitivo de El Brieff en Spotify?~~ → [20HgvkIWtkxDP44PguN1Wi](https://open.spotify.com/show/20HgvkIWtkxDP44PguN1Wi) — [spotify-embed.md](spotify-embed.md).
-3. ¿Dominio definitivo y hosting (Cloudflare / Render static / otro)?
-4. ¿Lista final de plataformas de escucha (deep links además de Spotify)?
+3. ~~¿Dominio definitivo y hosting?~~ → Cloudflare Workers interim [el-brieff.fei-d02.workers.dev](https://el-brieff.fei-d02.workers.dev/) — [deployment.md](deployment.md). Dominio custom diferido.
+4. ~~¿Lista final de plataformas?~~ → Spotify, Apple Podcasts, Deezer, iHeart, radio.net — [platforms.md](platforms.md) (**URLs confirmadas**).
+5. ~~¿Framework?~~ → **Astro** + Cloudflare Workers — [ADR-0001](../decisions/adr-0001-static-first-marketing-site.md).
+6. ~~¿Aprobar prototipos Stitch?~~ → **Aprobado** — [stitch-ui.md](stitch-ui.md).
+7. ~~¿Backend del formulario media kit?~~ → Worker envía email **To** `arturo@strtgy.ai`, **Cc** `mar@strtgy.ai`.
 

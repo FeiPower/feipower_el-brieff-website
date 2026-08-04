@@ -3,8 +3,10 @@ type: Functional Requirement
 title: FR-008 Structured data JSON-LD
 description: Emitir JSON-LD válido (PodcastSeries, PodcastEpisode, Person, Organization, FAQ cuando aplique) alineado al contenido visible.
 tags: [fr, seo, geo, schema, json-ld]
-status: draft
+status: partial
 generated: { by: agent/composer, at: 2026-08-03T20:20:00Z }
+verified: { by: agent/composer, at: 2026-08-03T23:30:00Z }
+notes: "Phase 1 — home JsonLd @graph PodcastSeries + Person + Organization. Pendiente: About / Episode / Catalog."
 sources:
   - id: google-sd
     resource: https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data
@@ -29,12 +31,12 @@ Cada ruta pública relevante debe incluir **JSON-LD** que describa entidades rea
 
 # Acceptance outline
 
-- [ ] JSON-LD en `<script type="application/ld+json">` (uno o grafo `@graph`).
-- [ ] Propiedades requeridas por tipo presentes y **iguales** al HTML visible.
-- [ ] `sameAs` solo con perfiles verificados (no inventar URLs).
-- [ ] Imagen de serie/episodio: preferir portada canónica o artwork del episodio.
-- [ ] Pasa validación sin errores críticos antes de merge a main.
-- [ ] Idioma / `inLanguage`: `es-MX` cuando el schema lo permita.
+- [x] JSON-LD en `<script type="application/ld+json">` (uno o grafo `@graph`). — home Phase 1
+- [x] Propiedades requeridas por tipo presentes y **iguales** al HTML visible. — home Phase 1
+- [x] `sameAs` solo con perfiles verificados (no inventar URLs). — Spotify show + Instagram desde `site`
+- [x] Imagen de serie/episodio: preferir portada canónica o artwork del episodio. — cover absoluto
+- [ ] Pasa validación sin errores críticos antes de merge a main. — live OK; merge a main pendiente de commit/PR
+- [x] Idioma / `inLanguage`: `es-MX` cuando el schema lo permita. — home Series
 
 # Links
 

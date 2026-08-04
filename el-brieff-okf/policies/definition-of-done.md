@@ -20,8 +20,10 @@ Un ítem (User Story o FR implementado) está **Done** solo si:
 7. Documentación OKF actualizada si el cambio altera alcance, ADR, SEO/GEO o glosario.
 8. Revisado por el rol responsable ([roles](../roles/)).
 9. Si toca home/about/episodio: checklist SEO+GEO del [playbook](../architecture/seo-geo.md) (markup = contenido visible; sin hacks llms-only).
+10. Si toca media kit: PDF sin placeholders, identidad DESIGN, CTA de descarga verificado en desktop y móvil ([media-kit.md](../architecture/media-kit.md)).
 
 # Out of Done
 
 - “Funciona en mi máquina” sin preview desplegable.
 - Placeholders visibles en producción (`lorem`, TODOs de UI).
+- Media kit “en Canva” sin URL estable de descarga en el sitio.

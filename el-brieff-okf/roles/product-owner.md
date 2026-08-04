@@ -20,3 +20,4 @@ generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
 | Product overview | R | A | Architect | Eng |
 | User stories | R | A | Architect | Eng |
 | Go-live copy | R | A | Brand | Eng |
+| Prototipos UI (Stitch) | C | A | Brand, Architect | Eng |

@@ -3,8 +3,10 @@ type: Functional Requirement
 title: FR-001 Landing hero
 description: El home debe comunicar marca, propuesta de valor y acceso al episodio vigente en el primer viewport.
 tags: [fr, home, hero]
-status: draft
+status: implemented
 generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
+verified: { by: agent/composer, at: 2026-08-03T23:30:00Z }
+notes: "Phase 1 home — Hero.astro (EL/BRI/EFF + pitch + Escuchar/#escuchar + cover) live en workers.dev."
 ---
 
 # Statement

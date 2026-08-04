@@ -3,8 +3,10 @@ type: Functional Requirement
 title: FR-007 SEO metadata
 description: Cada página pública debe exponer título, descripción, canonical y Open Graph / Twitter Card adecuados.
 tags: [fr, seo, metadata, geo]
-status: draft
+status: partial
 generated: { by: agent/composer, at: 2026-08-03T20:20:00Z }
+verified: { by: agent/composer, at: 2026-08-03T23:30:00Z }
+notes: "Phase 1 — home vía BaseLayout (title, description, canonical, OG/Twitter, og:locale es_MX, og:image cover). Pendiente: about / episodios / catálogo cuando existan rutas."
 ---
 
 # Statement

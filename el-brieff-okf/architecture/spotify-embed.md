@@ -3,8 +3,9 @@ type: Reference
 title: Spotify official embed
 description: Cómo incrustar el show/episodios de El Brieff con el embed oficial de Spotify (v1).
 tags: [spotify, embed, episodes]
-status: draft
+status: stable
 generated: { by: agent/composer, at: 2026-08-03T20:25:00Z }
+notes: "Phase 1 — snippet show height 352 live en home (#escuchar)."
 sources:
   - id: adr
     resource: ../decisions/adr-0002-spotify-official-embed.md

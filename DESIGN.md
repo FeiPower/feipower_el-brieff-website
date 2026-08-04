@@ -1,5 +1,13 @@
 name: El Brieff
 description: Sistema visual editorial para un podcast de noticias y análisis breve conducido por Arturo Salazar. La identidad prioriza claridad, velocidad, confianza y lectura inmediata. Fuente de verdad de portada: elbrieff-cover.png.
+# Prototipos de UI (antes de código): Google Stitch
+# https://stitch.withgoogle.com/projects/16391393389959999592
+# Doc OKF: el-brieff-okf/architecture/stitch-ui.md
+ui_prototypes:
+  tool: "Google Stitch"
+  project_url: "https://stitch.withgoogle.com/projects/16391393389959999592"
+  project_id: "16391393389959999592"
+  okf: "el-brieff-okf/architecture/stitch-ui.md"
 brand_attributes:
   - Editorial
   - Preciso

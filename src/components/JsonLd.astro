@@ -1,0 +1,40 @@
+---
+import { site } from '../config/site';
+
+const personId = `${site.siteUrl}/#person`;
+const orgId = `${site.siteUrl}/#organization`;
+const imageUrl = new URL(site.ogImage, site.siteUrl).href;
+
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'PodcastSeries',
+      name: site.name,
+      description: site.pitch,
+      url: site.siteUrl,
+      inLanguage: 'es-MX' as const,
+      image: imageUrl,
+      sameAs: [site.spotify.showUrl, site.social.instagram],
+      author: { '@id': personId },
+      publisher: { '@id': orgId },
+    },
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: site.host.name,
+      alternateName: site.host.alternateName,
+    },
+    {
+      '@type': 'Organization',
+      '@id': orgId,
+      name: site.producer.name,
+      url: site.producer.url,
+    },
+  ],
+};
+
+const jsonLd = JSON.stringify(graph);
+---
+
+<script type="application/ld+json" set:html={jsonLd} />

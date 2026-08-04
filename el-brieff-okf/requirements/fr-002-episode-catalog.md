@@ -3,8 +3,9 @@ type: Functional Requirement
 title: FR-002 Episode catalog
 description: El sitio debe ofrecer un listado/archivo de episodios navegable por fecha (más reciente primero).
 tags: [fr, episodes, catalog]
-status: draft
+status: deferred
 generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
+notes: "v1.1 — catálogo HTML diferido; v1 usa embed Spotify del show."
 ---
 
 # Statement
