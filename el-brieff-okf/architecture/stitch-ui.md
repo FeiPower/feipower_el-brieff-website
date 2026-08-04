@@ -50,7 +50,7 @@ Pantallas alineadas a requisitos:
 - Detalle de episodio ([FR-003](../requirements/fr-003-episode-detail.md))
 - Suscripción a plataformas ([FR-004](../requirements/fr-004-platform-subscribe.md))
 - Sobre el programa / conductor ([FR-005](../requirements/fr-005-about-host.md))
-- Cruce Brieffy fuera del hero ([FR-006](../requirements/fr-006-brieffy-crossover.md))
+- Cruce Brieffy fuera del hero ([FR-006](../requirements/fr-006-brieffy-crossover.md)) — **omitido v1** (`brieffy.com` offline)
 - Media kit / prensa — CTA de descarga PDF ([FR-009](../requirements/fr-009-media-kit-pdf.md))
 
 Playback: [ADR-0002](../decisions/adr-0002-spotify-official-embed.md) / [spotify-embed.md](spotify-embed.md).  

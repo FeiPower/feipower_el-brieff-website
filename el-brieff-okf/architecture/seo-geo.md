@@ -61,7 +61,7 @@ Hacer que El Brieff sea **descubrible, indexable y citable** en Search y en resp
 ## About
 
 - [ ] Bio del conductor + handle + productor Brieffy.
-- [ ] `Person` + vínculos `sameAs` reales: Instagram [elbrieff](https://www.instagram.com/elbrieff/), Spotify show, Brieffy.
+- [ ] `Person` + vínculos `sameAs` reales: Instagram [elbrieff](https://www.instagram.com/elbrieff/), Spotify show; Brieffy `sameAs` omitido v1 (sitio offline).
 - [ ] Respuestas a “quién conduce” / “quién produce”.
 
 # Site globals (congelados)

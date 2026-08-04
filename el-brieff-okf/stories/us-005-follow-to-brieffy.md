@@ -3,8 +3,10 @@ type: User Story
 title: US-005 Follow to Brieffy
 description: Como profesional interesado, quiero conocer Brieffy desde el sitio del podcast.
 tags: [story, brieffy]
-status: draft
+status: deferred
 generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
+verified: { by: human:stakeholder, at: 2026-08-04T14:57:00Z }
+notes: "Omitida en v1 — brieffy.com offline; sin módulo/CTA puente (FR-006)."
 ---
 
 # Story
@@ -12,6 +14,10 @@ generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
 **Como** profesional interesado en liderazgo  
 **Quiero** un puente claro hacia Brieffy  
 **Para** profundizar con conocimiento corto y preciso más allá del podcast diario.
+
+# Status (v1)
+
+**Deferred / omitted.** No AC en v1 mientras `brieffy.com` esté offline.
 
 # Acceptance Criteria
 

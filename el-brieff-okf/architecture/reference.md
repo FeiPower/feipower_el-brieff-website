@@ -27,7 +27,7 @@ Sitio público de bajo acoplamiento: contenido editorial (episodios) + marketing
 
 | Contexto | Responsabilidad |
 |----------|-----------------|
-| Brand & Marketing | Home, about, crossover Brieffy, plataformas, media kit |
+| Brand & Marketing | Home, about, plataformas, media kit (crossover Brieffy omitido v1) |
 | Episodes | Catálogo, detalle, metadatos de episodio |
 | Content source | v1: embed Spotify + copy estático; catálogo MD/CMS → v1.1 |
 | Press assets | Media kit PDF + formulario de lead (`arturo@strtgy.ai`) |
@@ -42,7 +42,7 @@ Browser
        ├─ Static assets: cover art (public/); media-kit PDF → Phase 3
        ├─ Site config: src/config/site.ts (platforms, copy, GA4 hook, sameAs)
        ├─ Worker handlers: media-kit form POST (+ mail/CRM) → Phase 3
-       └─ Integrations: Spotify embed (live), platform deep links (config only Phase 1), Brieffy, Instagram
+       └─ Integrations: Spotify embed (live), platform deep links (config only Phase 1), Instagram (Brieffy CTA deferred)
 ```
 
 **Phase 1 (live):** [https://el-brieff.fei-d02.workers.dev/](https://el-brieff.fei-d02.workers.dev/) — Hero + Spotify show embed + JSON-LD. Media kit: [media-kit.md](media-kit.md). Deploy: [deployment.md](deployment.md).
