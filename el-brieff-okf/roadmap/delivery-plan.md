@@ -10,7 +10,7 @@ verified: { by: human:stakeholder, at: 2026-08-03T21:00:00Z }
 
 # Objective
 
-Llevar a producción un sitio v1 que cumpla [product/overview](../product/overview.md) y las historias US-001, US-003–US-007 (US-002 diferida a v1.1 vía embed).
+Llevar a producción un sitio v1 que cumpla [product/overview](../product/overview.md) y las historias US-001, US-003–US-004, US-006–US-007 (US-002 → v1.1 vía embed; US-005 / FR-006 omitidas — brieffy.com offline).
 
 # Phases
 
@@ -55,11 +55,12 @@ Llevar a producción un sitio v1 que cumpla [product/overview](../product/overvi
 
 ## Phase 3 — Convert & trust
 
-- Plataformas ([FR-004](../requirements/fr-004-platform-subscribe.md)).
-- About + E-E-A-T ([FR-005](../requirements/fr-005-about-host.md), Person/sameAs Instagram).
-- Crossover Brieffy ([FR-006](../requirements/fr-006-brieffy-crossover.md)).
-- Media kit PDF + **formulario** ([FR-009](../requirements/fr-009-media-kit-pdf.md), [media-kit.md](../architecture/media-kit.md)).
+- [x] Plataformas ([FR-004](../requirements/fr-004-platform-subscribe.md)) — `PlatformLinks` en home / about / media-kit.
+- [x] About + E-E-A-T ([FR-005](../requirements/fr-005-about-host.md), Person/sameAs Instagram) — `/about`.
+- [x] Media kit PDF + formulario UI ([FR-009](../requirements/fr-009-media-kit-pdf.md), [media-kit.md](../architecture/media-kit.md)) — PDF en `public/media-kit/`; form **disabled** hasta Email Service ops (`mediaKitEmailEnabled: false`). US-007 / FR-009 = `partial`.
+- [ ] Email Service smoke → flip flag → US-007 / FR-009 `implemented`.
 - Assets backlog: headshot editorial; métricas audiencia (si llegan).
+- Omitido v1: crossover Brieffy ([FR-006](../requirements/fr-006-brieffy-crossover.md) / [US-005](../stories/us-005-follow-to-brieffy.md)) — `brieffy.com` offline.
 
 ## Phase 4 — Harden & launch
 
@@ -70,7 +71,7 @@ Llevar a producción un sitio v1 que cumpla [product/overview](../product/overvi
 
 # Exit criteria (v1)
 
-- US-001, US-003–US-007 con AC marcados (US-002 → v1.1).
+- US-001, US-003–US-004, US-006–US-007 con AC marcados (US-002 → v1.1; US-005 omitida).
 - CWV en verde en móvil.
 - JSON-LD validado en home y about.
 - Media kit PDF + formulario operativo; leads To `arturo@strtgy.ai` / Cc `mar@strtgy.ai`.

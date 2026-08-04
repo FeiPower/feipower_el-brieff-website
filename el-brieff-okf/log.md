@@ -1,5 +1,13 @@
 # Directory Update Log
 
+## 2026-08-04
+
+* **Update (Phase 3 impl)**: Convert & trust en branch `phase-3-convert-trust` — plataformas (`PlatformLinks`), `/about`, `/media-kit` (form disabled), PDF Playwright `npm run media-kit:pdf` → `public/media-kit/el-brieff-media-kit.pdf`, API `POST /api/media-kit` + Cloudflare Email Service + KV `RATE_LIMIT`. FR-004/005 + US-003/004 → `implemented`; FR-009 / US-007 → `partial` hasta Email ops smoke (`mediaKitEmailEnabled: false`). Footer/JsonLd sin `brieffy.com`.
+* **Validation (stakeholder)**: Fondo del retrato base = **verde carbón oscuro `#121C16`** (no blanco/gris como default). Actualizado [photo-brief.md](architecture/photo-brief.md) set técnico + prompts GenAI.
+* **Update**: [photo-brief.md](architecture/photo-brief.md) — prompts GenAI por uso final (1:1 portada, 1:1 avatar, 4:5 About, 16:9 banner, 9:16 Stories) con bloque de identidad + negative prompt; asume fotos de referencia facial de Arturo.
+* **Creation**: Brief fotográfico para sesión de Arturo Salazar — [architecture/photo-brief.md](architecture/photo-brief.md) (planos, ratios 1:1 / 4:5 / 16:9 / 9:16, cutout portada, headshot media kit). Enlazado desde architecture index, OKF index y [media-kit.md](architecture/media-kit.md).
+* **Validation (stakeholder)**: Omitir puente Brieffy en v1 — `brieffy.com` offline. [FR-006](requirements/fr-006-brieffy-crossover.md) / [US-005](stories/us-005-follow-to-brieffy.md) → `deferred`; sacados de Phase 3 y exit criteria. Atribución de productor en copy/About sin CTA externo OK.
+
 ## 2026-08-03
 
 * **Deploy (Workers Builds)**: Git connected — first CI trigger on `main` with `npm run build` + `npm run cf:deploy` / `npm run cf:preview`. Repo `FeiPower/feipower_el-brieff-website`.

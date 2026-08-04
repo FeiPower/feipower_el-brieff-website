@@ -24,12 +24,12 @@ const graph = {
       '@id': personId,
       name: site.host.name,
       alternateName: site.host.alternateName,
+      sameAs: [site.social.instagram],
     },
     {
       '@type': 'Organization',
       '@id': orgId,
       name: site.producer.name,
-      url: site.producer.url,
     },
   ],
 };

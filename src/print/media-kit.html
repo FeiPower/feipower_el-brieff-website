@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <title>El Brieff — Media Kit</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 18mm 16mm 20mm;
+      }
+
+      :root {
+        --primary: #121c16;
+        --ink: #ffffff;
+        --muted: #9aa3a0;
+        --border: #2a3530;
+        --surface-elevated: #1a2420;
+        --tertiary: #78a08a;
+        --ink-on-light: #121c16;
+        --surface-light: #f5f6f7;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+        font-size: 11pt;
+        line-height: 1.45;
+        color: var(--ink-on-light);
+        background: var(--surface-light);
+      }
+
+      h1,
+      h2,
+      .wordmark {
+        font-family: 'Montserrat', 'Arial Narrow', sans-serif;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .page {
+        page-break-after: always;
+        min-height: 240mm;
+        padding: 8mm 0;
+      }
+
+      .page:last-of-type {
+        page-break-after: auto;
+      }
+
+      .cover {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 250mm;
+        padding: 16mm;
+        background: var(--primary);
+        color: var(--ink);
+      }
+
+      .cover .wordmark {
+        display: flex;
+        flex-direction: column;
+        font-size: 48pt;
+        font-weight: 800;
+        line-height: 0.92;
+        letter-spacing: 0.1em;
+      }
+
+      .cover__meta {
+        border-top: 1px solid var(--border);
+        padding-top: 8mm;
+      }
+
+      .cover__label {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 12pt;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .cover__year {
+        margin-top: 4mm;
+        color: var(--muted);
+        font-size: 11pt;
+      }
+
+      .section-title {
+        margin: 0 0 6mm;
+        padding-bottom: 3mm;
+        border-bottom: 1px solid #cfd4d1;
+        font-size: 16pt;
+        font-weight: 700;
+        color: var(--ink-on-light);
+      }
+
+      .lede {
+        font-size: 12pt;
+        margin: 0 0 5mm;
+      }
+
+      .muted {
+        color: #5c6662;
+      }
+
+      .host {
+        display: grid;
+        grid-template-columns: 52mm 1fr;
+        gap: 8mm;
+        align-items: start;
+      }
+
+      .host img {
+        width: 52mm;
+        height: 52mm;
+        object-fit: contain;
+        border: 1px solid #cfd4d1;
+        background: var(--primary);
+      }
+
+      .handle {
+        margin: 0 0 4mm;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 10pt;
+        font-weight: 600;
+        color: #5c6662;
+      }
+
+      dl {
+        margin: 0;
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 32mm 1fr;
+        gap: 4mm;
+        padding: 2.5mm 0;
+        border-bottom: 1px solid #e2e5e3;
+      }
+
+      dt {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 8pt;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #5c6662;
+      }
+
+      dd {
+        margin: 0;
+      }
+
+      ul.platforms {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      ul.platforms li {
+        padding: 2mm 0;
+        border-bottom: 1px solid #e2e5e3;
+      }
+
+      .brand-notes {
+        margin: 0;
+        padding-left: 5mm;
+      }
+
+      .brand-notes li {
+        margin-bottom: 2mm;
+      }
+
+      .contact {
+        padding: 6mm;
+        border: 1px solid #cfd4d1;
+        background: #fff;
+      }
+
+      .contact a {
+        color: var(--ink-on-light);
+      }
+
+      .footer {
+        position: running(pageFooter);
+        font-size: 8pt;
+        color: #5c6662;
+      }
+
+      .doc-footer {
+        margin-top: 10mm;
+        padding-top: 3mm;
+        border-top: 1px solid #cfd4d1;
+        font-size: 8pt;
+        color: #5c6662;
+      }
+
+      .script {
+        font-family: 'Caveat', 'Segoe Print', cursive;
+        font-size: 14pt;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="page cover">
+      <div class="wordmark">
+        <span>EL</span>
+        <span>BRI</span>
+        <span>EFF</span>
+      </div>
+      <div class="cover__meta">
+        <div class="cover__label">Media Kit</div>
+        <div class="cover__year">2026</div>
+      </div>
+    </section>
+
+    <section class="page">
+      <h2 class="section-title">El programa</h2>
+      <p class="lede">
+        Somos el podcast que te ayuda a informarte en 15 minutos al día con los
+        temas de conversación más importantes de México y el mundo, conducido
+        por Arturo Salazar (@elchearturo) y publicado de lunes a viernes.
+      </p>
+      <p class="muted">
+        Formato breve, editorial y cotidiano: actualidad empresarial y de
+        conversación para audiencias en México y Latinoamérica.
+      </p>
+      <div class="doc-footer">El Brieff Media Kit · v1 · 2026-08-04</div>
+    </section>
+
+    <section class="page">
+      <h2 class="section-title">El conductor</h2>
+      <div class="host">
+        <img
+          src="../../public/elbrieff-cover.png"
+          alt="Portada de El Brieff"
+          width="200"
+          height="200"
+        />
+        <div>
+          <h1 style="margin: 0 0 2mm; font-size: 14pt; letter-spacing: 0.02em; text-transform: none;">
+            Arturo Salazar Bazúa
+          </h1>
+          <p class="handle">@elchearturo</p>
+          <p>
+            Arturo Salazar Bazúa (conocido en redes sociales como @elchearturo)
+            es un emprendedor, estratega de negocios y comunicador mexicano. Es
+            reconocido principalmente por su rol como creador y conductor de El
+            Brieff, uno de los podcasts diarios de noticias y actualidad
+            empresarial más escuchados en México y Latinoamérica. Adicionalmente
+            es cofundador STRTGY, una empresa de ingeniería de soluciones
+            centrada en la inteligencia de decisiones. Es titular del podcast
+            InteligencIA, donde analiza el impacto de la inteligencia artificial
+            generativa, la automatización y la productividad en el entorno
+            corporativo. Participa de forma habitual como conferencista, analista
+            y panelista en foros de tecnología, innovación y emprendimiento.
+          </p>
+        </div>
+      </div>
+      <div class="doc-footer">El Brieff Media Kit · v1 · 2026-08-04</div>
+    </section>
+
+    <section class="page">
+      <h2 class="section-title">Hechos rápidos</h2>
+      <dl>
+        <div class="row">
+          <dt>Formato</dt>
+          <dd>~15 minutos, lunes a viernes</dd>
+        </div>
+        <div class="row">
+          <dt>Idioma</dt>
+          <dd>es-MX</dd>
+        </div>
+        <div class="row">
+          <dt>Enfoque</dt>
+          <dd>México y el mundo</dd>
+        </div>
+        <div class="row">
+          <dt>Productor</dt>
+          <dd><span class="script">Brieffy</span></dd>
+        </div>
+      </dl>
+
+      <h2 class="section-title" style="margin-top: 10mm;">Plataformas</h2>
+      <ul class="platforms">
+        <li>Spotify — https://open.spotify.com/show/20HgvkIWtkxDP44PguN1Wi</li>
+        <li>
+          Apple Podcasts —
+          https://podcasts.apple.com/mx/podcast/el-brieff/id1444545033
+        </li>
+        <li>Deezer — https://www.deezer.com/es/show/5905047</li>
+        <li>iHeart — https://www.iheart.com/podcast/256-el-brieff-30974371/</li>
+        <li>radio.net — https://mx.radio.net/podcast/el-brieff</li>
+      </ul>
+      <div class="doc-footer">El Brieff Media Kit · v1 · 2026-08-04</div>
+    </section>
+
+    <section class="page">
+      <h2 class="section-title">Marca</h2>
+      <ul class="brand-notes">
+        <li>
+          Usar la portada canónica <strong>elbrieff-cover.png</strong> (wordmark
+          EL/BRI/EFF + retrato).
+        </li>
+        <li>
+          Paleta: primary <code>#121C16</code>, tinta blanca, sage
+          <code>#78A08A</code> solo como acento puntual.
+        </li>
+        <li>Do: alto contraste tipográfico; tipografía sobria y editorial.</li>
+        <li>
+          Don’t: fondos claros como default de marca; métricas de audiencia no
+          aprobadas; inventar plataformas o assets.
+        </li>
+      </ul>
+
+      <h2 class="section-title" style="margin-top: 10mm;">Contacto</h2>
+      <div class="contact">
+        <p style="margin: 0 0 3mm;">
+          Prensa y partnerships:
+          <a href="mailto:arturo@strtgy.ai">arturo@strtgy.ai</a>
+        </p>
+        <p style="margin: 0;" class="muted">
+          Sitio:
+          <a href="https://el-brieff.fei-d02.workers.dev"
+            >https://el-brieff.fei-d02.workers.dev</a
+          >
+        </p>
+      </div>
+      <div class="doc-footer">El Brieff Media Kit · v1 · 2026-08-04</div>
+    </section>
+  </body>
+</html>

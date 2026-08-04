@@ -3,7 +3,7 @@ type: User Story
 title: US-003 Subscribe platforms
 description: Como oyente, quiero suscribirme en mi plataforma favorita desde el sitio.
 tags: [story, subscribe]
-status: draft
+status: implemented
 generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
 ---
 
@@ -15,9 +15,9 @@ generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
 
 # Acceptance Criteria
 
-- [ ] AC1: Las plataformas configuradas aparecen en home y en detalle.
-- [ ] AC2: Cada enlace tiene nombre accesible (no solo ícono).
-- [ ] AC3: Los URLs son centralizados (config / CMS), no duplicados ad hoc.
+- [x] AC1: Las plataformas configuradas aparecen en home (y About / media kit). Detalle de episodio = v1.1 diferido.
+- [x] AC2: Cada enlace tiene nombre accesible (no solo ícono).
+- [x] AC3: Los URLs son centralizados (`src/config/site.ts`), no duplicados ad hoc.
 
 # Links
 

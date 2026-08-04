@@ -12,8 +12,10 @@ export type SiteConfig = {
   host: {
     name: 'Arturo Salazar Bazúa';
     alternateName: '@elchearturo';
+    bioShort: string;
+    bioLong: string;
   };
-  producer: { name: 'Brieffy'; url: 'https://www.brieffy.com' };
+  producer: { name: 'Brieffy' };
   spotify: {
     showId: '20HgvkIWtkxDP44PguN1Wi';
     showUrl: 'https://open.spotify.com/show/20HgvkIWtkxDP44PguN1Wi';
@@ -22,9 +24,22 @@ export type SiteConfig = {
   };
   platforms: PlatformLink[];
   social: { instagram: 'https://www.instagram.com/elbrieff/' };
-  press: { to: 'arturo@strtgy.ai'; cc: 'mar@strtgy.ai' };
+  press: {
+    from: 'prensa@strtgy.ai';
+    to: 'arturo@strtgy.ai';
+    cc: 'mar@strtgy.ai';
+  };
+  features: {
+    mediaKitEmailEnabled: boolean;
+  };
   ogImage: '/elbrieff-cover.png';
 };
+
+const hostBioLong =
+  'Arturo Salazar Bazúa (conocido en redes sociales como @elchearturo) es un emprendedor, estratega de negocios y comunicador mexicano. Es reconocido principalmente por su rol como creador y conductor de El Brieff, uno de los podcasts diarios de noticias y actualidad empresarial más escuchados en México y Latinoamérica. Adicionalmente es cofundador STRTGY, una empresa de ingeniería de soluciones centrada en la inteligencia de decisiones. Es titular del podcast InteligencIA, donde analiza el impacto de la inteligencia artificial generativa, la automatización y la productividad en el entorno corporativo. Participa de forma habitual como conferencista, analista y panelista en foros de tecnología, innovación y emprendimiento.';
+
+const hostBioShort =
+  'Arturo Salazar Bazúa (conocido en redes sociales como @elchearturo) es un emprendedor, estratega de negocios y comunicador mexicano. Es reconocido principalmente por su rol como creador y conductor de El Brieff, uno de los podcasts diarios de noticias y actualidad empresarial más escuchados en México y Latinoamérica.';
 
 export const site: SiteConfig = {
   siteUrl: 'https://el-brieff.fei-d02.workers.dev',
@@ -35,10 +50,11 @@ export const site: SiteConfig = {
   host: {
     name: 'Arturo Salazar Bazúa',
     alternateName: '@elchearturo',
+    bioShort: hostBioShort,
+    bioLong: hostBioLong,
   },
   producer: {
     name: 'Brieffy',
-    url: 'https://www.brieffy.com',
   },
   spotify: {
     showId: '20HgvkIWtkxDP44PguN1Wi',
@@ -77,8 +93,12 @@ export const site: SiteConfig = {
     instagram: 'https://www.instagram.com/elbrieff/',
   },
   press: {
+    from: 'prensa@strtgy.ai',
     to: 'arturo@strtgy.ai',
     cc: 'mar@strtgy.ai',
+  },
+  features: {
+    mediaKitEmailEnabled: false,
   },
   ogImage: '/elbrieff-cover.png',
 };

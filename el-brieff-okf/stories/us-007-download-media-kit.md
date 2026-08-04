@@ -3,7 +3,7 @@ type: User Story
 title: US-007 Download media kit
 description: Como periodista o partner, quiero solicitar el media kit en PDF mediante un formulario para cubrir o proponer colaboraciones con El Brieff.
 tags: [story, media-kit, press, pdf, form]
-status: draft
+status: partial
 generated: { by: agent/composer, at: 2026-08-03T20:35:00Z }
 verified: { by: human:stakeholder, at: 2026-08-03T21:00:00Z }
 ---
@@ -16,13 +16,13 @@ verified: { by: human:stakeholder, at: 2026-08-03T21:00:00Z }
 
 # Acceptance Criteria
 
-- [ ] AC1: Existe una sección o página “Media kit” / “Prensa” enlazada desde nav o About.
-- [ ] AC2: Un formulario recoge al menos nombre y email; el CTA no entrega el PDF sin envío válido.
-- [ ] AC3: Tras envío válido, el PDF es descargable (y/o llega por email).
-- [ ] AC4: El PDF incluye pitch, conductor (bio aprobada), formato, productor, plataformas y contacto `arturo@strtgy.ai`.
-- [ ] AC5: Visual coherente con [DESIGN.md](../../DESIGN.md) y portada canónica.
-- [ ] AC6: En móvil, formulario y descarga funcionan.
-- [ ] AC7: El equipo recibe el lead por email: To `arturo@strtgy.ai`, Cc `mar@strtgy.ai`.
+- [x] AC1: Existe una sección o página “Media kit” / “Prensa” enlazada desde nav o About.
+- [x] AC2: Un formulario recoge al menos nombre y email; el CTA no entrega el PDF sin envío válido (form disabled hasta Email ops).
+- [ ] AC3: Tras envío válido, el PDF es descargable (y/o llega por email). — pendiente smoke Email Service.
+- [x] AC4: El PDF incluye pitch, conductor (bio aprobada), formato, productor, plataformas y contacto `arturo@strtgy.ai`.
+- [x] AC5: Visual coherente con [DESIGN.md](../../DESIGN.md) y portada canónica.
+- [x] AC6: En móvil, formulario (disabled) y PDF estático en ruta pública existen.
+- [ ] AC7: El equipo recibe el lead por email: To `arturo@strtgy.ai`, Cc `mar@strtgy.ai`. — pendiente `mediaKitEmailEnabled` + ops.
 
 # Links
 

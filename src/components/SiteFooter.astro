@@ -6,9 +6,7 @@ import { site } from '../config/site';
   <div class="site-footer__inner">
     <p class="site-footer__credit">
       Producción por
-      <a class="site-footer__link" href={site.producer.url} rel="noopener noreferrer">
-        {site.producer.name}
-      </a>
+      <span class="site-footer__producer">{site.producer.name}</span>
     </p>
   </div>
 </footer>
@@ -32,14 +30,9 @@ import { site } from '../config/site';
     color: var(--muted);
   }
 
-  .site-footer__link {
+  .site-footer__producer {
     font-family: var(--font-script);
     font-size: 1.25rem;
     color: var(--ink);
-    text-decoration: none;
-  }
-
-  .site-footer__link:hover {
-    text-decoration: underline;
   }
 </style>

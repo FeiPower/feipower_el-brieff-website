@@ -32,7 +32,7 @@ Hasta que exista dominio propio, el sitio se publica en el Worker de Cloudflare:
 | Assets (actual) | **live** — Static Assets from Astro `dist/client` (home HTML, `_astro/*`, cover) |
 | Stack | Astro + `@astrojs/cloudflare` (build) + Wrangler (`wrangler.jsonc` name `el-brieff`) |
 | Git production branch | `main` |
-| Bindings (actual) | Ninguno requerido en el path de producción (assets-only). KV `SESSION` / Images `IMAGES` pueden aparecer en builds del adapter; no son el serving path actual |
+| Bindings (actual) | `EMAIL` (`send_email`: from `prensa@strtgy.ai`; To/Cc arturo+mar); KV `RATE_LIMIT` (`el-brieff-RATE_LIMIT`). Adapter puede inyectar `SESSION` / `IMAGES`. Form media kit gated por `mediaKitEmailEnabled` (default false hasta Email ops). |
 
 # Workers Builds (Git → prod + PR previews)
 
@@ -45,8 +45,8 @@ Connect the Worker **el-brieff** to GitHub repo **`FeiPower/feipower_el-brieff-w
 | Builds for non-production branches | **Enabled** (PR / feature-branch preview URLs) |
 | Root directory | *(empty — repo root)* |
 | Build command | `npm run build` |
-| Deploy command (production) | `npm run cf:deploy` |
-| Non-production deploy command | `npm run cf:preview` |
+| Deploy command (production) | `npm run cf:deploy` → `wrangler deploy --config dist/server/wrangler.json` (adapter-generated; do not set `main` in root `wrangler.jsonc` — that breaks clean `astro build`) |
+| Non-production deploy command | `npm run cf:preview` → `wrangler versions upload --config dist/server/wrangler.json` |
 | Node | `.nvmrc` → `22` (`engines.node >=22`) |
 
 Flow ([Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)):
