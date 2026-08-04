@@ -26,6 +26,7 @@ Fuente semilla: [brieff.md](../brieff.md). Especificación OKF: [Knowledge Catal
 * [Deployment](architecture/deployment.md) — Cloudflare Workers interim.
 * [Platforms](architecture/platforms.md) — Deep links de escucha.
 * [Cover art](architecture/cover-art.md) — Portada canónica `elbrieff-cover.png`.
+* [Brief fotográfico](architecture/photo-brief.md) — Brief para fotógrafo (Arturo Salazar).
 * [Google Stitch UI](architecture/stitch-ui.md) — Prototipos UI aprobados (fuente visual v1).
 * [Spotify embed](architecture/spotify-embed.md) — Embed oficial Spotify (v1).
 * [SEO + GEO](architecture/seo-geo.md) — Playbook SEO Google y Generative Engine Optimization.
