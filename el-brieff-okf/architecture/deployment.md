@@ -76,8 +76,8 @@ Equivalent CI split: `npm run build` then `npm run cf:deploy`.
 - [x] Primer deploy con assets reales (Phase 1 foundation).
 - [x] HTTPS workers.dev (nativo).
 - [x] Git production branch `main` + Workers Builds scripts (`cf:deploy` / `cf:preview`).
-- [ ] Cloudflare dashboard: connect `FeiPower/feipower_el-brieff-website`, npm commands above, enable non-prod builds.
-- [ ] GitHub default branch = `main` (deprecate `master` for new work).
+- [x] Cloudflare dashboard: connected `FeiPower/feipower_el-brieff-website`; build `npm run build`; deploy `npm run cf:deploy`; version `npm run cf:preview`; non-prod builds enabled.
+- [x] GitHub default branch = `main`.
 - [ ] `robots.txt` + sitemap con base interim.
 - [ ] Search Console / GA4 apuntando al host interim (actualizar en cutover).
 - [ ] Confirm PR preview URL comments from Workers Builds GitHub integration.
