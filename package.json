@@ -3,11 +3,16 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "deploy": "astro build && rm -f .wrangler/deploy/config.json && wrangler deploy --config wrangler.jsonc"
+    "cf:deploy": "rm -f .wrangler/deploy/config.json && wrangler deploy --config wrangler.jsonc",
+    "cf:preview": "rm -f .wrangler/deploy/config.json && wrangler versions upload --config wrangler.jsonc",
+    "deploy": "npm run build && npm run cf:deploy"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.1.7",

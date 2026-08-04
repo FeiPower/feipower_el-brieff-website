@@ -2,6 +2,7 @@
 
 ## 2026-08-03
 
+* **Update (Workers Builds / Git)**: Scripts `cf:deploy` / `cf:preview` + `.nvmrc` (Node 22) para Cloudflare Workers Builds. Prod branch `main`; previews vía `wrangler versions upload`. Ver [deployment.md](architecture/deployment.md). Dashboard debe conectar `FeiPower/feipower_el-brieff-website` con `npm run build` + `npm run cf:deploy` (no pnpm / no repo WoOS).
 * **Update (Phase 2 verify)**: `agentic-plan-verify` → **PASS**. Sin remediaciones. Gate Phase 2 cerrado; listo para Phase 3. Live: [`el-brieff`](https://el-brieff.fei-d02.workers.dev/).
 * **Update (Phase 2 listen zone)**: Zona de escucha v1 endurecida — heading `Escuchar en Spotify`, CTA sage `Escuchar ahora`, nav `Escuchar`, fallback/noscript AC3. Redeploy Worker [`el-brieff`](https://el-brieff.fei-d02.workers.dev/); US-001 AC1–AC4 PASS (360px + 1280px); axe 0 critical/serious; Lighthouse a11y 100 / perf 98 / SEO 100. FR-002 / FR-003 / US-002 siguen deferred (v1.1).
 * **Update (Phase 1 verify)**: `agentic-plan-verify` → **PASS WITH GAPS**; remediación Ideal aprobada: `typescript` como `devDependency`; `npx tsc --noEmit` exit 0. Residual opcional: PNG desktop Stitch stub (`prototypes/stitch/el_brieff_home_desktop/screen.png` ~28 B). Branch `phase-1-foundation` (sin commit/push salvo pedido).
