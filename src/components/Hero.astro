@@ -14,7 +14,7 @@ const CTA_SECONDARY = {
     <div class="hero__media">
       <img
         class="hero__cover"
-        src="/arturo-cover.png"
+        src="/arturo-cover-cut-out.png"
         alt="Arturo Salazar, conductor de El Brieff"
         width="1024"
         height="1024"
@@ -219,7 +219,7 @@ const CTA_SECONDARY = {
     }
   }
 
-  /* Mobile: bordered card — full photo visible */
+  /* Cut-out on black: no card fill/border so page primary is the only background */
   .hero__cover {
     display: block;
     width: 100%;
@@ -227,17 +227,14 @@ const CTA_SECONDARY = {
     aspect-ratio: 1 / 1;
     object-fit: contain;
     object-position: center;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    background: var(--surface-elevated);
+    border: none;
+    border-radius: 0;
+    background: transparent;
   }
 
   /* Desktop: full-height fill, no box */
   @media (min-width: 900px) {
     .hero__cover {
-      border: none;
-      border-radius: 0;
-      background: transparent;
       aspect-ratio: auto;
       height: 100%;
       object-fit: cover;
