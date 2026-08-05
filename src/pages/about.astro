@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import arturoAboutImage from '../assets/arturo-about-us.png';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -30,14 +32,12 @@ const description =
     <section class="about-host" aria-labelledby="about-host-heading">
       <div class="about-host__inner">
         <div class="about-host__portrait">
-          <img
+          <Image
             class="about-host__cover"
-            src="/arturo-about-us.png"
+            src={arturoAboutImage}
             alt={site.host.name}
-            width="819"
-            height="1024"
-            decoding="async"
             loading="lazy"
+            decoding="async"
           />
         </div>
         <div class="about-host__copy">

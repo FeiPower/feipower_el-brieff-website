@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import arturoImage from '../assets/arturo-cover.png';
 import { site } from '../config/site';
 
 const HERO_HOOK = 'Entiende lo importante de México y el mundo en 15 minutos.';
@@ -13,14 +15,13 @@ const CTA_SECONDARY = {
 <section class="hero" aria-labelledby="hero-brand">
   <div class="hero__inner">
     <div class="hero__media">
-      <img
+      <Image
         class="hero__cover"
-        src="/arturo-cover.png"
+        src={arturoImage}
         alt="Arturo Salazar, conductor de El Brieff"
-        width="1024"
-        height="1024"
-        decoding="async"
+        loading="eager"
         fetchpriority="high"
+        decoding="async"
         sizes="(min-width: 900px) 50vw, 100vw"
       />
     </div>
