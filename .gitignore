@@ -18,3 +18,5 @@ dist/
 .DS_Store
 Thumbs.db
 *.log
+
+# Cursor App: keep tracked — .impeccable/ and .cursor/plans/
