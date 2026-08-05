@@ -11,6 +11,18 @@ const CTA_SECONDARY = {
 
 <section class="hero" aria-labelledby="hero-brand">
   <div class="hero__inner">
+    <div class="hero__media">
+      <img
+        class="hero__cover"
+        src="/arturo-cover.png"
+        alt="Arturo Salazar, conductor de El Brieff"
+        width="1024"
+        height="1024"
+        decoding="async"
+        fetchpriority="high"
+        sizes="(min-width: 900px) 50vw, 100vw"
+      />
+    </div>
     <div class="hero__copy">
       <h1 class="hero__wordmark" id="hero-brand">
         <span>EL</span>
@@ -31,6 +43,7 @@ const CTA_SECONDARY = {
         <a
           class="hero__cta hero__cta--secondary"
           href={CTA_SECONDARY.href}
+          target="_blank"
           rel="noopener noreferrer"
           data-analytics-event="listen_cta"
           data-analytics-cta-id="abrir_spotify"
@@ -39,17 +52,6 @@ const CTA_SECONDARY = {
           {CTA_SECONDARY.label}
         </a>
       </div>
-    </div>
-    <div class="hero__media">
-      <img
-        class="hero__cover"
-        src="/arturo-cover.png"
-        alt="Arturo Salazar, conductor de El Brieff"
-        width="1024"
-        height="1024"
-        decoding="async"
-        fetchpriority="high"
-      />
     </div>
   </div>
 </section>
@@ -61,14 +63,16 @@ const CTA_SECONDARY = {
     display: flex;
     align-items: center;
     background:
-      radial-gradient(ellipse 80% 60% at 70% 40%, #1a2420 0%, transparent 55%),
+      radial-gradient(ellipse 55% 70% at 28% 50%, #1a2420 0%, transparent 65%),
       var(--primary);
     overflow: hidden;
   }
 
+  /* ---- INNER CONTAINER ---- */
+
   .hero__inner {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse; /* mobile: copy above media (DOM: media first = paints behind) */
     gap: var(--space-xl);
     width: 100%;
     max-width: 72rem;
@@ -80,14 +84,16 @@ const CTA_SECONDARY = {
     .hero__inner {
       flex-direction: row;
       align-items: center;
-      justify-content: space-between;
-      gap: var(--space-xl);
       padding: calc(5rem + var(--space-lg)) var(--space-xl) var(--space-xl);
     }
   }
 
+  /* ---- COPY COLUMN ---- */
+
   .hero__copy {
-    flex: 1 1 48%;
+    position: relative;
+    z-index: 1; /* ensures copy stacks above absolutely-positioned media on desktop */
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -95,12 +101,18 @@ const CTA_SECONDARY = {
     animation: hero-fade-up 0.9s var(--ease-settle) both;
   }
 
+  @media (min-width: 900px) {
+    .hero__copy {
+      max-width: 34rem;
+    }
+  }
+
   .hero__wordmark {
     margin: 0;
     display: flex;
     flex-direction: column;
     font-family: var(--font-display);
-    font-size: clamp(2.75rem, 10vw, 4.5rem);
+    font-size: clamp(2.75rem, 10vw, 5.5rem);
     font-weight: 800;
     line-height: 0.92;
     letter-spacing: 0.1em;
@@ -170,22 +182,46 @@ const CTA_SECONDARY = {
     border-color: var(--ink);
   }
 
+  /* ---- MEDIA PANEL ---- */
+
+  /* Mobile: contained card below copy */
   .hero__media {
-    flex: 1 1 48%;
     width: 100%;
     max-width: 28rem;
     margin-inline: auto;
     animation: hero-settle 1.2s var(--ease-settle) 0.08s both;
   }
 
+  /* Desktop: escape flex flow; bleed to viewport right edge */
   @media (min-width: 900px) {
     .hero__media {
-      margin-inline: auto 0;
-      max-width: min(28rem, 46%);
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 50vw;
+      max-width: none;
+      margin-inline: 0;
+      animation: hero-panel-in 1.6s var(--ease-settle) 0.05s both;
+    }
+
+    /* Gradient fade: blends photo into the dark background at the left edge */
+    .hero__media::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 40%;
+      background: linear-gradient(to right, var(--primary) 0%, transparent 100%);
+      z-index: 1;
+      pointer-events: none;
     }
   }
 
+  /* Mobile: bordered card — full photo visible */
   .hero__cover {
+    display: block;
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
@@ -195,6 +231,21 @@ const CTA_SECONDARY = {
     border-radius: var(--radius-md);
     background: var(--surface-elevated);
   }
+
+  /* Desktop: full-height fill, no box */
+  @media (min-width: 900px) {
+    .hero__cover {
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      aspect-ratio: auto;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+    }
+  }
+
+  /* ---- KEYFRAMES ---- */
 
   @keyframes hero-fade-up {
     from {
@@ -215,6 +266,18 @@ const CTA_SECONDARY = {
     to {
       opacity: 1;
       transform: scale(1) translateY(0);
+    }
+  }
+
+  /* Cinematic entrance for the full-bleed panel */
+  @keyframes hero-panel-in {
+    from {
+      opacity: 0;
+      transform: scale(1.04);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 
