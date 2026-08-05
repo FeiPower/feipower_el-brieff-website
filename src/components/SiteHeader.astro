@@ -1,5 +1,10 @@
 ---
 import { site } from '../config/site';
+
+const pathname = Astro.url.pathname;
+const isHome = pathname === '/';
+const isAbout = pathname.startsWith('/about');
+const isPress = pathname.startsWith('/media-kit');
 ---
 
 <header class="site-header">
@@ -7,22 +12,88 @@ import { site } from '../config/site';
     <a class="site-header__brand" href="/" aria-label={`${site.name} — inicio`}>
       {site.name}
     </a>
-    <nav class="site-header__nav" aria-label="Principal">
-      <a class="site-header__link" href="/">Inicio</a>
+    <button
+      class="site-header__toggle"
+      id="site-nav-toggle"
+      type="button"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="site-nav"
+    >
+      <span class="site-header__toggle-icon" aria-hidden="true"></span>
+    </button>
+    <nav class="site-header__nav" id="site-nav" aria-label="Principal">
+      <a
+        class="site-header__link"
+        href="/"
+        aria-current={isHome ? 'page' : undefined}
+      >Inicio</a>
       <a
         class="site-header__link"
         href="/#escuchar"
         data-analytics-event="listen_cta"
         data-analytics-cta-id="nav_escuchar"
         data-analytics-cta-location="nav"
-      >
-        Escuchar
-      </a>
-      <a class="site-header__link" href="/about">Acerca</a>
-      <a class="site-header__link" href="/media-kit">Prensa</a>
+      >Escuchar</a>
+      <a
+        class="site-header__link"
+        href="/about"
+        aria-current={isAbout ? 'page' : undefined}
+      >Acerca</a>
+      <a
+        class="site-header__link"
+        href="/media-kit"
+        aria-current={isPress ? 'page' : undefined}
+      >Prensa</a>
     </nav>
   </div>
 </header>
+
+<script>
+  const toggle = document.getElementById('site-nav-toggle') as HTMLButtonElement | null;
+  const nav = document.getElementById('site-nav') as HTMLElement | null;
+  const header = toggle?.closest<HTMLElement>('.site-header');
+
+  function openNav(): void {
+    if (!toggle || !header) return;
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Cerrar menú');
+    header.classList.add('site-header--nav-open');
+  }
+
+  function closeNav(): void {
+    if (!toggle || !header) return;
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Abrir menú');
+    header.classList.remove('site-header--nav-open');
+  }
+
+  toggle?.addEventListener('click', () => {
+    toggle.getAttribute('aria-expanded') === 'true' ? closeNav() : openNav();
+  });
+
+  document.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'Escape' && header?.classList.contains('site-header--nav-open')) {
+      closeNav();
+      toggle?.focus();
+    }
+  });
+
+  document.addEventListener('click', (e: MouseEvent) => {
+    if (
+      header?.classList.contains('site-header--nav-open') &&
+      !header.contains(e.target as Node)
+    ) {
+      closeNav();
+    }
+  });
+
+  nav?.addEventListener('click', (e: MouseEvent) => {
+    if ((e.target as HTMLElement).closest('a')) {
+      closeNav();
+    }
+  });
+</script>
 
 <style>
   .site-header {
@@ -47,6 +118,8 @@ import { site } from '../config/site';
     }
   }
 
+  /* ---- BRAND ---- */
+
   .site-header__brand {
     font-family: var(--font-display);
     font-size: 0.875rem;
@@ -56,12 +129,79 @@ import { site } from '../config/site';
     text-decoration: none;
     color: var(--ink);
     opacity: 0.85;
+    flex-shrink: 0;
   }
 
   .site-header__brand:hover {
     opacity: 1;
     text-decoration: none;
   }
+
+  /* ---- TOGGLE BUTTON (mobile only) ---- */
+
+  .site-header__toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    flex-shrink: 0;
+  }
+
+  .site-header__toggle:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  /* Three-bar icon */
+  .site-header__toggle-icon,
+  .site-header__toggle-icon::before,
+  .site-header__toggle-icon::after {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: currentColor;
+    transition:
+      transform 0.2s var(--ease-fade),
+      opacity 0.15s var(--ease-fade);
+  }
+
+  .site-header__toggle-icon {
+    position: relative;
+  }
+
+  .site-header__toggle-icon::before,
+  .site-header__toggle-icon::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .site-header__toggle-icon::before { top: -5px; }
+  .site-header__toggle-icon::after  { top:  5px; }
+
+  /* X state */
+  .site-header--nav-open .site-header__toggle-icon {
+    background: transparent;
+  }
+
+  .site-header--nav-open .site-header__toggle-icon::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  .site-header--nav-open .site-header__toggle-icon::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+  /* ---- DESKTOP NAV ---- */
 
   .site-header__nav {
     display: flex;
@@ -82,5 +222,75 @@ import { site } from '../config/site';
   .site-header__link[aria-current='page'] {
     color: var(--ink);
     text-decoration: none;
+  }
+
+  /* ---- MOBILE NAV (<640px) ---- */
+
+  @media (max-width: 639px) {
+    .site-header__toggle {
+      display: flex;
+    }
+
+    .site-header__nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      padding: var(--space-xs) 0 var(--space-sm);
+      background: var(--primary);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      /* Hidden state */
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-0.25rem);
+      transition:
+        opacity 0.18s var(--ease-fade),
+        transform 0.18s var(--ease-fade),
+        visibility 0s linear 0.18s;
+      pointer-events: none;
+    }
+
+    .site-header--nav-open .site-header__nav {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition:
+        opacity 0.18s var(--ease-fade),
+        transform 0.18s var(--ease-fade),
+        visibility 0s;
+      pointer-events: auto;
+    }
+
+    .site-header__link {
+      padding: 0.875rem var(--space-md);
+      font-size: 0.875rem;
+      letter-spacing: 0.06em;
+      border-radius: 0;
+    }
+
+    .site-header__link:hover {
+      background: var(--surface-elevated);
+    }
+  }
+
+  /* ---- REDUCED MOTION ---- */
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header__toggle-icon,
+    .site-header__toggle-icon::before,
+    .site-header__toggle-icon::after {
+      transition: none;
+    }
+
+    .site-header__nav {
+      transition: none;
+    }
+
+    .site-header--nav-open .site-header__nav {
+      transition: none;
+    }
   }
 </style>
