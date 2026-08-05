@@ -6,18 +6,31 @@ type BaseLayoutProps = {
   title: string;
   description: string;
   canonicalPath?: string;
+  ogType?: 'website' | 'article';
+  ogImagePath?: string;
+  publishedTime?: string | null;
+  modifiedTime?: string | null;
+  robots?: string;
 };
 
 const {
   title,
   description,
   canonicalPath = '/',
+  ogType = 'website',
+  ogImagePath = site.ogImage,
+  publishedTime = null,
+  modifiedTime = null,
+  robots = 'index,follow',
 } = Astro.props as BaseLayoutProps;
 
 const canonicalUrl = new URL(canonicalPath, site.siteUrl).href;
-const ogImageUrl = new URL(site.ogImage, site.siteUrl).href;
+const ogImageUrl = new URL(ogImagePath, site.siteUrl).href;
 const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 const hasGa = typeof gaId === 'string' && gaId.trim().length > 0;
+const pathname = Astro.url.pathname;
+const analyticsEnabled = hasGa && !pathname.startsWith('/admin');
+const debugGa = Astro.url.searchParams.has('debug_ga');
 ---
 
 <!doctype html>
@@ -28,15 +41,25 @@ const hasGa = typeof gaId === 'string' && gaId.trim().length > 0;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content={robots} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:locale" content="es_MX" />
     <meta property="og:site_name" content={site.name} />
+    {
+      publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )
+    }
+    {
+      modifiedTime && (
+        <meta property="article:modified_time" content={modifiedTime} />
+      )
+    }
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -46,26 +69,40 @@ const hasGa = typeof gaId === 'string' && gaId.trim().length > 0;
     <link rel="icon" type="image/png" href={site.ogImage} />
 
     {
-      hasGa && (
+      analyticsEnabled && (
         <>
           <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
           ></script>
-          <script is:inline define:vars={{ gaId }}>
+          <script is:inline define:vars={{ gaId, debugGa }}>
             window.dataLayer = window.dataLayer || [];
             function gtag() {
               dataLayer.push(arguments);
             }
             gtag('js', new Date());
-            gtag('config', gaId);
+            gtag('config', gaId, {
+              anonymize_ip: true,
+              send_page_view: true,
+              cookie_flags: 'SameSite=None;Secure',
+              ...(debugGa ? { debug_mode: true } : {}),
+            });
           </script>
         </>
       )
     }
+    <slot name="head" />
   </head>
   <body>
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <slot />
+    {
+      analyticsEnabled && (
+        <script>
+          import { initAnalyticsClient } from '../scripts/analytics-client.ts';
+          initAnalyticsClient();
+        </script>
+      )
+    }
   </body>
 </html>

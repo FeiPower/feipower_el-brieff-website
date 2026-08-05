@@ -1,0 +1,220 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { env } from 'cloudflare:workers';
+import {
+  ConflictError,
+  EditorialRepository,
+} from '../../../lib/editorial/repository.ts';
+import {
+  UnauthorizedError,
+  resolveAccessIdentity,
+  validateDraftArticleForm,
+  type FieldErrors,
+} from '../../../lib/editorial/validation.ts';
+
+let identityEmail = '';
+let denied = false;
+let denyMessage = '';
+let errors: FieldErrors = {};
+let successMessage = '';
+let createdSlug = '';
+let values = {
+  kind: 'column',
+  status: 'draft',
+  title: '',
+  summary: '',
+  slug: '',
+  bodyMarkdown: '',
+  citationClaim: '',
+  citationExcerpt: '',
+  citationSourceUrl: '',
+};
+
+try {
+  const identity = resolveAccessIdentity(Astro.request, {
+    ACCESS_ALLOWED_EMAILS: env.ACCESS_ALLOWED_EMAILS,
+    EDITORIAL_DEV_ACTOR_EMAIL: env.EDITORIAL_DEV_ACTOR_EMAIL,
+  });
+  identityEmail = identity.email;
+} catch (error) {
+  denied = true;
+  denyMessage =
+    error instanceof UnauthorizedError
+      ? error.message
+      : 'Acceso no autorizado';
+  Astro.response.status = 401;
+}
+
+if (!denied && Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  values = {
+    kind: String(form.get('kind') ?? 'column'),
+    status: String(form.get('status') ?? 'draft'),
+    title: String(form.get('title') ?? ''),
+    summary: String(form.get('summary') ?? ''),
+    slug: String(form.get('slug') ?? ''),
+    bodyMarkdown: String(form.get('bodyMarkdown') ?? ''),
+    citationClaim: String(form.get('citationClaim') ?? ''),
+    citationExcerpt: String(form.get('citationExcerpt') ?? ''),
+    citationSourceUrl: String(form.get('citationSourceUrl') ?? ''),
+  };
+
+  const validated = validateDraftArticleForm(form);
+  if (!validated.ok) {
+    errors = validated.errors;
+    Astro.response.status = 422;
+  } else {
+    try {
+      const repository = new EditorialRepository(env.EDITORIAL_DB);
+      const content = await repository.persistValidatedDraft(
+        identityEmail,
+        validated.value,
+      );
+      createdSlug = content.slug;
+      successMessage = `Borrador guardado (${content.status}). Ya aparece en la bandeja.`;
+      values = {
+        kind: 'column',
+        status: 'draft',
+        title: '',
+        summary: '',
+        slug: '',
+        bodyMarkdown: '',
+        citationClaim: '',
+        citationExcerpt: '',
+        citationSourceUrl: '',
+      };
+    } catch (error) {
+      Astro.response.status = error instanceof ConflictError ? 409 : 422;
+      errors.form =
+        error instanceof ConflictError
+          ? 'Ya existe un contenido con ese slug.'
+          : 'No se pudo guardar el borrador.';
+    }
+  }
+}
+
+const title = 'Nuevo borrador — El Brieff';
+const description = 'Formulario editorial para crear un borrador protegido.';
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/admin/articles/new/">
+  <main id="contenido" class="admin-shell">
+    {
+      denied ? (
+        <section class="admin-panel admin-panel--denied">
+          <h1>No autorizado</h1>
+          <p>{denyMessage}</p>
+        </section>
+      ) : (
+        <>
+          <header class="admin-header">
+            <p class="admin-kicker">Consola editorial</p>
+            <h1>Nuevo borrador</h1>
+            <p class="admin-meta">
+              Sesión: <span>{identityEmail}</span> ·
+              <a href="/admin/">Volver a la bandeja</a>
+            </p>
+          </header>
+
+          {
+            successMessage && (
+              <p class="admin-success" role="status">
+                {successMessage}{' '}
+                {createdSlug && <a href="/admin/">Ver cola</a>}
+              </p>
+            )
+          }
+
+          {
+            errors.form && (
+              <p class="admin-error" role="alert">{errors.form}</p>
+            )
+          }
+
+          <form class="admin-form" method="post" action="/admin/articles/new/">
+            <div class="admin-form__grid">
+              <label class="admin-field">
+                <span>Tipo</span>
+                <select name="kind" required>
+                  <option value="column" selected={values.kind === 'column'}>Columna</option>
+                  <option value="episode" selected={values.kind === 'episode'}>Episodio</option>
+                  <option value="newsletter" selected={values.kind === 'newsletter'}>Newsletter</option>
+                </select>
+                {errors.kind && <small class="admin-error">{errors.kind}</small>}
+              </label>
+
+              <label class="admin-field">
+                <span>Estado</span>
+                <select name="status" required>
+                  <option value="idea" selected={values.status === 'idea'}>Idea</option>
+                  <option value="research" selected={values.status === 'research'}>Research</option>
+                  <option value="draft" selected={values.status === 'draft'}>Draft</option>
+                  <option value="editing" selected={values.status === 'editing'}>Editing</option>
+                  <option value="approved" selected={values.status === 'approved'}>Approved</option>
+                </select>
+                {errors.status && <small class="admin-error">{errors.status}</small>}
+              </label>
+            </div>
+
+            <label class="admin-field">
+              <span>Título</span>
+              <input name="title" type="text" value={values.title} required />
+              {errors.title && <small class="admin-error">{errors.title}</small>}
+            </label>
+
+            <label class="admin-field">
+              <span>Slug</span>
+              <input name="slug" type="text" value={values.slug} required />
+              {errors.slug && <small class="admin-error">{errors.slug}</small>}
+            </label>
+
+            <label class="admin-field">
+              <span>Resumen</span>
+              <textarea name="summary" rows="3" required>{values.summary}</textarea>
+              {errors.summary && <small class="admin-error">{errors.summary}</small>}
+            </label>
+
+            <label class="admin-field">
+              <span>Cuerpo (Markdown)</span>
+              <textarea name="bodyMarkdown" rows="12" required>{values.bodyMarkdown}</textarea>
+              {errors.bodyMarkdown && (
+                <small class="admin-error">{errors.bodyMarkdown}</small>
+              )}
+            </label>
+
+            <fieldset class="admin-fieldset">
+              <legend>Cita de fuente</legend>
+              <label class="admin-field">
+                <span>Afirmación</span>
+                <input name="citationClaim" type="text" value={values.citationClaim} />
+              </label>
+              <label class="admin-field">
+                <span>Extracto</span>
+                <textarea name="citationExcerpt" rows="2">{values.citationExcerpt}</textarea>
+              </label>
+              <label class="admin-field">
+                <span>URL de la fuente</span>
+                <input
+                  name="citationSourceUrl"
+                  type="url"
+                  value={values.citationSourceUrl}
+                />
+              </label>
+              {
+                errors.citations && (
+                  <small class="admin-error">{errors.citations}</small>
+                )
+              }
+            </fieldset>
+
+            <div class="admin-form__actions">
+              <button class="admin-button" type="submit">Guardar borrador</button>
+            </div>
+          </form>
+        </>
+      )
+    }
+  </main>
+</BaseLayout>

@@ -1,11 +1,17 @@
 ---
 import { site } from '../config/site';
 
+type JsonLdProps = {
+  graph?: Record<string, unknown> | Record<string, unknown>[];
+};
+
+const { graph } = Astro.props as JsonLdProps;
+
 const personId = `${site.siteUrl}/#person`;
 const orgId = `${site.siteUrl}/#organization`;
 const imageUrl = new URL(site.ogImage, site.siteUrl).href;
 
-const graph = {
+const defaultGraph = {
   '@context': 'https://schema.org',
   '@graph': [
     {
@@ -24,17 +30,18 @@ const graph = {
       '@id': personId,
       name: site.host.name,
       alternateName: site.host.alternateName,
+      sameAs: [site.social.instagram],
     },
     {
       '@type': 'Organization',
       '@id': orgId,
       name: site.producer.name,
-      url: site.producer.url,
     },
   ],
 };
 
-const jsonLd = JSON.stringify(graph);
+const payload = graph ?? defaultGraph;
+const jsonLd = JSON.stringify(payload);
 ---
 
 <script type="application/ld+json" set:html={jsonLd} />

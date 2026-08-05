@@ -3,7 +3,7 @@ type: Functional Requirement
 title: FR-004 Platform subscribe
 description: El sitio debe ofrecer enlaces claros a las plataformas de escucha del podcast.
 tags: [fr, subscribe, platforms]
-status: draft
+status: implemented
 generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
 verified: { by: human:stakeholder, at: 2026-08-03T21:00:00Z }
 ---

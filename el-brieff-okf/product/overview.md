@@ -35,8 +35,8 @@ Sitio web profesional que proyecta a **El Brieff** como el podcast diario para i
 | Cadencia | Lunes a viernes |
 | Formato | ~15 minutos / episodio |
 | Idioma principal | Español México (`es-MX`) — único en v1 |
-| Hosting interim | Cloudflare Worker [el-brieff.fei-d02.workers.dev](https://el-brieff.fei-d02.workers.dev/) |
-| Analytics | GA4 |
+| Hosting | Cloudflare Worker — prod [el-brieff.strtgy.ai](https://el-brieff.strtgy.ai/); fallback [workers.dev](https://el-brieff.fei-d02.workers.dev/) |
+| Analytics | GA4 `G-P2FHN490KW` — [analytics-ga4.md](../architecture/analytics-ga4.md) |
 | Redes | [Instagram @elbrieff](https://www.instagram.com/elbrieff/) |
 | Prensa / form | To `arturo@strtgy.ai`, Cc `mar@strtgy.ai` |
 | Stack | Astro + Cloudflare Workers |
@@ -49,7 +49,7 @@ Hoy el podcast existe como contenido editorial; falta una **casa digital propia*
 
 1. Landing que comunique marca, propuesta y episodio vigente en el primer viewport.
 2. Escucha / episodios recientes vía embed Spotify (catálogo HTML propio diferido a v1.1).
-3. CTAs claros hacia plataformas de audio y hacia Brieffy.
+3. CTAs claros hacia plataformas de audio (puente Brieffy omitido en v1 — sitio productor offline).
 4. Identidad editorial coherente (claridad, velocidad, confianza).
 5. Media kit profesional en PDF vía **formulario** (prensa / partnerships).
 
@@ -59,7 +59,7 @@ Hoy el podcast existe como contenido editorial; falta una **casa digital propia*
 |---------|-----------|
 | Oyente ocasional | Entender qué es El Brieff y escuchar el episodio de hoy |
 | Oyente recurrente | Suscribirse en su plataforma y volver al show |
-| Profesional / líder | Descubrir Brieffy como extensión de conocimiento corto y preciso |
+| Profesional / líder | (Diferido) Descubrir Brieffy cuando `brieffy.com` vuelva online |
 | Prensa / partner | Completar formulario y obtener media kit PDF |
 
 # Alcance (v1)
@@ -70,15 +70,16 @@ Hoy el podcast existe como contenido editorial; falta una **casa digital propia*
 - Escucha / episodios recientes vía embed Spotify del show ([ADR-0002](../decisions/adr-0002-spotify-official-embed.md))
 - Sobre el programa y el conductor (bio aprobada)
 - Enlaces a plataformas: Spotify, Apple Podcasts, Deezer, iHeart, radio.net ([platforms.md](../architecture/platforms.md))
-- Cruce editorial hacia Brieffy
 - SEO on-page, Open Graph / Twitter Card, JSON-LD, GEO
+- Atribución de productor Brieffy en copy/About (sin CTA/enlace a brieffy.com)
 - Media kit PDF + formulario de solicitud/descarga ([FR-009](../requirements/fr-009-media-kit-pdf.md))
-- GA4
+- GA4 ([NFR-006](../requirements/nfr-006-analytics-ga4.md), [analytics-ga4.md](../architecture/analytics-ga4.md))
 - Diseño responsive
 - Deploy Cloudflare Workers ([deployment.md](../architecture/deployment.md))
 
 ## Fuera de alcance (v1) / diferido
 
+- Cruce / módulo CTA hacia Brieffy ([FR-006](../requirements/fr-006-brieffy-crossover.md), [US-005](../stories/us-005-follow-to-brieffy.md)) — `brieffy.com` offline
 - Catálogo y detalle HTML propios de episodios → **v1.1** (embed Spotify cubre US-001/US-002 en v1)
 - CMS editorial completo con roles multi-autor
 - App nativa o PWA offline-first

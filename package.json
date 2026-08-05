@@ -10,19 +10,24 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "cf:deploy": "rm -f .wrangler/deploy/config.json && wrangler deploy --config wrangler.jsonc",
-    "cf:preview": "rm -f .wrangler/deploy/config.json && wrangler versions upload --config wrangler.jsonc",
-    "deploy": "npm run build && npm run cf:deploy"
+    "cf:deploy": "rm -f .wrangler/deploy/config.json && wrangler deploy --config dist/server/wrangler.json",
+    "cf:preview": "rm -f .wrangler/deploy/config.json && wrangler versions upload --config dist/server/wrangler.json",
+    "deploy": "npm run build && npm run cf:deploy",
+    "media-kit:pdf": "node scripts/media-kit-pdf.mjs",
+    "editorial:typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/**/*.test.ts"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.1.7",
     "@fontsource/caveat": "^5.3.0",
     "@fontsource/montserrat": "^5.3.0",
     "@fontsource/source-sans-3": "^5.3.0",
+    "agents": "^0.20.1",
     "astro": "^7.1.6",
     "wrangler": "^4.118.0"
   },
   "devDependencies": {
+    "playwright": "^1.54.2",
     "typescript": "^7.0.2"
   }
 }

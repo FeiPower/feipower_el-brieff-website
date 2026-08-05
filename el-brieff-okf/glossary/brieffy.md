@@ -18,4 +18,4 @@ sources:
 
 # Notes
 
-En el sitio del podcast, Brieffy aparece como crossover / atribución de producción, no como producto principal del primer viewport.
+En el sitio del podcast, Brieffy aparece como **atribución de producción** (About / copy). El módulo/CTA crossover a `brieffy.com` está **omitido en v1** mientras el sitio productor esté offline ([FR-006](../requirements/fr-006-brieffy-crossover.md)).

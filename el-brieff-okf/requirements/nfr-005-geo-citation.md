@@ -28,7 +28,7 @@ Playbook operativo: [architecture/seo-geo.md](../architecture/seo-geo.md).
 ## Entity clarity
 
 - Nombre de marca consistente: **El Brieff** (podcast) ≠ **Brieffy** (productora) — ver glosario.
-- `Organization` / `PodcastSeries` + `Person` (Arturo Salazar) con `sameAs` a perfiles oficiales (X/Twitter, LinkedIn, plataformas de podcast, Brieffy) cuando existan URLs canónicas.
+- `Organization` / `PodcastSeries` + `Person` (Arturo Salazar) con `sameAs` a perfiles oficiales (X/Twitter, LinkedIn, plataformas de podcast) cuando existan URLs canónicas; Brieffy `sameAs` omitido mientras `brieffy.com` esté offline.
 - Página About con bio, rol y vínculo productor.
 
 ## Extractable answers
@@ -42,7 +42,7 @@ Playbook operativo: [architecture/seo-geo.md](../architecture/seo-geo.md).
 
 - Datos estructurales estables: duración ~15 min, lun–vie, México y el mundo, conductor, productor.
 - Evitar prosa ambigua en bloques citables; preferir enunciados verificables.
-- Enlaces internos a About, episodio vigente y Brieffy (grafo de entidades en-site).
+- Enlaces internos a About y episodio vigente (grafo de entidades en-site); enlace a Brieffy omitido v1.
 
 ## Freshness
 

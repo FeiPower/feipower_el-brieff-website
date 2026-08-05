@@ -24,6 +24,16 @@ cover_composition:
   background: "Carbón verdoso profundo (#121C16), no negro puro"
   wordmark: "Sans geométrica extrabold, blanca, tracking amplio, tres líneas"
   producer_mark: "Brieffy en script/cursive blanco"
+approved_variants:
+  media_kit_cover:
+    status: "approved"
+    source: "src/print/media-kit.html"
+    purpose: "Portada vertical A4 para el kit de prensa"
+    composition: "Lockup EL / BRI / EFF a la izquierda, firma Brieffy arriba y retrato editorial de Arturo a la derecha sobre carbón verdoso"
+    constraints:
+      - "Mantener la paleta, el wordmark apilado y la firma de la portada canónica"
+      - "Usar únicamente retratos editoriales aprobados de Arturo Salazar"
+      - "No reemplaza el asset canónico en plataformas, OG ni hero web"
 
 colors:
   # Extraídos / alineados a elbrieff-cover.png

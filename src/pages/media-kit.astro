@@ -1,0 +1,361 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import PlatformLinks from '../components/PlatformLinks.astro';
+import { site } from '../config/site';
+
+const title = `Media kit — ${site.name} | Prensa`;
+const description =
+  'Solicita el media kit PDF de El Brieff: pitch, bio del conductor, plataformas y contacto de prensa.';
+const emailEnabled = site.features.mediaKitEmailEnabled;
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/media-kit">
+  <SiteHeader />
+  <main id="contenido">
+    <section class="media-kit" aria-labelledby="media-kit-heading">
+      <div class="media-kit__inner">
+        <h1 class="media-kit__brand">{site.name}</h1>
+        <h2 class="media-kit__heading" id="media-kit-heading">Media kit</h2>
+        <p class="media-kit__lede">
+          Solicitar / descargar media kit (PDF) con pitch, bio del conductor,
+          hechos del programa, plataformas y contacto de prensa.
+        </p>
+
+        {
+          !emailEnabled && (
+            <p class="media-kit__notice" role="status">
+              El formulario de solicitud no está disponible por ahora. El envío
+              por correo aún no está habilitado. Vuelve pronto o escribe a{' '}
+              <a href={`mailto:${site.press.to}`}>{site.press.to}</a>.
+            </p>
+          )
+        }
+
+        <form
+          class="media-kit__form"
+          id="media-kit-form"
+          novalidate
+          aria-describedby={!emailEnabled ? 'media-kit-disabled-hint' : undefined}
+        >
+          {
+            !emailEnabled && (
+              <p id="media-kit-disabled-hint" class="visually-hidden">
+                Formulario deshabilitado hasta que el servicio de correo esté
+                listo.
+              </p>
+            )
+          }
+
+          <div class="media-kit__field">
+            <label for="mk-name">Nombre</label>
+            <input
+              id="mk-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+              maxlength="120"
+              disabled={!emailEnabled}
+            />
+          </div>
+
+          <div class="media-kit__field">
+            <label for="mk-email">Email</label>
+            <input
+              id="mk-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              maxlength="200"
+              disabled={!emailEnabled}
+            />
+          </div>
+
+          <div class="media-kit__field">
+            <label for="mk-org">Organización (opcional)</label>
+            <input
+              id="mk-org"
+              name="organization"
+              type="text"
+              autocomplete="organization"
+              maxlength="200"
+              disabled={!emailEnabled}
+            />
+          </div>
+
+          <div class="media-kit__field">
+            <label for="mk-reason">Motivo (opcional)</label>
+            <select id="mk-reason" name="reason" disabled={!emailEnabled}>
+              <option value="">Selecciona…</option>
+              <option value="prensa">Prensa</option>
+              <option value="partnership">Partnership</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="media-kit__hp" aria-hidden="true">
+            <label for="mk-website">Website</label>
+            <input
+              id="mk-website"
+              name="website"
+              type="text"
+              tabindex="-1"
+              autocomplete="off"
+              disabled={!emailEnabled}
+            />
+          </div>
+
+          <p class="media-kit__status" id="media-kit-status" role="status" hidden></p>
+
+          <button
+            class="media-kit__submit"
+            type="submit"
+            disabled={!emailEnabled}
+          >
+            Solicitar media kit
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <PlatformLinks heading="Plataformas" ctaLocation="media_kit" />
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<script define:vars={{ emailEnabled }}>
+  import {
+    trackMediaKitDownload,
+    trackMediaKitFormStart,
+    trackMediaKitSubmit,
+    trackMediaKitSubmitError,
+  } from '../lib/analytics/media-kit.ts';
+
+  const form = document.getElementById('media-kit-form');
+  const statusEl = document.getElementById('media-kit-status');
+  let formStartTracked = false;
+
+  function showStatus(message, isError = false) {
+    if (!(statusEl instanceof HTMLElement)) return;
+    statusEl.hidden = false;
+    statusEl.textContent = message;
+    statusEl.dataset.state = isError ? 'error' : 'ok';
+  }
+
+  if (emailEnabled && form instanceof HTMLFormElement) {
+    form.addEventListener(
+      'focusin',
+      () => {
+        if (formStartTracked) return;
+        formStartTracked = true;
+        trackMediaKitFormStart();
+      },
+      { once: true },
+    );
+  }
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!emailEnabled || !(form instanceof HTMLFormElement)) {
+      showStatus('El formulario no está disponible por ahora.', true);
+      return;
+    }
+
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get('name') ?? '').trim(),
+      email: String(data.get('email') ?? '').trim(),
+      organization: String(data.get('organization') ?? '').trim() || undefined,
+      reason: String(data.get('reason') ?? '').trim() || undefined,
+      website: String(data.get('website') ?? ''),
+    };
+
+    showStatus('Enviando…');
+
+    try {
+      const response = await fetch('/api/media-kit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await response.json();
+
+      if (!result.ok || !result.downloadUrl) {
+        const messages = {
+          validation: 'Revisa nombre y email e inténtalo de nuevo.',
+          honeypot: 'No se pudo completar la solicitud.',
+          rate_limit: 'Demasiadas solicitudes. Intenta más tarde.',
+          email_failed: 'No se pudo enviar el aviso. Intenta más tarde.',
+          disabled: 'El formulario no está disponible por ahora.',
+        };
+        trackMediaKitSubmitError(result.error);
+        showStatus(
+          messages[result.error] ?? 'No se pudo completar la solicitud.',
+          true,
+        );
+        return;
+      }
+
+      trackMediaKitSubmit(payload.reason);
+      trackMediaKitDownload();
+      showStatus('Listo. Descargando el media kit…');
+      window.location.assign(result.downloadUrl);
+    } catch {
+      trackMediaKitSubmitError('network');
+      showStatus('Error de red. Intenta de nuevo.', true);
+    }
+  });
+</script>
+
+<style>
+  .media-kit {
+    padding: calc(4.5rem + var(--space-lg)) var(--space-md) var(--space-xl);
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 70% 45% at 80% 10%, #1a2420 0%, transparent 55%),
+      var(--primary);
+  }
+
+  @media (min-width: 768px) {
+    .media-kit {
+      padding: calc(5rem + var(--space-lg)) var(--space-xl) var(--space-xl);
+    }
+  }
+
+  .media-kit__inner {
+    max-width: 32rem;
+    margin: 0 auto;
+  }
+
+  .media-kit__brand {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .media-kit__heading {
+    margin: 0 0 var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .media-kit__lede {
+    margin: 0 0 var(--space-lg);
+    color: var(--muted);
+  }
+
+  .media-kit__notice {
+    margin: 0 0 var(--space-lg);
+    padding: var(--space-md) 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+  }
+
+  .media-kit__notice a {
+    color: var(--ink);
+  }
+
+  .media-kit__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .media-kit__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .media-kit__field label {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .media-kit__field input,
+  .media-kit__field select {
+    min-height: 2.75rem;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface-elevated);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+  }
+
+  .media-kit__field input:disabled,
+  .media-kit__field select:disabled,
+  .media-kit__submit:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  .media-kit__hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .media-kit__status {
+    margin: 0;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  .media-kit__status[data-state='error'] {
+    color: var(--ink);
+  }
+
+  .media-kit__submit {
+    align-self: flex-start;
+    min-height: 2.75rem;
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--tertiary);
+    background: var(--tertiary);
+    color: var(--ink-on-light);
+    cursor: pointer;
+  }
+
+  .media-kit__submit:hover:not(:disabled) {
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

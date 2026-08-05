@@ -1,0 +1,141 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { site } from '../../config/site';
+import { NotFoundError } from '../../lib/editorial/repository.ts';
+import { getEditorialRepository } from '../../lib/editorial/runtime.ts';
+import {
+  articleCanonicalPath,
+  buildArticleJsonLd,
+  isValidArticleForSeo,
+  markdownToSafeParagraphHtml,
+} from '../../lib/editorial/seo.ts';
+
+const slug = Astro.params.slug;
+if (!slug) {
+  return Astro.redirect('/opinion/');
+}
+
+const repository = getEditorialRepository();
+if (!repository) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+let content;
+try {
+  content = await repository.getContentItemBySlug(slug);
+} catch (error) {
+  if (error instanceof NotFoundError) {
+    return new Response(null, { status: 404, statusText: 'Not Found' });
+  }
+  throw error;
+}
+
+if (!isValidArticleForSeo(content)) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const citations = await repository.listCitations(content.id);
+const canonicalPath = articleCanonicalPath(content.slug);
+const jsonLd = buildArticleJsonLd({
+  content,
+  authorName: site.host.name,
+});
+const bodyHtml = markdownToSafeParagraphHtml(content.bodyMarkdown);
+const publishedLabel = content.publishedAt
+  ? new Date(content.publishedAt).toLocaleDateString('es-MX', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  : '';
+---
+
+<BaseLayout
+  title={`${content.title} — El Brieff`}
+  description={content.summary}
+  canonicalPath={canonicalPath}
+  ogType="article"
+  publishedTime={content.publishedAt}
+  modifiedTime={content.updatedAt}
+>
+  <JsonLd slot="head" graph={jsonLd} />
+  <SiteHeader />
+  <main id="contenido" class="admin-shell article">
+    <article>
+      <header class="admin-header">
+        <p class="admin-kicker">Opinión</p>
+        <h1>{content.title}</h1>
+        <p class="byline">
+          Por <span>{site.host.name}</span>
+          {
+            content.publishedAt && (
+              <>
+                {' · '}
+                <time datetime={content.publishedAt}>{publishedLabel}</time>
+              </>
+            )
+          }
+        </p>
+        <p class="lede">{content.summary}</p>
+      </header>
+
+      <div class="article-body" set:html={bodyHtml} />
+
+      {
+        citations.length > 0 && (
+          <section class="article-sources" aria-labelledby="fuentes">
+            <h2 id="fuentes">Fuentes</h2>
+            <ul>
+              {citations.map((citation) => (
+                <li>
+                  <p>{citation.claim}</p>
+                  <p class="admin-meta">{citation.excerpt}</p>
+                  <a href={citation.sourceUrl} rel="noopener noreferrer">
+                    {citation.sourceUrl}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </article>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .byline,
+  .lede {
+    color: var(--muted);
+  }
+
+  .article-body {
+    margin-top: var(--space-xl);
+    display: grid;
+    gap: var(--space-md);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .article-sources {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border);
+  }
+
+  .article-sources h2 {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+  }
+
+  .article-sources ul {
+    padding-left: 1.1rem;
+    color: var(--muted);
+  }
+</style>

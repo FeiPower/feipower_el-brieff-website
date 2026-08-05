@@ -3,7 +3,7 @@ type: Functional Requirement
 title: FR-005 About host
 description: Página o sección Sobre el programa y el conductor Arturo Salazar.
 tags: [fr, about, host]
-status: draft
+status: implemented
 generated: { by: agent/composer, at: 2026-08-03T20:00:00Z }
 verified: { by: human:stakeholder, at: 2026-08-03T21:00:00Z }
 ---

@@ -1,0 +1,233 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { env } from 'cloudflare:workers';
+import {
+  ConflictError,
+  EditorialRepository,
+  NotFoundError,
+} from '../../lib/editorial/repository.ts';
+import {
+  ALLOWED_TRANSITIONS,
+  UnauthorizedError,
+  assertEditorialTransition,
+  ConflictStateError,
+  resolveAccessIdentity,
+} from '../../lib/editorial/validation.ts';
+import {
+  parseEditorialStatus,
+  type ContentItem,
+  type EditorialStatus,
+} from '../../lib/editorial/contracts.ts';
+
+let identityEmail = '';
+let denied = false;
+let denyMessage = '';
+let queue: ContentItem[] = [];
+let actionMessage = '';
+let actionError = '';
+
+try {
+  const identity = resolveAccessIdentity(Astro.request, {
+    ACCESS_ALLOWED_EMAILS: env.ACCESS_ALLOWED_EMAILS,
+    EDITORIAL_DEV_ACTOR_EMAIL: env.EDITORIAL_DEV_ACTOR_EMAIL,
+  });
+  identityEmail = identity.email;
+} catch (error) {
+  denied = true;
+  denyMessage =
+    error instanceof UnauthorizedError
+      ? error.message
+      : 'Acceso no autorizado';
+  Astro.response.status = 401;
+}
+
+const repository = denied
+  ? null
+  : new EditorialRepository(env.EDITORIAL_DB);
+
+if (!denied && repository && Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  const id = String(form.get('id') ?? '');
+  const toRaw = String(form.get('to') ?? '');
+  try {
+    const toStatus = parseEditorialStatus(toRaw);
+    const current = await repository.getContentItemById(id);
+    assertEditorialTransition(current.status, toStatus);
+    await repository.updateContentItem(
+      id,
+      { status: toStatus },
+      identityEmail,
+    );
+    actionMessage = `Transición aplicada: ${current.slug} → ${toStatus}`;
+  } catch (error) {
+    Astro.response.status =
+      error instanceof NotFoundError
+        ? 404
+        : error instanceof ConflictStateError || error instanceof ConflictError
+          ? 409
+          : 422;
+    actionError =
+      error instanceof Error ? error.message : 'No se pudo actualizar el estado';
+  }
+}
+
+if (!denied && repository) {
+  try {
+    queue = await repository.listEditorialQueue(50);
+  } catch {
+    actionError = actionError || 'No se pudo cargar la cola editorial';
+  }
+}
+
+const title = 'Consola editorial — El Brieff';
+const description = 'Bandeja editorial privada para crear y revisar contenido.';
+
+function nextStatuses(status: EditorialStatus): EditorialStatus[] {
+  return ALLOWED_TRANSITIONS[status] ?? [];
+}
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/admin/">
+  <main id="contenido" class="admin-shell">
+    {
+      denied ? (
+        <section class="admin-panel admin-panel--denied" aria-labelledby="admin-denied">
+          <p class="admin-kicker">Acceso restringido</p>
+          <h1 id="admin-denied">No autorizado</h1>
+          <p>{denyMessage}</p>
+          <ol class="admin-checklist">
+            <li>Crear aplicación Cloudflare Access para el hostname de El Brieff.</li>
+            <li>Proteger la ruta <code>/admin*</code> con política Zero Trust.</li>
+            <li>Permitir solo el correo del owner/editor en la allowlist.</li>
+            <li>Confirmar header <code>Cf-Access-Authenticated-User-Email</code>.</li>
+            <li>Configurar <code>ACCESS_ALLOWED_EMAILS</code> en el Worker (sin secretos de proveedor).</li>
+          </ol>
+        </section>
+      ) : (
+        <>
+          <header class="admin-header">
+            <p class="admin-kicker">Consola editorial</p>
+            <h1>Bandeja de revisión</h1>
+            <p class="admin-meta">
+              Sesión: <span>{identityEmail}</span>
+            </p>
+          </header>
+
+          {
+            actionMessage && (
+              <p class="admin-success" role="status">{actionMessage}</p>
+            )
+          }
+          {
+            actionError && (
+              <p class="admin-error" role="alert">{actionError}</p>
+            )
+          }
+
+          <section class="admin-panel" aria-labelledby="admin-queue">
+            <div class="admin-panel__head">
+              <h2 id="admin-queue">Cola editorial</h2>
+              <a class="admin-button" href="/admin/articles/new/">Nuevo borrador</a>
+            </div>
+            {
+              queue.length === 0 ? (
+                <p class="admin-empty">
+                  Aún no hay ítems en la cola. Crea un borrador para iniciar el ciclo
+                  idea → research → draft → editing → approved.
+                </p>
+              ) : (
+                <ul class="admin-queue">
+                  {queue.map((item) => (
+                    <li class="admin-queue__item">
+                      <div>
+                        <p class="admin-kicker">
+                          {item.kind} · {item.status}
+                        </p>
+                        <h3>{item.title}</h3>
+                        <p class="admin-meta">
+                          <code>{item.slug}</code>
+                          {item.status === 'published' || item.status === 'syndicated' ? (
+                            <>
+                              {' · '}
+                              <a href={`/opinion/${item.slug}/`}>Ver público</a>
+                            </>
+                          ) : null}
+                        </p>
+                      </div>
+                      {
+                        nextStatuses(item.status).length > 0 && (
+                          <div class="admin-queue__actions">
+                            {nextStatuses(item.status).map((to) => (
+                              <form method="post" action="/admin/">
+                                <input type="hidden" name="id" value={item.id} />
+                                <input type="hidden" name="to" value={to} />
+                                <button class="admin-button admin-button--ghost" type="submit">
+                                  → {to}
+                                </button>
+                              </form>
+                            ))}
+                          </div>
+                        )
+                      }
+                    </li>
+                  ))}
+                </ul>
+              )
+            }
+          </section>
+
+          <section class="admin-panel" aria-labelledby="admin-access">
+            <h2 id="admin-access">Checklist Cloudflare Access</h2>
+            <ol class="admin-checklist">
+              <li>Política Access activa en staging/producción para <code>/admin*</code>.</li>
+              <li>Allowlist de correo alineada con <code>ACCESS_ALLOWED_EMAILS</code>.</li>
+              <li>Sin contraseñas propias ni secretos de proveedor en el cliente.</li>
+              <li>En local, usar solo <code>EDITORIAL_DEV_ACTOR_EMAIL</code> (mock documentado).</li>
+            </ol>
+          </section>
+        </>
+      )
+    }
+  </main>
+</BaseLayout>
+
+<style>
+  .admin-queue {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .admin-queue__item {
+    display: grid;
+    gap: var(--space-sm);
+    padding-block: var(--space-md);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  }
+
+  .admin-queue__item:first-child {
+    border-top: 0;
+  }
+
+  .admin-queue__item h3 {
+    margin: 0.25rem 0;
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+  }
+
+  .admin-queue__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .admin-button--ghost {
+    background: transparent;
+    border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+    color: var(--accent);
+  }
+</style>

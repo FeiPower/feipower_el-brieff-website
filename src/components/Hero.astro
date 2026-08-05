@@ -19,13 +19,22 @@ const CTA_SECONDARY = {
       </h1>
       <p class="hero__lede">{HERO_LEDE}</p>
       <div class="hero__ctas">
-        <a class="hero__cta hero__cta--primary" href={CTA_PRIMARY.href}>
+        <a
+          class="hero__cta hero__cta--primary"
+          href={CTA_PRIMARY.href}
+          data-analytics-event="listen_cta"
+          data-analytics-cta-id="escuchar_ahora"
+          data-analytics-cta-location="hero"
+        >
           {CTA_PRIMARY.label}
         </a>
         <a
           class="hero__cta hero__cta--secondary"
           href={CTA_SECONDARY.href}
           rel="noopener noreferrer"
+          data-analytics-event="listen_cta"
+          data-analytics-cta-id="abrir_spotify"
+          data-analytics-cta-location="hero"
         >
           {CTA_SECONDARY.label}
         </a>
@@ -34,10 +43,10 @@ const CTA_SECONDARY = {
     <div class="hero__media">
       <img
         class="hero__cover"
-        src={site.ogImage}
-        alt="Portada de El Brieff: wordmark EL BRI EFF y Arturo Salazar"
-        width="502"
-        height="499"
+        src="/arturo-cover.png"
+        alt="Arturo Salazar, conductor de El Brieff"
+        width="1024"
+        height="1024"
         decoding="async"
         fetchpriority="high"
       />

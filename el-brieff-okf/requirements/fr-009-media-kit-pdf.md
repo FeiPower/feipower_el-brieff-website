@@ -3,7 +3,7 @@ type: Functional Requirement
 title: FR-009 Media kit PDF
 description: Media kit profesional de El Brieff en PDF, accesible tras completar un formulario en el sitio.
 tags: [fr, media-kit, press, pdf, form]
-status: draft
+status: partial
 generated: { by: agent/composer, at: 2026-08-03T20:35:00Z }
 verified: { by: human:stakeholder, at: 2026-08-03T21:00:00Z }
 ---

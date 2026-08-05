@@ -1,0 +1,354 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import PlatformLinks from '../components/PlatformLinks.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { site } from '../config/site';
+
+const title = `Acerca de ${site.name} — ${site.host.name}`;
+const description =
+  'Conoce El Brieff y a Arturo Salazar (@elchearturo): podcast diario de ~15 minutos sobre México y el mundo, lun–vie.';
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/about">
+  <JsonLd />
+  <SiteHeader />
+  <main id="contenido">
+    <section class="about-hero" aria-labelledby="about-brand">
+      <div class="about-hero__inner">
+        <p class="about-hero__eyebrow">Acerca de</p>
+        <h1 class="about-hero__wordmark" id="about-brand">
+          <span>EL</span>
+          <span>BRI</span>
+          <span>EFF</span>
+        </h1>
+        <p class="about-hero__pitch">{site.pitch}</p>
+      </div>
+    </section>
+
+    <section class="about-host" aria-labelledby="about-host-heading">
+      <div class="about-host__inner">
+        <div class="about-host__portrait">
+          <img
+            class="about-host__cover"
+            src="/arturo-about-us.png"
+            alt={site.host.name}
+            width="819"
+            height="1024"
+            decoding="async"
+          />
+        </div>
+        <div class="about-host__copy">
+          <h2 class="about-host__heading" id="about-host-heading">
+            {site.host.name}
+          </h2>
+          <p class="about-host__handle">{site.host.alternateName}</p>
+          <p class="about-host__bio">{site.host.bioLong}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-facts" aria-labelledby="about-facts-heading">
+      <div class="about-facts__inner">
+        <h2 class="about-facts__heading" id="about-facts-heading">Hechos</h2>
+        <dl class="about-facts__list">
+          <div class="about-facts__row">
+            <dt>Formato</dt>
+            <dd>~15 minutos, lunes a viernes</dd>
+          </div>
+          <div class="about-facts__row">
+            <dt>Idioma</dt>
+            <dd>{site.locale}</dd>
+          </div>
+          <div class="about-facts__row">
+            <dt>Enfoque</dt>
+            <dd>México y el mundo</dd>
+          </div>
+          <div class="about-facts__row">
+            <dt>Producción</dt>
+            <dd>{site.producer.name}</dd>
+          </div>
+          <div class="about-facts__row">
+            <dt>Instagram</dt>
+            <dd>
+              <a
+                href={site.social.instagram}
+                rel="noopener noreferrer"
+                data-analytics-event="social_outbound"
+                data-analytics-network="instagram"
+                data-analytics-cta-location="about"
+              >
+                @elbrieff
+              </a>
+            </dd>
+          </div>
+        </dl>
+        <p class="about-facts__producer">
+          Producción por <span class="about-facts__producer-name">{site.producer.name}</span>
+        </p>
+      </div>
+    </section>
+
+    <PlatformLinks heading="Escúchalo en" ctaLocation="about" />
+
+    <section class="about-cta" aria-labelledby="about-cta-heading">
+      <div class="about-cta__inner">
+        <h2 class="about-cta__heading" id="about-cta-heading">Escuchar ahora</h2>
+        <p class="about-cta__lede">
+          Reproduce el episodio más reciente en Spotify.
+        </p>
+        <a
+          class="about-cta__link"
+          href="/#escuchar"
+          data-analytics-event="listen_cta"
+          data-analytics-cta-id="escuchar_ahora"
+          data-analytics-cta-location="about"
+        >
+          Ir a Escuchar
+        </a>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .about-hero {
+    padding: calc(4.5rem + var(--space-lg)) var(--space-md) var(--space-xl);
+    background:
+      radial-gradient(ellipse 70% 50% at 30% 20%, #1a2420 0%, transparent 55%),
+      var(--primary);
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (min-width: 768px) {
+    .about-hero {
+      padding: calc(5rem + var(--space-lg)) var(--space-xl) var(--space-xl);
+    }
+  }
+
+  .about-hero__inner {
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .about-hero__eyebrow {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .about-hero__wordmark {
+    margin: 0 0 var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 8vw, 3.75rem);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .about-hero__pitch {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  .about-host {
+    padding: var(--space-xl) var(--space-md);
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (min-width: 768px) {
+    .about-host {
+      padding: var(--space-xl);
+    }
+  }
+
+  .about-host__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 800px) {
+    .about-host__inner {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  .about-host__portrait {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 16rem;
+  }
+
+  .about-host__cover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center top;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface-elevated);
+  }
+
+  .about-host__copy {
+    flex: 1 1 auto;
+  }
+
+  .about-host__heading {
+    margin: 0 0 var(--space-xs);
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .about-host__handle {
+    margin: 0 0 var(--space-lg);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+
+  .about-host__bio {
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+  .about-facts {
+    padding: var(--space-xl) var(--space-md);
+    border-bottom: 1px solid var(--border);
+  }
+
+  @media (min-width: 768px) {
+    .about-facts {
+      padding: var(--space-xl);
+    }
+  }
+
+  .about-facts__inner {
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .about-facts__heading {
+    margin: 0 0 var(--space-lg);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .about-facts__list {
+    margin: 0;
+  }
+
+  .about-facts__row {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-facts__row dt {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .about-facts__row dd {
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .about-facts__row a {
+    color: var(--ink);
+  }
+
+  .about-facts__producer {
+    margin: var(--space-lg) 0 0;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  .about-facts__producer-name {
+    font-family: var(--font-script);
+    font-size: 1.25rem;
+    color: var(--ink);
+  }
+
+  .about-cta {
+    padding: var(--space-xl) var(--space-md) calc(var(--space-xl) * 1.5);
+    border-top: 1px solid var(--border);
+  }
+
+  .about-cta__inner {
+    max-width: 40rem;
+    margin: 0 auto;
+  }
+
+  .about-cta__heading {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .about-cta__lede {
+    margin: 0 0 var(--space-lg);
+    color: var(--muted);
+  }
+
+  .about-cta__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    padding: 0.75rem 1.25rem;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    background: var(--tertiary);
+    color: var(--ink-on-light);
+    border: 1px solid var(--tertiary);
+  }
+
+  .about-cta__link:hover {
+    background: transparent;
+    color: var(--ink);
+    text-decoration: none;
+  }
+</style>
