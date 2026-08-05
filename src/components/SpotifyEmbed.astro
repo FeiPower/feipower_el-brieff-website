@@ -11,7 +11,6 @@ const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm
   <div class="spotify-embed__inner">
     <h2 class="spotify-embed__heading" id="escuchar-heading">{LISTEN_HEADING}</h2>
     <iframe
-      style="border-radius:12px"
       src={embedSrc}
       width="100%"
       height={site.spotify.embedHeight}
@@ -48,6 +47,10 @@ const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm
   .spotify-embed__inner {
     max-width: 52rem;
     margin: 0 auto;
+  }
+
+  .spotify-embed__inner iframe {
+    border-radius: var(--radius-md);
   }
 
   .spotify-embed__heading {

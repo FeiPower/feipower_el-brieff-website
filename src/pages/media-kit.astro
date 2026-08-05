@@ -16,8 +16,7 @@ const emailEnabled = site.features.mediaKitEmailEnabled;
   <main id="contenido">
     <section class="media-kit" aria-labelledby="media-kit-heading">
       <div class="media-kit__inner">
-        <h1 class="media-kit__brand">{site.name}</h1>
-        <h2 class="media-kit__heading" id="media-kit-heading">Media kit</h2>
+        <h1 class="media-kit__heading" id="media-kit-heading">Media kit</h1>
         <p class="media-kit__lede">
           Solicitar / descargar media kit (PDF) con pitch, bio del conductor,
           hechos del programa, plataformas y contacto de prensa.
@@ -228,16 +227,6 @@ const emailEnabled = site.features.mediaKitEmailEnabled;
   .media-kit__inner {
     max-width: 32rem;
     margin: 0 auto;
-  }
-
-  .media-kit__brand {
-    margin: 0 0 var(--space-sm);
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
   }
 
   .media-kit__heading {

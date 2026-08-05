@@ -19,7 +19,6 @@ const description =
   <main id="contenido">
     <section class="about-hero" aria-labelledby="about-brand">
       <div class="about-hero__inner">
-        <p class="about-hero__eyebrow">Acerca de</p>
         <h1 class="about-hero__wordmark" id="about-brand" aria-label="El Brieff">
           <span aria-hidden="true">EL</span>
           <span aria-hidden="true">BRI</span>
@@ -60,7 +59,7 @@ const description =
           </div>
           <div class="about-facts__row">
             <dt>Idioma</dt>
-            <dd>{site.locale}</dd>
+            <dd>Español (México)</dd>
           </div>
           <div class="about-facts__row">
             <dt>Enfoque</dt>
@@ -133,16 +132,6 @@ const description =
   .about-hero__inner {
     max-width: 40rem;
     margin: 0 auto;
-  }
-
-  .about-hero__eyebrow {
-    margin: 0 0 var(--space-sm);
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
   }
 
   .about-hero__wordmark {
@@ -352,5 +341,10 @@ const description =
     background: transparent;
     color: var(--ink);
     text-decoration: none;
+  }
+
+  .about-cta__link:focus-visible {
+    outline: 2px solid var(--tertiary);
+    outline-offset: 3px;
   }
 </style>
