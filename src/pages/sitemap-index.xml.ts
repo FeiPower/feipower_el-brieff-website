@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
-import { env } from 'cloudflare:workers';
 import { site } from '../config/site';
-import { EditorialRepository } from '../lib/editorial/repository.ts';
+import { getEditorialRepository } from '../lib/editorial/runtime.ts';
 import {
   articleCanonicalUrl,
   escapeXml,
@@ -11,10 +10,10 @@ import {
 export const prerender = false;
 
 export const GET: APIRoute = async () => {
-  const repository = new EditorialRepository(env.EDITORIAL_DB);
-  const articles = (await repository.listPublishedByKind('column')).filter(
-    isValidArticleForSeo,
-  );
+  const repository = getEditorialRepository();
+  const articles = repository
+    ? (await repository.listPublishedByKind('column')).filter(isValidArticleForSeo)
+    : [];
 
   const staticPaths = ['/', '/about/', '/media-kit/', '/opinion/'];
   const urls = [

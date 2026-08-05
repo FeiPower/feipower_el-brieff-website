@@ -76,6 +76,7 @@ Equivalent CI split: `npm run build` then `npm run cf:deploy`.
 - Formulario media kit: procesar en el mismo Worker (o binding) — ver [media-kit.md](media-kit.md).
 - Stack preferido: static/SSG + Workers Static Assets (o adapter Cloudflare) — [ADR-0001](../decisions/adr-0001-static-first-marketing-site.md).
 - workers.dev sigue vivo como fallback/ops; no es el host canónico.
+- Bindings editoriales (D1/R2/Vectorize/Queues/Workflows/DO) **no** van en `wrangler.jsonc` de producción hasta Approval Gates; el marketing deploy usa EMAIL + RATE_LIMIT. Sitemap/feeds degradan sin D1.
 
 # Ops checklist (launch)
 

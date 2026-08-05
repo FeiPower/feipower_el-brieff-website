@@ -5,9 +5,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import JsonLd from '../../components/JsonLd.astro';
-import { env } from 'cloudflare:workers';
 import { site } from '../../config/site';
-import { EditorialRepository, NotFoundError } from '../../lib/editorial/repository.ts';
+import { NotFoundError } from '../../lib/editorial/repository.ts';
+import { getEditorialRepository } from '../../lib/editorial/runtime.ts';
 import {
   articleCanonicalPath,
   buildArticleJsonLd,
@@ -20,7 +20,10 @@ if (!slug) {
   return Astro.redirect('/opinion/');
 }
 
-const repository = new EditorialRepository(env.EDITORIAL_DB);
+const repository = getEditorialRepository();
+if (!repository) {
+  return new Response(null, { status: 404, statusText: 'Not Found' });
+}
 
 let content;
 try {
