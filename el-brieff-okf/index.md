@@ -30,6 +30,7 @@ Fuente semilla: [brieff.md](../brieff.md). Especificación OKF: [Knowledge Catal
 * [Google Stitch UI](architecture/stitch-ui.md) — Prototipos UI aprobados (fuente visual v1).
 * [Spotify embed](architecture/spotify-embed.md) — Embed oficial Spotify (v1).
 * [SEO + GEO](architecture/seo-geo.md) — Playbook SEO Google y Generative Engine Optimization.
+* [Analytics GA4](architecture/analytics-ga4.md) — Estrategia de tracking Google Analytics 4.
 * [Media kit](architecture/media-kit.md) — Media kit PDF + formulario.
 
 # Decisions

@@ -2,132 +2,361 @@
 <html lang="es-MX">
   <head>
     <meta charset="utf-8" />
-    <title>El Brieff — Media Kit</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>El Brieff — Kit de prensa</title>
     <style>
+      @font-face {
+        font-family: 'Montserrat';
+        src: url('../../public/media-kit/fonts/montserrat-700.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Montserrat';
+        src: url('../../public/media-kit/fonts/montserrat-800.woff2') format('woff2');
+        font-weight: 800;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Source Sans 3';
+        src: url('../../public/media-kit/fonts/source-sans-3-400.woff2') format('woff2');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Source Sans 3';
+        src: url('../../public/media-kit/fonts/source-sans-3-600.woff2') format('woff2');
+        font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Caveat';
+        src: url('../../public/media-kit/fonts/caveat-500.woff2') format('woff2');
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+      }
+
       @page {
         size: A4;
-        margin: 18mm 16mm 20mm;
+        margin: 0;
       }
 
       :root {
         --primary: #121c16;
         --ink: #ffffff;
-        --muted: #9aa3a0;
+        --muted: #a1aaa6;
         --border: #2a3530;
         --surface-elevated: #1a2420;
         --tertiary: #78a08a;
         --ink-on-light: #121c16;
         --surface-light: #f5f6f7;
+        --surface-page: #ffffff;
+        --muted-on-light: #4b5752;
+        --border-on-light: #cfd4d1;
+        --space-xs: 4px;
+        --space-sm: 8px;
+        --space-md: 16px;
+        --space-lg: 24px;
+        --space-xl: 32px;
+        --page-inline: 16mm;
+        --page-block: 18mm;
+        --z-content: 1;
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        background: #dfe3e1;
+      }
+
       body {
         margin: 0;
+        padding-bottom: env(safe-area-inset-bottom);
         font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
         font-size: 11pt;
-        line-height: 1.45;
+        line-height: 1.5;
         color: var(--ink-on-light);
-        background: var(--surface-light);
+        background: transparent;
       }
 
       h1,
       h2,
-      .wordmark {
+      h3,
+      .brand-name,
+      .page-label {
         font-family: 'Montserrat', 'Arial Narrow', sans-serif;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
       }
 
       .page {
-        page-break-after: always;
-        min-height: 240mm;
-        padding: 8mm 0;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        width: 210mm;
+        min-height: 297mm;
+        margin: var(--space-xl) auto;
+        padding: var(--page-block) var(--page-inline) 14mm;
+        background: var(--surface-page);
+        border: 1px solid var(--border-on-light);
       }
 
-      .page:last-of-type {
-        page-break-after: auto;
+      .page__header,
+      .page__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-md);
+      }
+
+      .page__header {
+        padding-bottom: var(--space-lg);
+        border-bottom: 1px solid var(--border-on-light);
+      }
+
+      .page__footer {
+        padding-top: var(--space-md);
+        border-top: 1px solid var(--border-on-light);
+        color: var(--muted-on-light);
+        font-size: 8pt;
+      }
+
+      .brand-name,
+      .page-label {
+        margin: 0;
+        font-size: 8pt;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .page__content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xl);
+        padding: var(--space-xl) 0;
       }
 
       .cover {
+        grid-template-rows: auto 1fr auto;
+        padding: var(--page-block) var(--page-inline);
+        background: var(--primary);
+        color: var(--ink);
+        border-color: var(--primary);
+      }
+
+      .cover__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-md);
+      }
+
+      .cover__top .brand-name,
+      .cover__year {
+        color: var(--muted);
+      }
+
+      .cover__hero {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        align-items: end;
+        min-height: 160mm;
+        overflow: hidden;
+      }
+
+      .cover__identity {
+        position: relative;
+        z-index: var(--z-content);
+        align-self: center;
+      }
+
+      .cover__producer {
+        display: block;
+        margin-bottom: var(--space-md);
+        font-family: 'Caveat', 'Segoe Print', cursive;
+        font-size: 24pt;
+        line-height: 1;
+        text-align: right;
+      }
+
+      .cover__wordmark {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        min-height: 250mm;
-        padding: 16mm;
+        font-family: 'Montserrat', 'Arial Narrow', sans-serif;
+        font-size: clamp(44pt, 8.8vw, 72pt);
+        font-weight: 800;
+        line-height: 0.8;
+        letter-spacing: 0.08em;
+      }
+
+      .cover__portrait {
+        align-self: end;
+        justify-self: end;
+        width: 128%;
+        height: 185mm;
+        max-height: none;
+        object-fit: cover;
+        object-position: center bottom;
+        mix-blend-mode: lighten;
+        transform: translateX(5%);
+        transform-origin: bottom right;
+      }
+
+      .cover__bottom {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: var(--space-xl);
+        align-items: end;
+        padding-top: var(--space-lg);
+        border-top: 1px solid var(--border);
+      }
+
+      .cover h1 {
+        max-width: 12ch;
+        margin: 0;
+        font-size: 34pt;
+        line-height: 0.96;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        text-wrap: balance;
+      }
+
+      .cover__promise {
+        max-width: 24ch;
+        margin: 0;
+        color: var(--muted);
+        text-align: right;
+      }
+
+      .program-intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.55fr);
+        gap: var(--space-xl);
+        align-items: end;
+      }
+
+      .page--program .page__content {
+        gap: var(--space-lg);
+        padding: 0 0 var(--space-lg);
+      }
+
+      .page--program .program-intro {
+        margin-right: calc(-1 * var(--page-inline));
+        margin-left: calc(-1 * var(--page-inline));
+        padding: var(--space-lg) var(--page-inline);
         background: var(--primary);
         color: var(--ink);
       }
 
-      .cover .wordmark {
-        display: flex;
-        flex-direction: column;
-        font-size: 48pt;
-        font-weight: 800;
-        line-height: 0.92;
-        letter-spacing: 0.1em;
-      }
-
-      .cover__meta {
-        border-top: 1px solid var(--border);
-        padding-top: 8mm;
-      }
-
-      .cover__label {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 12pt;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .cover__year {
-        margin-top: 4mm;
+      .page--program .program-summary {
         color: var(--muted);
-        font-size: 11pt;
+      }
+
+      .page--program .editorial-grid {
+        padding-top: var(--space-lg);
+        border-top-color: var(--border-on-light);
       }
 
       .section-title {
-        margin: 0 0 6mm;
-        padding-bottom: 3mm;
-        border-bottom: 1px solid #cfd4d1;
-        font-size: 16pt;
+        margin: 0 0 var(--space-md);
+        font-size: 14pt;
+        line-height: 1.1;
         font-weight: 700;
-        color: var(--ink-on-light);
       }
 
-      .lede {
-        font-size: 12pt;
-        margin: 0 0 5mm;
+      .statement {
+        max-width: 22ch;
+        margin: 0;
+        font-family: 'Montserrat', 'Arial Narrow', sans-serif;
+        font-size: 30pt;
+        font-weight: 800;
+        line-height: 1.04;
+        letter-spacing: -0.03em;
+        text-wrap: balance;
       }
 
-      .muted {
-        color: #5c6662;
+      .page--program .statement {
+        max-width: 18ch;
+        font-size: 32pt;
+      }
+
+      .program-summary {
+        margin: 0;
+        color: var(--muted-on-light);
+        text-wrap: pretty;
+      }
+
+      .editorial-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(160px, 0.7fr);
+        gap: var(--space-lg);
+        padding-top: var(--space-lg);
+        border-top: 1px solid var(--border-on-light);
       }
 
       .host {
         display: grid;
-        grid-template-columns: 52mm 1fr;
-        gap: 8mm;
+        grid-template-columns: 160px minmax(0, 1fr);
+        gap: var(--space-lg);
         align-items: start;
       }
 
       .host img {
-        width: 52mm;
-        height: 52mm;
-        object-fit: contain;
-        border: 1px solid #cfd4d1;
+        width: 100%;
+        height: 200px;
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+        object-position: center top;
+        border: 1px solid var(--border-on-light);
         background: var(--primary);
       }
 
+      .host h3 {
+        margin: 0 0 var(--space-xs);
+        font-size: 20pt;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+      }
+
       .handle {
-        margin: 0 0 4mm;
+        margin: 0 0 var(--space-md);
         font-family: 'Montserrat', sans-serif;
-        font-size: 10pt;
+        font-size: 9pt;
         font-weight: 600;
-        color: #5c6662;
+        color: var(--muted-on-light);
+      }
+
+      .host__bio {
+        margin: 0;
+        color: var(--muted-on-light);
+        text-wrap: pretty;
+      }
+
+      .facts {
+        align-self: stretch;
+      }
+
+      .facts h3,
+      .resources h3,
+      .brand-guidance h3,
+      .press-hub h3 {
+        margin: 0 0 var(--space-md);
+        font-size: 11pt;
+        line-height: 1.2;
+        font-weight: 700;
       }
 
       dl {
@@ -136,201 +365,571 @@
 
       .row {
         display: grid;
-        grid-template-columns: 32mm 1fr;
-        gap: 4mm;
-        padding: 2.5mm 0;
-        border-bottom: 1px solid #e2e5e3;
+        gap: var(--space-xs);
+        padding: var(--space-sm) 0;
+        border-top: 1px solid var(--border-on-light);
       }
 
       dt {
         font-family: 'Montserrat', sans-serif;
-        font-size: 8pt;
+        font-size: 7.5pt;
         font-weight: 700;
         letter-spacing: 0.06em;
         text-transform: uppercase;
-        color: #5c6662;
+        color: var(--muted-on-light);
       }
 
       dd {
         margin: 0;
       }
 
-      ul.platforms {
+      .resources-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.8fr);
+        gap: var(--space-lg);
+        align-items: start;
+      }
+
+      .resources-intro {
+        display: grid;
+        grid-template-columns: minmax(140px, 0.45fr) minmax(0, 1.55fr);
+        gap: var(--space-xl);
+        align-items: end;
+        padding-top: var(--space-lg);
+        border-top: 1px solid var(--border-on-light);
+      }
+
+      .resources-intro .section-title {
+        margin: 0;
+      }
+
+      .resources-intro .statement {
+        max-width: 18ch;
+      }
+
+      .resource-list,
+      .brand-notes {
         margin: 0;
         padding: 0;
         list-style: none;
       }
 
-      ul.platforms li {
-        padding: 2mm 0;
-        border-bottom: 1px solid #e2e5e3;
+      .resource-list {
+        border-top: 1px solid var(--border-on-light);
+      }
+
+      .resource-list li {
+        border-bottom: 1px solid var(--border-on-light);
+      }
+
+      .resource-link {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: var(--space-md);
+        align-items: baseline;
+        padding: var(--space-md) 0;
+        color: var(--ink-on-light);
+        text-decoration-line: underline;
+        text-decoration-thickness: 1px;
+        text-decoration-color: var(--tertiary);
+        text-underline-offset: 4px;
+      }
+
+      .resource-link,
+      .press-hub__links a {
+        overflow-wrap: anywhere;
+      }
+
+      .resource-link strong {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 11pt;
+      }
+
+      .resource-list li:first-child .resource-link strong {
+        font-size: 12pt;
+      }
+
+      .resource-link span {
+        color: var(--muted-on-light);
+        font-size: 9pt;
+      }
+
+      .resource-note {
+        margin: var(--space-md) 0 0;
+        color: var(--muted-on-light);
+        font-size: 9pt;
+      }
+
+      .press-hub {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 34mm;
+        gap: var(--space-xl);
+        align-items: center;
+        padding: var(--space-xl);
+        border-top: 4px solid var(--tertiary);
+        background: var(--primary);
+        color: var(--ink);
+      }
+
+      .press-hub__label {
+        margin: 0 0 var(--space-sm);
+        font-family: 'Montserrat', sans-serif;
+        font-size: 8pt;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .press-hub h3 {
+        margin: 0 0 var(--space-sm);
+        font-size: 14pt;
+      }
+
+      .press-hub__copy {
+        max-width: 48ch;
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .press-hub__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-md);
+        margin-top: var(--space-lg);
+      }
+
+      .press-hub__links a {
+        min-height: 44px;
+        color: var(--ink);
+        text-decoration-color: var(--tertiary);
+        text-underline-offset: var(--space-xs);
+      }
+
+      .press-hub__email {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 12pt;
+        font-weight: 700;
+      }
+
+      .press-hub__url {
+        font-size: 9pt;
+      }
+
+      .press-hub__qr {
+        display: block;
+        width: 34mm;
+        height: 34mm;
+        padding: var(--space-sm);
+        background: var(--ink);
+      }
+
+      a:focus-visible {
+        outline: 2px solid var(--tertiary);
+        outline-offset: 3px;
+      }
+
+      @media (hover: hover) {
+        .resource-link:hover,
+        .press-hub__links a:hover {
+          text-decoration-thickness: 2px;
+        }
+
+      }
+
+      a:active {
+        text-decoration-thickness: 2px;
       }
 
       .brand-notes {
-        margin: 0;
-        padding-left: 5mm;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-sm);
+        color: var(--muted-on-light);
       }
 
       .brand-notes li {
-        margin-bottom: 2mm;
+        position: relative;
+        padding-left: var(--space-md);
       }
 
-      .contact {
-        padding: 6mm;
-        border: 1px solid #cfd4d1;
-        background: #fff;
-      }
-
-      .contact a {
-        color: var(--ink-on-light);
-      }
-
-      .footer {
-        position: running(pageFooter);
-        font-size: 8pt;
-        color: #5c6662;
-      }
-
-      .doc-footer {
-        margin-top: 10mm;
-        padding-top: 3mm;
-        border-top: 1px solid #cfd4d1;
-        font-size: 8pt;
-        color: #5c6662;
+      .brand-notes li::before {
+        position: absolute;
+        left: 0;
+        content: '—';
+        color: var(--tertiary);
       }
 
       .script {
         font-family: 'Caveat', 'Segoe Print', cursive;
-        font-size: 14pt;
+        font-size: 13pt;
+      }
+
+      @media screen and (max-width: 820px) {
+        html {
+          background: var(--surface-page);
+        }
+
+        .page {
+          width: 100%;
+          min-height: auto;
+          margin: 0;
+          padding: var(--space-xl) var(--space-md);
+          border: 0;
+          border-bottom: 1px solid var(--border-on-light);
+        }
+
+        .cover {
+          min-height: 100svh;
+        }
+
+        .cover__hero {
+          grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+          min-height: 0;
+        }
+
+        .cover__wordmark {
+          font-size: clamp(34pt, 15vw, 54pt);
+        }
+
+        .cover__producer {
+          font-size: 18pt;
+        }
+
+        .cover__portrait {
+          width: 130%;
+          height: 76svh;
+          max-height: 660px;
+          transform: translateX(8%);
+        }
+
+        .cover__bottom,
+        .program-intro,
+        .editorial-grid,
+        .host,
+        .resources-intro,
+        .resources-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .press-hub {
+          grid-template-columns: 1fr auto;
+          gap: var(--space-lg);
+          padding: var(--space-lg);
+        }
+
+        .press-hub__qr {
+          width: 28mm;
+          height: 28mm;
+        }
+
+        .page--program .program-intro {
+          margin-right: calc(-1 * var(--space-md));
+          margin-left: calc(-1 * var(--space-md));
+          padding: var(--space-xl) var(--space-md);
+        }
+
+        .cover__promise {
+          text-align: left;
+        }
+
+        .statement {
+          font-size: 22pt;
+        }
+
+        .host img {
+          max-width: 320px;
+        }
+
+        .page__footer {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: var(--space-xs);
+        }
+      }
+
+      @media screen and (min-width: 640px) and (max-width: 1023px) {
+        .page {
+          width: min(100% - calc(var(--space-lg) * 2), 760px);
+          min-height: auto;
+          margin: var(--space-lg) auto;
+          padding: var(--space-xl);
+        }
+
+        .cover {
+          min-height: min(100svh, 900px);
+        }
+
+        .page--program .program-intro {
+          grid-template-columns: minmax(0, 1.35fr) minmax(180px, 0.65fr);
+        }
+
+        .page--program .editorial-grid {
+          grid-template-columns: minmax(0, 1.45fr) minmax(180px, 0.75fr);
+        }
+
+        .host {
+          grid-template-columns: 140px minmax(0, 1fr);
+        }
+
+        .resources-grid {
+          grid-template-columns: minmax(0, 1.25fr) minmax(200px, 0.75fr);
+        }
+
+        .resources-intro {
+          grid-template-columns: minmax(150px, 0.55fr) minmax(0, 1.45fr);
+        }
+      }
+
+      @media (pointer: coarse) {
+        .resource-link {
+          min-height: 44px;
+          align-items: center;
+        }
+      }
+
+      @media print {
+        html,
+        body {
+          background: transparent;
+        }
+
+        .page {
+          width: 210mm;
+          height: 297mm;
+          min-height: 297mm;
+          margin: 0;
+          border: 0;
+          break-after: page;
+          page-break-after: always;
+          overflow: hidden;
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+
+        .page:last-of-type {
+          break-after: auto;
+          page-break-after: auto;
+        }
       }
     </style>
   </head>
   <body>
     <section class="page cover">
-      <div class="wordmark">
-        <span>EL</span>
-        <span>BRI</span>
-        <span>EFF</span>
+      <div class="cover__top">
+        <p class="brand-name">El Brieff</p>
+        <span class="cover__year">2026</span>
       </div>
-      <div class="cover__meta">
-        <div class="cover__label">Media Kit</div>
-        <div class="cover__year">2026</div>
-      </div>
-    </section>
-
-    <section class="page">
-      <h2 class="section-title">El programa</h2>
-      <p class="lede">
-        Somos el podcast que te ayuda a informarte en 15 minutos al día con los
-        temas de conversación más importantes de México y el mundo, conducido
-        por Arturo Salazar (@elchearturo) y publicado de lunes a viernes.
-      </p>
-      <p class="muted">
-        Formato breve, editorial y cotidiano: actualidad empresarial y de
-        conversación para audiencias en México y Latinoamérica.
-      </p>
-      <div class="doc-footer">El Brieff Media Kit · v1 · 2026-08-04</div>
-    </section>
-
-    <section class="page">
-      <h2 class="section-title">El conductor</h2>
-      <div class="host">
+      <div class="cover__hero">
+        <div class="cover__identity" role="img" aria-label="El Brieff">
+          <span class="cover__producer" aria-hidden="true">Brieffy</span>
+          <span class="cover__wordmark" aria-hidden="true">
+            <span>EL</span>
+            <span>BRI</span>
+            <span>EFF</span>
+          </span>
+        </div>
         <img
-          src="../../public/elbrieff-cover.png"
-          alt="Portada de El Brieff"
-          width="200"
-          height="200"
+          class="cover__portrait"
+          src="../../public/create-a-photorealistic-editorial-portrait-of-the-.png"
+          alt="Recorte editorial de Arturo Salazar con saco azul"
+          width="819"
+          height="1024"
         />
-        <div>
-          <h1 style="margin: 0 0 2mm; font-size: 14pt; letter-spacing: 0.02em; text-transform: none;">
-            Arturo Salazar Bazúa
-          </h1>
-          <p class="handle">@elchearturo</p>
-          <p>
-            Arturo Salazar Bazúa (conocido en redes sociales como @elchearturo)
-            es un emprendedor, estratega de negocios y comunicador mexicano. Es
-            reconocido principalmente por su rol como creador y conductor de El
-            Brieff, uno de los podcasts diarios de noticias y actualidad
-            empresarial más escuchados en México y Latinoamérica. Adicionalmente
-            es cofundador STRTGY, una empresa de ingeniería de soluciones
-            centrada en la inteligencia de decisiones. Es titular del podcast
-            InteligencIA, donde analiza el impacto de la inteligencia artificial
-            generativa, la automatización y la productividad en el entorno
-            corporativo. Participa de forma habitual como conferencista, analista
-            y panelista en foros de tecnología, innovación y emprendimiento.
+      </div>
+      <div class="cover__bottom">
+        <h1>Kit de prensa</h1>
+        <p class="cover__promise">
+          Lo importante de México y el mundo, en aproximadamente 15 minutos.
+        </p>
+      </div>
+    </section>
+
+    <section class="page page--program">
+      <header class="page__header">
+        <p class="brand-name">El Brieff</p>
+        <p class="page-label">Programa y conductor · 02</p>
+      </header>
+
+      <div class="page__content">
+        <div class="program-intro">
+          <div>
+            <h2 class="section-title">El programa</h2>
+            <p class="statement">
+              Entender lo importante antes de empezar el día.
+            </p>
+          </div>
+          <p class="program-summary">
+            El Brieff explica las noticias y los temas de conversación más
+            relevantes de México y el mundo en aproximadamente 15 minutos.
+            Arturo Salazar conduce nuevos episodios de lunes a viernes.
           </p>
         </div>
+
+        <div class="editorial-grid">
+          <article class="host">
+            <img
+              src="../../public/arturo-about-us.png"
+              alt="Retrato editorial de Arturo Salazar con saco azul"
+              width="803"
+              height="1000"
+            />
+            <div>
+              <h3>Arturo Salazar Bazúa</h3>
+              <p class="handle">@elchearturo</p>
+              <p class="host__bio">
+                Arturo Salazar Bazúa es un emprendedor, estratega de negocios y
+                comunicador mexicano. Creó y conduce El Brieff, y es cofundador
+                de STRTGY, una empresa de ingeniería de soluciones centrada en
+                la inteligencia de decisiones. Participa como conferencista,
+                analista y panelista en tecnología, innovación y emprendimiento.
+              </p>
+            </div>
+          </article>
+
+          <aside class="facts" aria-labelledby="facts-title">
+            <h3 id="facts-title">Datos clave</h3>
+            <dl>
+              <div class="row">
+                <dt>Duración</dt>
+                <dd>Aproximadamente 15 minutos</dd>
+              </div>
+              <div class="row">
+                <dt>Publicación</dt>
+                <dd>De lunes a viernes</dd>
+              </div>
+              <div class="row">
+                <dt>Idioma</dt>
+                <dd>Español de México</dd>
+              </div>
+              <div class="row">
+                <dt>Enfoque</dt>
+                <dd>México y el mundo</dd>
+              </div>
+              <div class="row">
+                <dt>Productora</dt>
+                <dd><span class="script">Brieffy</span></dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
       </div>
-      <div class="doc-footer">El Brieff Media Kit · v1 · 2026-08-04</div>
+
+      <footer class="page__footer">
+        <span>Kit de prensa de El Brieff · v1</span>
+        <span>Actualizado el 4 de agosto de 2026</span>
+      </footer>
     </section>
 
-    <section class="page">
-      <h2 class="section-title">Hechos rápidos</h2>
-      <dl>
-        <div class="row">
-          <dt>Formato</dt>
-          <dd>~15 minutos, lunes a viernes</dd>
-        </div>
-        <div class="row">
-          <dt>Idioma</dt>
-          <dd>es-MX</dd>
-        </div>
-        <div class="row">
-          <dt>Enfoque</dt>
-          <dd>México y el mundo</dd>
-        </div>
-        <div class="row">
-          <dt>Productor</dt>
-          <dd><span class="script">Brieffy</span></dd>
-        </div>
-      </dl>
+    <section class="page page--resources">
+      <header class="page__header">
+        <p class="brand-name">El Brieff</p>
+        <p class="page-label">Recursos y contacto · 03</p>
+      </header>
 
-      <h2 class="section-title" style="margin-top: 10mm;">Plataformas</h2>
-      <ul class="platforms">
-        <li>Spotify — https://open.spotify.com/show/20HgvkIWtkxDP44PguN1Wi</li>
-        <li>
-          Apple Podcasts —
-          https://podcasts.apple.com/mx/podcast/el-brieff/id1444545033
-        </li>
-        <li>Deezer — https://www.deezer.com/es/show/5905047</li>
-        <li>iHeart — https://www.iheart.com/podcast/256-el-brieff-30974371/</li>
-        <li>radio.net — https://mx.radio.net/podcast/el-brieff</li>
-      </ul>
-      <div class="doc-footer">El Brieff Media Kit · v1 · 2026-08-04</div>
-    </section>
+      <div class="page__content">
+        <div class="resources-intro">
+          <h2 class="section-title">Recursos para prensa</h2>
+          <p class="statement">Todo lo necesario para presentar El Brieff.</p>
+        </div>
 
-    <section class="page">
-      <h2 class="section-title">Marca</h2>
-      <ul class="brand-notes">
-        <li>
-          Usar la portada canónica <strong>elbrieff-cover.png</strong> (wordmark
-          EL/BRI/EFF + retrato).
-        </li>
-        <li>
-          Paleta: primary <code>#121C16</code>, tinta blanca, sage
-          <code>#78A08A</code> solo como acento puntual.
-        </li>
-        <li>Do: alto contraste tipográfico; tipografía sobria y editorial.</li>
-        <li>
-          Don’t: fondos claros como default de marca; métricas de audiencia no
-          aprobadas; inventar plataformas o assets.
-        </li>
-      </ul>
-
-      <h2 class="section-title" style="margin-top: 10mm;">Contacto</h2>
-      <div class="contact">
-        <p style="margin: 0 0 3mm;">
-          Prensa y partnerships:
-          <a href="mailto:arturo@strtgy.ai">arturo@strtgy.ai</a>
-        </p>
-        <p style="margin: 0;" class="muted">
-          Sitio:
-          <a href="https://el-brieff.fei-d02.workers.dev"
-            >https://el-brieff.fei-d02.workers.dev</a
+        <section class="press-hub" aria-labelledby="press-hub-title">
+          <div>
+            <p class="press-hub__label">Acceso principal</p>
+            <h3 id="press-hub-title">Centro de prensa de El Brieff</h3>
+            <p class="press-hub__copy">
+              Accede a los archivos oficiales, los enlaces de escucha y el
+              contacto para prensa desde un solo lugar.
+            </p>
+            <div class="press-hub__links">
+              <a
+                class="press-hub__email"
+                href="mailto:arturo@strtgy.ai"
+                >arturo@strtgy.ai</a
+              >
+              <a
+                class="press-hub__url"
+                href="https://el-brieff.strtgy.ai/media-kit"
+                >el-brieff.strtgy.ai/media-kit</a
+              >
+            </div>
+          </div>
+          <a
+            href="https://el-brieff.strtgy.ai/media-kit"
+            aria-label="Abrir el centro de prensa de El Brieff"
           >
-        </p>
+            <img
+              class="press-hub__qr"
+              src="../../public/media-kit/press-hub-qr.svg"
+              alt="Código QR para abrir el centro de prensa de El Brieff"
+              width="129"
+              height="129"
+            />
+          </a>
+        </section>
+
+        <div class="resources-grid">
+          <div>
+            <section class="resources" aria-labelledby="resources-title">
+              <h3 id="resources-title">Archivos oficiales</h3>
+              <ul class="resource-list">
+                <li>
+                  <a
+                    class="resource-link"
+                    href="https://el-brieff.strtgy.ai/elbrieff-cover.png"
+                    download
+                  >
+                    <strong>Portada oficial de El Brieff</strong>
+                    <span>PNG · cuadrada</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="resource-link"
+                    href="https://el-brieff.strtgy.ai/arturo-about-us.png"
+                    download
+                  >
+                    <strong>Retrato editorial de Arturo Salazar</strong>
+                    <span>PNG · vertical</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="resource-link"
+                    href="https://el-brieff.strtgy.ai/arturo-cover.png"
+                    download
+                  >
+                    <strong>Retrato alternativo de Arturo Salazar</strong>
+                    <span>PNG · cuadrado</span>
+                  </a>
+                </li>
+              </ul>
+              <p class="resource-note">
+                Para acceder a todos los recursos y enlaces de escucha, visita
+                el centro de prensa.
+              </p>
+            </section>
+
+          </div>
+
+          <section class="brand-guidance" aria-labelledby="brand-guidance-title">
+            <h3 id="brand-guidance-title">Uso de marca</h3>
+            <ul class="brand-notes">
+              <li>Usar la portada oficial sin modificar su composición.</li>
+              <li>Mantener alto contraste y titulares breves.</li>
+              <li>Reservar el verde claro para acentos puntuales.</li>
+              <li>
+                No publicar datos de audiencia sin una fuente verificable.
+              </li>
+            </ul>
+          </section>
+        </div>
       </div>
-      <div class="doc-footer">El Brieff Media Kit · v1 · 2026-08-04</div>
+
+      <footer class="page__footer">
+        <span>Kit de prensa de El Brieff · v1</span>
+        <span>Actualizado el 4 de agosto de 2026</span>
+      </footer>
     </section>
   </body>
 </html>

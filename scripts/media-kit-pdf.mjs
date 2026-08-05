@@ -24,6 +24,8 @@ try {
     path: outPath,
     format: 'A4',
     printBackground: true,
+    tagged: true,
+    outline: true,
     margin: {
       top: '0',
       right: '0',

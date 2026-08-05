@@ -1,11 +1,13 @@
 ---
 import { site } from '../config/site';
+import type { CtaLocation } from '../lib/analytics/gtag.ts';
 
 type Props = {
   heading?: string;
+  ctaLocation?: CtaLocation;
 };
 
-const { heading = 'También en' } = Astro.props;
+const { heading = 'También en', ctaLocation = 'platform_links' } = Astro.props;
 ---
 
 {
@@ -28,6 +30,9 @@ const { heading = 'También en' } = Astro.props;
                   class="platform-links__link"
                   href={platform.url}
                   rel="noopener noreferrer"
+                  data-analytics-event="platform_outbound"
+                  data-analytics-platform-id={platform.id}
+                  data-analytics-cta-location={ctaLocation}
                 >
                   {platform.label}
                 </a>

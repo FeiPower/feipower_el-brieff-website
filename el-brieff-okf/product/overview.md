@@ -35,8 +35,8 @@ Sitio web profesional que proyecta a **El Brieff** como el podcast diario para i
 | Cadencia | Lunes a viernes |
 | Formato | ~15 minutos / episodio |
 | Idioma principal | Español México (`es-MX`) — único en v1 |
-| Hosting interim | Cloudflare Worker [el-brieff.fei-d02.workers.dev](https://el-brieff.fei-d02.workers.dev/) |
-| Analytics | GA4 |
+| Hosting | Cloudflare Worker — prod [el-brieff.strtgy.ai](https://el-brieff.strtgy.ai/); fallback [workers.dev](https://el-brieff.fei-d02.workers.dev/) |
+| Analytics | GA4 `G-P2FHN490KW` — [analytics-ga4.md](../architecture/analytics-ga4.md) |
 | Redes | [Instagram @elbrieff](https://www.instagram.com/elbrieff/) |
 | Prensa / form | To `arturo@strtgy.ai`, Cc `mar@strtgy.ai` |
 | Stack | Astro + Cloudflare Workers |
@@ -73,7 +73,7 @@ Hoy el podcast existe como contenido editorial; falta una **casa digital propia*
 - SEO on-page, Open Graph / Twitter Card, JSON-LD, GEO
 - Atribución de productor Brieffy en copy/About (sin CTA/enlace a brieffy.com)
 - Media kit PDF + formulario de solicitud/descarga ([FR-009](../requirements/fr-009-media-kit-pdf.md))
-- GA4
+- GA4 ([NFR-006](../requirements/nfr-006-analytics-ga4.md), [analytics-ga4.md](../architecture/analytics-ga4.md))
 - Diseño responsive
 - Deploy Cloudflare Workers ([deployment.md](../architecture/deployment.md))
 

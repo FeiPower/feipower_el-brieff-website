@@ -5,7 +5,7 @@ export type PlatformLink = {
 };
 
 export type SiteConfig = {
-  siteUrl: 'https://el-brieff.fei-d02.workers.dev';
+  siteUrl: 'https://el-brieff.strtgy.ai';
   locale: 'es-MX';
   name: 'El Brieff';
   pitch: string;
@@ -32,6 +32,14 @@ export type SiteConfig = {
   features: {
     mediaKitEmailEnabled: boolean;
   };
+  /** Public editorial surfaces introduced by the CMS control plane. */
+  editorial: {
+    opinionBasePath: '/opinion/';
+    adminBasePath: '/admin/';
+    rssPath: '/rss.xml';
+    syndicationPath: '/syndication.xml';
+    agentApiPath: '/api/admin/agent';
+  };
   ogImage: '/elbrieff-cover.png';
 };
 
@@ -42,7 +50,7 @@ const hostBioShort =
   'Arturo Salazar Bazúa (conocido en redes sociales como @elchearturo) es un emprendedor, estratega de negocios y comunicador mexicano. Es reconocido principalmente por su rol como creador y conductor de El Brieff, uno de los podcasts diarios de noticias y actualidad empresarial más escuchados en México y Latinoamérica.';
 
 export const site: SiteConfig = {
-  siteUrl: 'https://el-brieff.fei-d02.workers.dev',
+  siteUrl: 'https://el-brieff.strtgy.ai',
   locale: 'es-MX',
   name: 'El Brieff',
   pitch:
@@ -99,6 +107,13 @@ export const site: SiteConfig = {
   },
   features: {
     mediaKitEmailEnabled: false,
+  },
+  editorial: {
+    opinionBasePath: '/opinion/',
+    adminBasePath: '/admin/',
+    rssPath: '/rss.xml',
+    syndicationPath: '/syndication.xml',
+    agentApiPath: '/api/admin/agent',
   },
   ogImage: '/elbrieff-cover.png',
 };

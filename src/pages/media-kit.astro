@@ -121,20 +121,40 @@ const emailEnabled = site.features.mediaKitEmailEnabled;
       </div>
     </section>
 
-    <PlatformLinks heading="Plataformas" />
+    <PlatformLinks heading="Plataformas" ctaLocation="media_kit" />
   </main>
   <SiteFooter />
 </BaseLayout>
 
 <script define:vars={{ emailEnabled }}>
+  import {
+    trackMediaKitDownload,
+    trackMediaKitFormStart,
+    trackMediaKitSubmit,
+    trackMediaKitSubmitError,
+  } from '../lib/analytics/media-kit.ts';
+
   const form = document.getElementById('media-kit-form');
   const statusEl = document.getElementById('media-kit-status');
+  let formStartTracked = false;
 
   function showStatus(message, isError = false) {
     if (!(statusEl instanceof HTMLElement)) return;
     statusEl.hidden = false;
     statusEl.textContent = message;
     statusEl.dataset.state = isError ? 'error' : 'ok';
+  }
+
+  if (emailEnabled && form instanceof HTMLFormElement) {
+    form.addEventListener(
+      'focusin',
+      () => {
+        if (formStartTracked) return;
+        formStartTracked = true;
+        trackMediaKitFormStart();
+      },
+      { once: true },
+    );
   }
 
   form?.addEventListener('submit', async (event) => {
@@ -171,6 +191,7 @@ const emailEnabled = site.features.mediaKitEmailEnabled;
           email_failed: 'No se pudo enviar el aviso. Intenta más tarde.',
           disabled: 'El formulario no está disponible por ahora.',
         };
+        trackMediaKitSubmitError(result.error);
         showStatus(
           messages[result.error] ?? 'No se pudo completar la solicitud.',
           true,
@@ -178,9 +199,12 @@ const emailEnabled = site.features.mediaKitEmailEnabled;
         return;
       }
 
+      trackMediaKitSubmit(payload.reason);
+      trackMediaKitDownload();
       showStatus('Listo. Descargando el media kit…');
       window.location.assign(result.downloadUrl);
     } catch {
+      trackMediaKitSubmitError('network');
       showStatus('Error de red. Intenta de nuevo.', true);
     }
   });

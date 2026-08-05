@@ -1,0 +1,87 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { env } from 'cloudflare:workers';
+import { site } from '../../config/site';
+import { EditorialRepository } from '../../lib/editorial/repository.ts';
+import {
+  articleCanonicalPath,
+  isValidArticleForSeo,
+} from '../../lib/editorial/seo.ts';
+
+const repository = new EditorialRepository(env.EDITORIAL_DB);
+const published = (await repository.listPublishedByKind('column')).filter(
+  isValidArticleForSeo,
+);
+
+const title = 'Opinión — El Brieff';
+const description =
+  'Columnas de opinión de Arturo Salazar sobre actualidad empresarial y conversación pública.';
+---
+
+<BaseLayout title={title} description={description} canonicalPath="/opinion/">
+  <SiteHeader />
+  <main id="contenido" class="admin-shell">
+    <header class="admin-header">
+      <p class="admin-kicker">Archivo editorial</p>
+      <h1>Opinión</h1>
+      <p class="admin-meta">{site.host.name}</p>
+    </header>
+
+    {
+      published.length === 0 ? (
+        <p class="admin-empty">Aún no hay columnas publicadas.</p>
+      ) : (
+        <ul class="opinion-list">
+          {published.map((item) => (
+            <li>
+              <a href={articleCanonicalPath(item.slug)}>
+                <h2>{item.title}</h2>
+              </a>
+              <p class="admin-meta">
+                <time datetime={item.publishedAt ?? undefined}>
+                  {item.publishedAt
+                    ? new Date(item.publishedAt).toLocaleDateString('es-MX', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })
+                    : ''}
+                </time>
+              </p>
+              <p>{item.summary}</p>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </main>
+  <SiteFooter />
+</BaseLayout>
+
+<style>
+  .opinion-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .opinion-list h2 {
+    margin: 0 0 var(--space-sm);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+  }
+
+  .opinion-list a {
+    text-decoration: none;
+  }
+
+  .opinion-list a:hover h2 {
+    color: var(--accent);
+  }
+</style>

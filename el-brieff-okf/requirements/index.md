@@ -19,3 +19,4 @@
 * [NFR-003 Responsive](nfr-003-responsive.md) — Adaptación móvil / desktop.
 * [NFR-004 SEO core](nfr-004-seo-core.md) — Fundamentos Google Search (crawl, helpful content, E-E-A-T base).
 * [NFR-005 GEO citation](nfr-005-geo-citation.md) — Generative Engine Optimization alineado a Google.
+* [NFR-006 Analytics GA4](nfr-006-analytics-ga4.md) — Instrumentación gtag, eventos de conversión y privacidad.

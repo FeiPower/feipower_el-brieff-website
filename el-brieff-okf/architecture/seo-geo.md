@@ -69,15 +69,25 @@ Hacer que El Brieff sea **descubrible, indexable y citable** en Search y en resp
 | Campo | Valor |
 |-------|--------|
 | `inLanguage` | `es-MX` |
-| Canonical base (interim) | `https://el-brieff.fei-d02.workers.dev` |
-| Analytics | GA4 |
+| Canonical base | `https://el-brieff.strtgy.ai` |
+| Analytics | GA4 `G-P2FHN490KW` — [analytics-ga4.md](analytics-ga4.md) |
 | OG image default | `elbrieff-cover.png` |
+
+# Columnas / opinión (CMS)
+
+- Rutas: `/opinion/`, `/opinion/[slug]/` desde D1 publicado.
+- Metadata: `og:type=article`, `article:published_time` / `modified_time`, canonical self.
+- JSON-LD: `NewsArticle` vía `src/lib/editorial/seo.ts` (headline/description/fechas = texto visible).
+- Discovery: `/robots.txt`, `/sitemap-index.xml`, `/news-sitemap.xml` (solo ítems ≤48h), `/rss.xml`, `/syndication.xml` (socios; copias full → `noindex` en destino).
+- Rich Results: validar manualmente en Google Rich Results Test tras cada columna nueva.
+
 # Publish ritual
 
 1. Actualizar contenido visible.
-2. Regenerar sitemap.
-3. Validar JSON-LD.
-4. Verificar que title/description/OG coinciden con el HTML.
+2. Publicar desde admin (`approved → published`) con citas.
+3. Verificar sitemap / news-sitemap / RSS.
+4. Validar JSON-LD (Rich Results).
+5. Verificar que title/description/OG coinciden con el HTML.
 5. (Post-launch) Enviar URL en Search Console si es crítico.
 
 # References in-bundle

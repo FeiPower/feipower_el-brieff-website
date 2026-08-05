@@ -32,10 +32,10 @@ const description =
         <div class="about-host__portrait">
           <img
             class="about-host__cover"
-            src={site.ogImage}
-            alt={`Portada de ${site.name} con ${site.host.name}`}
-            width="502"
-            height="499"
+            src="/arturo-about-us.png"
+            alt={site.host.name}
+            width="819"
+            height="1024"
             decoding="async"
           />
         </div>
@@ -44,8 +44,7 @@ const description =
             {site.host.name}
           </h2>
           <p class="about-host__handle">{site.host.alternateName}</p>
-          <p class="about-host__bio-short">{site.host.bioShort}</p>
-          <p class="about-host__bio-long">{site.host.bioLong}</p>
+          <p class="about-host__bio">{site.host.bioLong}</p>
         </div>
       </div>
     </section>
@@ -73,7 +72,13 @@ const description =
           <div class="about-facts__row">
             <dt>Instagram</dt>
             <dd>
-              <a href={site.social.instagram} rel="noopener noreferrer">
+              <a
+                href={site.social.instagram}
+                rel="noopener noreferrer"
+                data-analytics-event="social_outbound"
+                data-analytics-network="instagram"
+                data-analytics-cta-location="about"
+              >
                 @elbrieff
               </a>
             </dd>
@@ -85,7 +90,7 @@ const description =
       </div>
     </section>
 
-    <PlatformLinks heading="Escúchalo en" />
+    <PlatformLinks heading="Escúchalo en" ctaLocation="about" />
 
     <section class="about-cta" aria-labelledby="about-cta-heading">
       <div class="about-cta__inner">
@@ -93,7 +98,15 @@ const description =
         <p class="about-cta__lede">
           Reproduce el episodio más reciente en Spotify.
         </p>
-        <a class="about-cta__link" href="/#escuchar">Ir a Escuchar</a>
+        <a
+          class="about-cta__link"
+          href="/#escuchar"
+          data-analytics-event="listen_cta"
+          data-analytics-cta-id="escuchar_ahora"
+          data-analytics-cta-location="about"
+        >
+          Ir a Escuchar
+        </a>
       </div>
     </section>
   </main>
@@ -186,7 +199,8 @@ const description =
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center top;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     background: var(--surface-elevated);
@@ -214,18 +228,11 @@ const description =
     color: var(--muted);
   }
 
-  .about-host__bio-short {
-    margin: 0 0 var(--space-md);
+  .about-host__bio {
+    margin: 0;
     font-size: 1.0625rem;
     line-height: 1.55;
     color: var(--ink);
-  }
-
-  .about-host__bio-long {
-    margin: 0;
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    color: var(--muted);
   }
 
   .about-facts {

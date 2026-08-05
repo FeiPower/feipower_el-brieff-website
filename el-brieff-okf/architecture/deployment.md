@@ -1,12 +1,12 @@
 ---
 type: Reference
 title: Deployment — Cloudflare Workers
-description: Hosting y URL de preview/producción temporal del sitio El Brieff en Cloudflare Workers.
+description: Hosting y URL de producción del sitio El Brieff en Cloudflare Workers + dominio custom.
 tags: [architecture, cloudflare, workers, hosting]
 status: stable
 generated: { by: agent/composer, at: 2026-08-03T21:00:00Z }
-verified: { by: human:stakeholder, at: 2026-08-03T21:00:00Z }
-notes: "Git-connected Workers Builds on main (prod) + non-prod branch previews; local fallback npm run deploy."
+verified: { by: human:stakeholder, at: 2026-08-04T20:26:00Z }
+notes: "Prod canonical https://el-brieff.strtgy.ai/; workers.dev remains fallback. Git-connected Workers Builds on main + non-prod branch previews."
 sources:
   - id: cloudflare-api
     title: Cloudflare Workers API (account fei-d02)
@@ -16,17 +16,16 @@ sources:
     title: Workers Builds configuration
 ---
 
-# Canonical deploy target (v1 interim)
-
-Hasta que exista dominio propio, el sitio se publica en el Worker de Cloudflare:
+# Canonical deploy target (producción)
 
 | Campo | Valor |
 |-------|--------|
 | Platform | Cloudflare Workers |
 | Account workers.dev subdomain | `fei-d02` |
 | Script name | `el-brieff` |
-| Public URL | [https://el-brieff.fei-d02.workers.dev/](https://el-brieff.fei-d02.workers.dev/) |
-| Canonical base (interim) | `https://el-brieff.fei-d02.workers.dev` |
+| **Canonical production URL** | [https://el-brieff.strtgy.ai/](https://el-brieff.strtgy.ai/) |
+| Canonical base (SEO / Astro `site`) | `https://el-brieff.strtgy.ai` |
+| Fallback workers.dev | [https://el-brieff.fei-d02.workers.dev/](https://el-brieff.fei-d02.workers.dev/) |
 | Compatibility date (actual) | `2026-08-03` |
 | Observability | Logs enabled |
 | Assets (actual) | **live** — Static Assets from Astro `dist/client` (home HTML, `_astro/*`, cover) |
@@ -51,10 +50,17 @@ Connect the Worker **el-brieff** to GitHub repo **`FeiPower/feipower_el-brieff-w
 
 Flow ([Workers Builds](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/)):
 
-1. Push to `main` → build → `cf:deploy` → traffic on [workers.dev](https://el-brieff.fei-d02.workers.dev/).
+1. Push to `main` → build → `cf:deploy` → traffic on [el-brieff.strtgy.ai](https://el-brieff.strtgy.ai/) (custom domain) and [workers.dev](https://el-brieff.fei-d02.workers.dev/).
 2. Push to other branches / PRs → build → `cf:preview` (`wrangler versions upload`) → preview URL, not production traffic.
 
 `cf:deploy` / `cf:preview` delete `.wrangler/deploy/config.json` before Wrangler so the adapter-generated redirect config does not replace `wrangler.jsonc` assets (`./dist/client`). Without that wipe, `/` can serve the Hello World Worker while assets look fine.
+
+# Custom domain
+
+- Hostname: `el-brieff.strtgy.ai` under zone `strtgy.ai`.
+- Attach Custom Domain / route to Worker `el-brieff` in Cloudflare dashboard (or Wrangler `routes` when frozen).
+- DNS: CNAME/AAAA per Cloudflare Workers custom domains docs.
+- SEO: `astro.config.mjs` `site` + `site.siteUrl` = `https://el-brieff.strtgy.ai` (canonical, `og:url`, sitemap, robots, JSON-LD).
 
 # Local / fallback deploy
 
@@ -66,10 +72,10 @@ Equivalent CI split: `npm run build` then `npm run cf:deploy`.
 
 # Implications
 
-- SEO: `canonical`, `og:url` y sitemap deben usar el base URL interim hasta cutover a dominio custom.
+- SEO: `canonical`, `og:url` y sitemap usan `https://el-brieff.strtgy.ai`.
 - Formulario media kit: procesar en el mismo Worker (o binding) — ver [media-kit.md](media-kit.md).
 - Stack preferido: static/SSG + Workers Static Assets (o adapter Cloudflare) — [ADR-0001](../decisions/adr-0001-static-first-marketing-site.md).
-- Dominio custom: diferido; documentar cutover en ADR/log cuando exista.
+- workers.dev sigue vivo como fallback/ops; no es el host canónico.
 
 # Ops checklist (launch)
 
@@ -78,6 +84,9 @@ Equivalent CI split: `npm run build` then `npm run cf:deploy`.
 - [x] Git production branch `main` + Workers Builds scripts (`cf:deploy` / `cf:preview`).
 - [x] Cloudflare dashboard: connected `FeiPower/feipower_el-brieff-website`; build `npm run build`; deploy `npm run cf:deploy`; version `npm run cf:preview`; non-prod builds enabled.
 - [x] GitHub default branch = `main`.
-- [ ] `robots.txt` + sitemap con base interim.
-- [ ] Search Console / GA4 apuntando al host interim (actualizar en cutover).
+- [x] Canonical base URL = `https://el-brieff.strtgy.ai` en código (`site.ts`, `astro.config.mjs`).
+- [ ] Custom domain `el-brieff.strtgy.ai` attached to Worker `el-brieff` + DNS verde.
+- [ ] `robots.txt` + sitemap verificados en host canónico.
+- [ ] Search Console / GA4 stream apuntando a `https://el-brieff.strtgy.ai`.
+- [ ] **Build-time env (soft gate):** set Workers Builds / Worker env `PUBLIC_GA_MEASUREMENT_ID=G-P2FHN490KW` for production (and previews per policy). Astro bakes `PUBLIC_*` at `npm run build` — without this, prod HTML has no gtag. **2026-08-04:** in-session approval granted; remote upsert via Builds API failed (`Authentication error` — Wrangler OAuth lacks Workers CI Write). Residual: Dashboard → Worker `el-brieff` → Settings → Build variables and secrets → add `PUBLIC_GA_MEASUREMENT_ID=G-P2FHN490KW` (non-secret), then rebuild. Validate Realtime after deploy — playbook [analytics-ga4.md](analytics-ga4.md) / [NFR-006](../requirements/nfr-006-analytics-ga4.md). Local: copy from `.env.example`.
 - [ ] Confirm PR preview URL comments from Workers Builds GitHub integration.
