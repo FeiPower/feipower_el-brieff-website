@@ -24,10 +24,10 @@ const CTA_SECONDARY = {
       />
     </div>
     <div class="hero__copy">
-      <h1 class="hero__wordmark" id="hero-brand">
-        <span>EL</span>
-        <span>BRI</span>
-        <span>EFF</span>
+      <h1 class="hero__wordmark" id="hero-brand" aria-label="El Brieff">
+        <span aria-hidden="true">EL</span>
+        <span aria-hidden="true">BRI</span>
+        <span aria-hidden="true">EFF</span>
       </h1>
       <p class="hero__lede">{HERO_LEDE}</p>
       <div class="hero__ctas">
@@ -180,6 +180,10 @@ const CTA_SECONDARY = {
 
   .hero__cta--secondary:hover {
     border-color: var(--ink);
+  }
+
+  .hero__cta--secondary:focus-visible {
+    outline-color: var(--tertiary);
   }
 
   /* ---- MEDIA PANEL ---- */
