@@ -1,7 +1,10 @@
 ---
+import { Image } from 'astro:assets';
+import arturoImage from '../assets/arturo-cover.png';
 import { site } from '../config/site';
 
-const HERO_LEDE = site.pitch;
+const HERO_HOOK = 'Entiende lo importante de México y el mundo en 15 minutos.';
+const HERO_CREDIT = 'Con Arturo Salazar (@elchearturo) · Lunes a viernes';
 const CTA_PRIMARY = { label: 'Escuchar ahora', href: '#escuchar' };
 const CTA_SECONDARY = {
   label: 'Abrir en Spotify',
@@ -12,24 +15,26 @@ const CTA_SECONDARY = {
 <section class="hero" aria-labelledby="hero-brand">
   <div class="hero__inner">
     <div class="hero__media">
-      <img
+      <Image
         class="hero__cover"
-        src="/arturo-cover.png"
+        src={arturoImage}
         alt="Arturo Salazar, conductor de El Brieff"
-        width="1024"
-        height="1024"
-        decoding="async"
+        loading="eager"
         fetchpriority="high"
+        decoding="async"
         sizes="(min-width: 900px) 50vw, 100vw"
       />
     </div>
     <div class="hero__copy">
-      <h1 class="hero__wordmark" id="hero-brand">
-        <span>EL</span>
-        <span>BRI</span>
-        <span>EFF</span>
+      <h1 class="hero__wordmark" id="hero-brand" aria-label="El Brieff">
+        <span aria-hidden="true">EL</span>
+        <span aria-hidden="true">BRI</span>
+        <span aria-hidden="true">EFF</span>
       </h1>
-      <p class="hero__lede">{HERO_LEDE}</p>
+      <div class="hero__lede">
+        <p class="hero__hook">{HERO_HOOK}</p>
+        <p class="hero__credit">{HERO_CREDIT}</p>
+      </div>
       <div class="hero__ctas">
         <a
           class="hero__cta hero__cta--primary"
@@ -63,7 +68,7 @@ const CTA_SECONDARY = {
     display: flex;
     align-items: center;
     background:
-      radial-gradient(ellipse 55% 70% at 28% 50%, #1a2420 0%, transparent 65%),
+      radial-gradient(ellipse 55% 70% at 28% 50%, var(--surface-elevated) 0%, transparent 65%),
       var(--primary);
     overflow: hidden;
   }
@@ -124,10 +129,25 @@ const CTA_SECONDARY = {
   .hero__lede {
     margin: 0;
     max-width: 32rem;
-    font-size: clamp(1rem, 2.2vw, 1.125rem);
-    line-height: 1.55;
-    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
     animation: hero-fade-up 0.9s var(--ease-fade) 0.12s both;
+  }
+
+  .hero__hook {
+    margin: 0;
+    font-size: clamp(1rem, 2.2vw, 1.125rem);
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  .hero__credit {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--muted);
   }
 
   .hero__ctas {
@@ -180,6 +200,10 @@ const CTA_SECONDARY = {
 
   .hero__cta--secondary:hover {
     border-color: var(--ink);
+  }
+
+  .hero__cta--secondary:focus-visible {
+    outline-color: var(--tertiary);
   }
 
   /* ---- MEDIA PANEL ---- */

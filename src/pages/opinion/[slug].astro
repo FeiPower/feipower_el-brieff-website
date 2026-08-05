@@ -1,6 +1,7 @@
 ---
 export const prerender = false;
 
+import '../../styles/admin.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
@@ -14,6 +15,14 @@ import {
   isValidArticleForSeo,
   markdownToSafeParagraphHtml,
 } from '../../lib/editorial/seo.ts';
+
+function citationLabel(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+}
 
 const slug = Astro.params.slug;
 if (!slug) {
@@ -95,8 +104,12 @@ const publishedLabel = content.publishedAt
                 <li>
                   <p>{citation.claim}</p>
                   <p class="admin-meta">{citation.excerpt}</p>
-                  <a href={citation.sourceUrl} rel="noopener noreferrer">
-                    {citation.sourceUrl}
+                  <a
+                    href={citation.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {citationLabel(citation.sourceUrl)}
                   </a>
                 </li>
               ))}
