@@ -18,10 +18,10 @@ const description =
     <section class="about-hero" aria-labelledby="about-brand">
       <div class="about-hero__inner">
         <p class="about-hero__eyebrow">Acerca de</p>
-        <h1 class="about-hero__wordmark" id="about-brand">
-          <span>EL</span>
-          <span>BRI</span>
-          <span>EFF</span>
+        <h1 class="about-hero__wordmark" id="about-brand" aria-label="El Brieff">
+          <span aria-hidden="true">EL</span>
+          <span aria-hidden="true">BRI</span>
+          <span aria-hidden="true">EFF</span>
         </h1>
         <p class="about-hero__pitch">{site.pitch}</p>
       </div>
@@ -37,6 +37,7 @@ const description =
             width="819"
             height="1024"
             decoding="async"
+            loading="lazy"
           />
         </div>
         <div class="about-host__copy">
@@ -74,6 +75,7 @@ const description =
             <dd>
               <a
                 href={site.social.instagram}
+                target="_blank"
                 rel="noopener noreferrer"
                 data-analytics-event="social_outbound"
                 data-analytics-network="instagram"
@@ -117,7 +119,7 @@ const description =
   .about-hero {
     padding: calc(4.5rem + var(--space-lg)) var(--space-md) var(--space-xl);
     background:
-      radial-gradient(ellipse 70% 50% at 30% 20%, #1a2420 0%, transparent 55%),
+      radial-gradient(ellipse 70% 50% at 30% 20%, var(--surface-elevated) 0%, transparent 55%),
       var(--primary);
     border-bottom: 1px solid var(--border);
   }

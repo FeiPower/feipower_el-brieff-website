@@ -237,7 +237,7 @@ a:hover {
 }
 
 .admin-error {
-  color: #f0b7b7;
+  color: var(--color-error);
 }
 
 .admin-success {
@@ -246,7 +246,7 @@ a:hover {
   border: 1px solid var(--tertiary);
   border-radius: var(--radius-sm);
   color: var(--ink);
-  background: rgba(120, 160, 138, 0.15);
+  background: color-mix(in srgb, var(--tertiary) 15%, transparent);
 }
 
 .admin-form__actions {
