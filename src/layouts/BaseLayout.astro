@@ -29,7 +29,10 @@ const ogImageUrl = new URL(ogImagePath, site.siteUrl).href;
 const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 const hasGa = typeof gaId === 'string' && gaId.trim().length > 0;
 const pathname = Astro.url.pathname;
-const analyticsEnabled = hasGa && !pathname.startsWith('/admin');
+const analyticsEnabled =
+  hasGa &&
+  !pathname.startsWith('/admin') &&
+  !pathname.startsWith('/opinion/');
 const debugGa = Astro.url.searchParams.has('debug_ga');
 ---
 

@@ -1,14 +1,14 @@
 # Operación editorial (una persona) — El Brieff
 
-Actualizado: 2026-08-04T20:24:00-06:00 (Ideal remediations F-8-1 / F-5-1 / F-6-1 + smoke). Entorno: Node 22.16, Wrangler 4.118, Astro 7.1.6, D1 local `el-brieff-editorial`, `agents@0.20.1`.
+Actualizado: 2026-08-04T21:00:00-06:00 (Ideal remediations F-4-1 / F-6b-1 / F-2-1 / F-7-1). Entorno: Node 22.16, Wrangler 4.118, Astro 7.1.6, D1 local `el-brieff-editorial`, `agents@0.20.1`.
 
 ## Límite de entrega CMS vs Phase-3
 
-- **CMS plan package surface:** `agents` (Approval Gate vía remediación Ideal F-4-1). No incluye `qrcode`.
+- **CMS plan package surface:** `agents@0.20.1` — **Approval Gate confirmado** en remediación Ideal (usuario: “Continúa con tus remediaciones ideales”, 2026-08-04). No incluye `qrcode` ni `@types/node`.
 - **CMS commit surface (Ideal):** incluir solo Expected Artifacts del plan CMS + excepciones listadas abajo. Al abrir PR CMS, **no** mezclar Phase-3/media-kit/DESIGN/Hero/About/analytics.
 - **Phase-3 / media-kit / GA4 (paralelo en working tree):** pueden coexistir en la rama local, pero **no** forman parte de Expected Artifacts del plan CMS. Regenerar QR es opcional (`node scripts/generate-media-kit-qr.mjs` tras instalar `qrcode` solo en un PR Phase-3). Analytics (`src/lib/analytics/**`, gtag) pertenece al plan GA4 — no a artículos CMS.
 - **Guardrail artículo público:** `/opinion/[slug]` sin client JavaScript (remediación Ideal F-5-1). Tracking de lectura de artículo, si se reactiva, vive en el plan GA4 con excepción explícita al Guardrail CMS.
-- **Excepciones de artefactos CMS aprobadas en remediación:** `src/lib/integrations/delivery.ts`, `src/pages/api/admin/agent.ts`, `tests/integrations/delivery.test.ts`, `tests/agents/sdk-integration.test.ts`, `tests/editorial/publish-api.test.ts`.
+- **Excepciones de artefactos CMS aprobadas en remediación (F-2-1):** `src/lib/integrations/delivery.ts`, `src/lib/agents/inference.ts`, `src/pages/api/admin/agent.ts`, `tests/integrations/delivery.test.ts`, `tests/agents/sdk-integration.test.ts`, `tests/agents/inference.test.ts`, `tests/editorial/publish-api.test.ts`, `tsconfig.editorial.json`.
 
 ### Checklist PR CMS (aislar Phase-3)
 
@@ -73,27 +73,32 @@ Secretos solo vía `wrangler secret` (nunca en git): `RESEND_API_KEY`, `RESEND_W
 ## Asistente (Agents SDK)
 
 - Clase `EditorialAgent` extiende `Agent` del paquete `agents` (Durable Object + estado SQLite).
+- **ADR-4 / Ideal F-4-1:** el paso de borrador llama `env.AI.run(model, …, { gateway: { id: env.AI_GATEWAY_ID } })` vía `src/lib/agents/inference.ts`. Workers AI es el default (`@cf/meta/llama-3.1-8b-instruct`). Modelos externos requieren `allowExternalModel: true` y no pueden ver contexto `confidential`.
+- Fallo de proveedor → borrador fallback + `inference` audit `degraded` (no crea delivery).
 - Borrador sin efecto: `POST /api/admin/agent` con `{ brief }` → `runBrief`.
 - Efecto externo: `action: "requestTool"` → `needs_approval`; luego `action: "approveTool"` con la misma identidad Access.
 - Rutas `/agents/*` también pasan por Access allowlist + `routeAgentRequest`.
-- Auditoría de prompt/modelo/citas/aprobaciones en D1 `audit_events` (`entity_type=agent_session`).
+- Auditoría de prompt/modelo/citas/aprobaciones/inference en D1 `audit_events` (`entity_type=agent_session`).
 
 ## Bindings locales declarados
 
-`EDITORIAL_DB`, `EDITORIAL_DOCUMENTS`, `KNOWLEDGE_INDEX`, `AI`, `EDITORIAL_QUEUE`, `EDITORIAL_WORKFLOW`, `EDITORIAL_AGENT`, más `EMAIL`, `RATE_LIMIT`, `ASSETS`.
+`EDITORIAL_DB`, `EDITORIAL_DOCUMENTS`, `KNOWLEDGE_INDEX`, `AI`, `AI_GATEWAY_ID`, `EDITORIAL_QUEUE`, `EDITORIAL_WORKFLOW`, `EDITORIAL_AGENT`, más `EMAIL`, `RATE_LIMIT`, `ASSETS`.
 
 ## Verificación registrada (local)
 
 | Check | Resultado | Timestamp / nota |
 |-------|-----------|------------------|
-| `npm run test` | pass (38) | 2026-08-04T20:23 local |
-| `npm run build` | exit 0 | 2026-08-04T20:23 local (F-8-1: stop leftover `astro dev`/`wrangler dev` locking `dist/server/.wrangler/tmp/email`) |
+| `npm run test` | pass (41) | 2026-08-04T21:00 local (+ inference suite) |
+| `npm run build` | exit 0 | 2026-08-04T21:00 local |
+| `npm run editorial:typecheck` | exit 0 | 2026-08-04T21:00 (`tsconfig.editorial.json`, sin `@types/node`) |
 | `npx wrangler d1 execute el-brieff-editorial --local --file=migrations/0001_editorial.sql` | 18 commands success | 2026-08-04 local |
 | RSS builder / live feeds | well-formed XML + live 200 | unit + wrangler smoke |
-| Package surface | `agents` present; `qrcode` absent; article pages **sin** client JS analytics | Ideal F-5-1 |
+| Package surface | `agents` present; `qrcode` absent; article pages **sin** client JS analytics | Ideal F-5-1 / F-7-1 |
 | CMS vs Phase-3 boundary | checklist PR CMS documentada arriba | Ideal F-6-1 |
+| AI Gateway draft path | unit tests assert `gateway.id` | Ideal F-4-1 |
 | Preview routes `/`, `/admin/`, feeds | see smoke section below | 2026-08-04T20:24 wrangler `:8787` |
-| Rich Results / Lighthouse / Access staging / sandbox Resend+LinkedIn | **bloqueados** | Approval Gates |
+| Admin viewport screenshots (1280/390) | **pendiente** | F-3-1 MANUAL |
+| Rich Results / Lighthouse / Access staging / sandbox Resend+LinkedIn | **bloqueados** | Approval Gates / F-3-2 / F-3-3 / F-8-1 |
 
 ### Smoke preview (local) — recorded 2026-08-04T20:24
 

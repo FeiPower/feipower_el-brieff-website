@@ -30,7 +30,7 @@ type D1PreparedStatementLike = {
   bind: (...values: unknown[]) => D1PreparedStatementLike;
   first: <T = unknown>() => Promise<T | null>;
   all: <T = unknown>() => Promise<{ results: T[] }>;
-  run: () => Promise<unknown>;
+  run: () => Promise<{ success?: boolean; meta?: { changes?: number } }>;
 };
 
 type D1DatabaseLike = {
@@ -139,6 +139,41 @@ declare namespace Cloudflare {
   interface Env extends CloudflareEnv {}
 }
 
+/** Minimal Worker runtime globals when @cloudflare/workers-types is not installed. */
+interface ExecutionContext {
+  waitUntil(promise: Promise<unknown>): void;
+  passThroughOnException(): void;
+}
+
+interface ExportedHandler<Env = unknown> {
+  fetch?: (
+    request: Request,
+    env: Env,
+    ctx: ExecutionContext,
+  ) => Response | Promise<Response>;
+}
+
 declare module 'cloudflare:workers' {
   export const env: CloudflareEnv;
+
+  export class WorkflowEntrypoint<
+    Env = unknown,
+    Params extends Record<string, unknown> = Record<string, unknown>,
+  > {
+    protected env: Env;
+    run(
+      event: WorkflowEvent<Params>,
+      step: WorkflowStep,
+    ): Promise<unknown>;
+  }
+
+  export interface WorkflowEvent<Params = Record<string, unknown>> {
+    payload: Params;
+    timestamp: Date;
+    instanceId: string;
+  }
+
+  export interface WorkflowStep {
+    do<T>(name: string, callback: () => Promise<T>): Promise<T>;
+  }
 }

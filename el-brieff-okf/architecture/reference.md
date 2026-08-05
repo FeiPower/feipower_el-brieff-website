@@ -44,6 +44,7 @@ Browser
        ├─ Admin: /admin/* (Cloudflare Access + allowlist)
        ├─ APIs: /api/media-kit, /api/admin/articles, /api/admin/publish
        ├─ Persistence: D1 EDITORIAL_DB, R2 EDITORIAL_DOCUMENTS, Vectorize KNOWLEDGE_INDEX
+       ├─ Inference: Workers AI via AI Gateway (`AI` + `AI_GATEWAY_ID`; external models gated by sensitivity)
        ├─ Agent: EDITORIAL_AGENT (`agents` SDK Agent class) + EDITORIAL_WORKFLOW (approval-gated)
        └─ Outbound (approved only): Resend, LinkedIn; Meta/Substack automation NOT implemented
 ```

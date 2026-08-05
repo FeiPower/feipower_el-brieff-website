@@ -19,7 +19,6 @@ import {
   type EditorialStatus,
   type PublicationRequest,
 } from '../../../lib/editorial/contracts.ts';
-import { executeApprovedChannelDelivery } from '../../../lib/integrations/delivery.ts';
 import { articleCanonicalUrl } from '../../../lib/editorial/seo.ts';
 
 export const prerender = false;
@@ -218,9 +217,6 @@ export const POST: APIRoute = async ({ request }) => {
       }
     }
 
-    let delivery:
-      | { channel: string; status: string; providerId: string | null }
-      | undefined;
     let workflowId: string | undefined;
 
     if (
@@ -248,8 +244,7 @@ export const POST: APIRoute = async ({ request }) => {
         );
       }
 
-      try {
-        const instance = await env.EDITORIAL_WORKFLOW.create({
+      const instance = await env.EDITORIAL_WORKFLOW.create({
           id: `wf_${requestRow.idempotencyKey}`,
           params: {
             publicationRequestId: requestRow.id,
@@ -260,36 +255,13 @@ export const POST: APIRoute = async ({ request }) => {
             model: '@cf/meta/llama-3.1-8b-instruct',
             contentItemId: content.id,
           },
-        });
-        workflowId = instance.id;
-      } catch {
-        await repository.recordAuditEvent({
-          entityType: 'publication_request',
-          entityId: requestRow.id,
-          action: 'workflow_create_failed_inline_fallback',
-          actorId,
-          payload: { channel: requestRow.channel },
-        });
-      }
-
-      const result = await executeApprovedChannelDelivery({
-        repository,
-        env,
-        publicationRequest: requestRow,
-        content,
-        actorEmail: actorId,
-        allowSandboxWithoutCredentials: true,
       });
-      delivery = {
-        channel: result.channel,
-        status: result.status,
-        providerId: result.providerId,
-      };
+      workflowId = instance.id;
     }
 
     return json(
-      { ok: true, content, publicationRequest, delivery, workflowId },
-      200,
+      { ok: true, content, publicationRequest, workflowId },
+      workflowId ? 202 : 200,
     );
   } catch (error) {
     if (error instanceof NotFoundError) {

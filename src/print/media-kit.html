@@ -40,14 +40,6 @@
         font-display: swap;
       }
 
-      @font-face {
-        font-family: 'Caveat';
-        src: url('../../public/media-kit/fonts/caveat-500.woff2') format('woff2');
-        font-weight: 500;
-        font-style: normal;
-        font-display: swap;
-      }
-
       @page {
         size: A4;
         margin: 0;
@@ -180,15 +172,6 @@
         position: relative;
         z-index: var(--z-content);
         align-self: center;
-      }
-
-      .cover__producer {
-        display: block;
-        margin-bottom: var(--space-md);
-        font-family: 'Caveat', 'Segoe Print', cursive;
-        font-size: 24pt;
-        line-height: 1;
-        text-align: right;
       }
 
       .cover__wordmark {
@@ -560,11 +543,6 @@
         color: var(--tertiary);
       }
 
-      .script {
-        font-family: 'Caveat', 'Segoe Print', cursive;
-        font-size: 13pt;
-      }
-
       @media screen and (max-width: 820px) {
         html {
           background: var(--surface-page);
@@ -590,10 +568,6 @@
 
         .cover__wordmark {
           font-size: clamp(34pt, 15vw, 54pt);
-        }
-
-        .cover__producer {
-          font-size: 18pt;
         }
 
         .cover__portrait {
@@ -722,7 +696,6 @@
       </div>
       <div class="cover__hero">
         <div class="cover__identity" role="img" aria-label="El Brieff">
-          <span class="cover__producer" aria-hidden="true">Brieffy</span>
           <span class="cover__wordmark" aria-hidden="true">
             <span>EL</span>
             <span>BRI</span>
@@ -731,10 +704,10 @@
         </div>
         <img
           class="cover__portrait"
-          src="../../public/create-a-photorealistic-editorial-portrait-of-the-.png"
+          src="../../public/arturo-cut-out.png"
           alt="Recorte editorial de Arturo Salazar con saco azul"
-          width="819"
-          height="1024"
+          width="1024"
+          height="1280"
         />
       </div>
       <div class="cover__bottom">
@@ -808,7 +781,7 @@
               </div>
               <div class="row">
                 <dt>Productora</dt>
-                <dd><span class="script">Brieffy</span></dd>
+                <dd>Brieffy</dd>
               </div>
             </dl>
           </aside>

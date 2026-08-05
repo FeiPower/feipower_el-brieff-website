@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { webcrypto } from 'node:crypto';
 import { describe, it } from 'node:test';
 import {
   ProviderError,
@@ -82,20 +83,45 @@ describe('resend adapter', () => {
     assert.equal(creates, 0);
   });
 
-  it('verifies signed webhook path', () => {
+  it('verifies current signed Svix webhook payloads only', async () => {
+    const secret = 'whsec_c2FuZGJveC1zZWNyZXQ=';
+    const rawBody = '{"type":"broadcast.sent"}';
+    const svixId = 'msg_test_123';
+    const now = new Date('2026-08-04T21:20:00.000Z');
+    const svixTimestamp = String(Math.floor(now.getTime() / 1000));
+    const key = await webcrypto.subtle.importKey(
+      'raw',
+      new TextEncoder().encode('sandbox-secret'),
+      { name: 'HMAC', hash: 'SHA-256' },
+      false,
+      ['sign'],
+    );
+    const signatureBytes = await webcrypto.subtle.sign(
+      'HMAC',
+      key,
+      new TextEncoder().encode(`${svixId}.${svixTimestamp}.${rawBody}`),
+    );
+    const signature = Buffer.from(signatureBytes).toString('base64');
+
     assert.equal(
-      verifyResendWebhookSignature({
-        rawBody: '{}',
-        signatureHeader: 'abc',
-        secret: 'abc',
+      await verifyResendWebhookSignature({
+        rawBody,
+        svixId,
+        svixTimestamp,
+        svixSignature: `v1,${signature}`,
+        secret,
+        now,
       }),
       true,
     );
     assert.equal(
-      verifyResendWebhookSignature({
-        rawBody: '{}',
-        signatureHeader: 'abc',
-        secret: 'xyz',
+      await verifyResendWebhookSignature({
+        rawBody,
+        svixId,
+        svixTimestamp,
+        svixSignature: 'v1,invalid',
+        secret,
+        now,
       }),
       false,
     );

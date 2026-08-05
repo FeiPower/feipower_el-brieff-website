@@ -15,12 +15,14 @@ import {
   createInitialAgentState,
   executeApprovedSideEffect,
   persistAgentAuditEntries,
+  recordInferenceAudit,
   requestSideEffectTool,
   type EditorialAgentState,
   type EditorialPublishParams,
   type SideEffectTool,
 } from './workflows.ts';
-import type { RetrievalResult } from '../knowledge/retrieval.ts';
+import { generateEditorialDraft } from './inference.ts';
+import { retrieveKnowledge } from '../knowledge/retrieval.ts';
 import { EditorialRepository } from '../editorial/repository.ts';
 import { executeApprovedChannelDelivery } from '../integrations/delivery.ts';
 import {
@@ -35,8 +37,10 @@ export {
   createInitialAgentState,
   executeApprovedSideEffect,
   persistAgentAuditEntries,
+  recordInferenceAudit,
   requestSideEffectTool,
 } from './workflows.ts';
+export { generateEditorialDraft } from './inference.ts';
 
 export type EditorialAgentPersistedState = {
   sessionId: string;
@@ -168,6 +172,9 @@ export class EditorialAgent extends Agent<
   Cloudflare.Env,
   EditorialAgentPersistedState
 > {
+  /** Runtime env from Agents SDK / Durable Object — declared for strict local tsc. */
+  declare env: Cloudflare.Env;
+
   override initialState: EditorialAgentPersistedState = { ...EMPTY_AGENT_STATE };
 
   /**
@@ -177,8 +184,9 @@ export class EditorialAgent extends Agent<
   async runBrief(input: {
     brief: string;
     actorEmail: string;
-    retrieval?: RetrievalResult;
     sessionId?: string;
+    /** Defaults false — confidential knowledge stays on Workers AI + gateway. */
+    allowExternalModel?: boolean;
   }): Promise<{
     ok: true;
     sessionId: string;
@@ -187,6 +195,8 @@ export class EditorialAgent extends Agent<
     draftMarkdown: string;
     citations: EditorialAgentState['citations'];
     auditPersisted: number;
+    routedViaGateway: boolean;
+    inferenceDegraded: boolean;
   }> {
     let state = createInitialAgentState({
       brief: input.brief,
@@ -194,19 +204,54 @@ export class EditorialAgent extends Agent<
       sessionId: input.sessionId || this.name || undefined,
     });
 
-    for (let i = 0; i < 5; i += 1) {
-      state = advanceAgentWorkflow(
-        state,
-        i === 2 ? input.retrieval : undefined,
-      );
-    }
+    const allowExternalModel = input.allowExternalModel === true;
+    const repository = new EditorialRepository(this.env.EDITORIAL_DB);
+    const retrieval = await retrieveKnowledge({
+      repository,
+      vectorize: this.env.KNOWLEDGE_INDEX,
+      query: {
+        text: input.brief,
+        actorSensitivity: 'internal',
+        allowExternalModel,
+      },
+    });
+
+    // brief → research_plan → retrieval (approved catalog) → fact_matrix
+    state = advanceAgentWorkflow(state);
+    state = advanceAgentWorkflow(state);
+    state = advanceAgentWorkflow(state, retrieval);
+
+    const documentSensitivities = retrieval.documents.map(
+      (document) => document.sensitivity,
+    );
+    const inference = await generateEditorialDraft({
+      ai: this.env.AI,
+      gatewayId: this.env.AI_GATEWAY_ID,
+      model: state.model,
+      promptVersion: state.promptVersion,
+      brief: state.brief,
+      citations: state.citations,
+      allowExternalModel,
+      documentSensitivities,
+    });
+    state = recordInferenceAudit(state, {
+      routedViaGateway: inference.routedViaGateway,
+      degraded: inference.degraded,
+      reason: inference.reason,
+      prompt: inference.prompt,
+      model: state.model,
+      promptVersion: state.promptVersion,
+    });
+
+    // fact_matrix → draft (AI/gateway text) → citation_tone_check
+    state = advanceAgentWorkflow(state, undefined, inference.draftMarkdown);
+    state = advanceAgentWorkflow(state);
 
     this.setState({
       ...toPersistedState(state),
       pendingTool: null,
     });
 
-    const repository = new EditorialRepository(this.env.EDITORIAL_DB);
     const auditPersisted = await persistAgentAuditEntries({
       repository,
       state,
@@ -220,6 +265,8 @@ export class EditorialAgent extends Agent<
       draftMarkdown: state.draftMarkdown,
       citations: state.citations,
       auditPersisted,
+      routedViaGateway: inference.routedViaGateway,
+      inferenceDegraded: inference.degraded,
     };
   }
 
@@ -387,7 +434,6 @@ export class EditorialAgent extends Agent<
       action?: 'runBrief' | 'requestTool' | 'approveTool';
       brief?: string;
       actorEmail?: string;
-      retrieval?: RetrievalResult;
       tool?: SideEffectTool;
       sessionId?: string;
     };
@@ -419,7 +465,6 @@ export class EditorialAgent extends Agent<
         await this.runBrief({
           brief: body.brief,
           actorEmail: body.actorEmail,
-          retrieval: body.retrieval,
           sessionId: body.sessionId,
         }),
       );

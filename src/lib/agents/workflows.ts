@@ -107,27 +107,37 @@ export function createInitialAgentState(input: {
   };
 }
 
+export function buildFallbackDraftMarkdown(
+  brief: string,
+  citations: Citation[],
+): string {
+  return [
+    '# Borrador',
+    '',
+    brief,
+    '',
+    ...citations.map(
+      (citation, index) =>
+        `${index + 1}. ${citation.claim} — ${citation.sourceUrl}`,
+    ),
+  ].join('\n');
+}
+
 export function advanceAgentWorkflow(
   state: EditorialAgentState,
   retrieval?: RetrievalResult,
+  draftOverride?: string,
 ): EditorialAgentState {
   const index = WORKFLOW_STEPS.indexOf(state.step);
   const nextStep =
     WORKFLOW_STEPS[Math.min(index + 1, WORKFLOW_STEPS.length - 1)] ?? state.step;
   const citations = retrieval?.citations ?? state.citations;
-  const draftMarkdown =
-    state.step === 'fact_matrix' || state.step === 'draft'
-      ? [
-          `# Borrador`,
-          ``,
-          state.brief,
-          ``,
-          ...citations.map(
-            (citation, i) =>
-              `${i + 1}. ${citation.claim} — ${citation.sourceUrl}`,
-          ),
-        ].join('\n')
-      : state.draftMarkdown;
+  const shouldMaterializeDraft =
+    state.step === 'fact_matrix' || state.step === 'draft';
+  const draftMarkdown = shouldMaterializeDraft
+    ? (draftOverride ??
+      buildFallbackDraftMarkdown(state.brief, citations))
+    : state.draftMarkdown;
 
   return {
     ...state,
@@ -144,6 +154,36 @@ export function advanceAgentWorkflow(
         citations: citations.map((citation) => citation.id),
         model: state.model,
         promptVersion: state.promptVersion,
+        draftSource: draftOverride ? 'ai_gateway' : shouldMaterializeDraft ? 'fallback' : undefined,
+      },
+    ],
+  };
+}
+
+export function recordInferenceAudit(
+  state: EditorialAgentState,
+  inference: {
+    routedViaGateway: boolean;
+    degraded: boolean;
+    reason?: string;
+    prompt: string;
+    model: string;
+    promptVersion: string;
+  },
+): EditorialAgentState {
+  return {
+    ...state,
+    audit: [
+      ...state.audit,
+      {
+        action: 'inference',
+        routedViaGateway: inference.routedViaGateway,
+        degraded: inference.degraded,
+        reason: inference.reason,
+        prompt: inference.prompt,
+        model: inference.model,
+        promptVersion: inference.promptVersion,
+        citations: state.citations.map((citation) => citation.id),
       },
     ],
   };

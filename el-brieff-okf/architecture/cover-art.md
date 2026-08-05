@@ -27,8 +27,8 @@ sources:
 
 - Fondo: carbón verdoso `#121C16` (no negro puro).
 - Izquierda: wordmark **EL / BRI / EFF** en sans geométrica extrabold blanca, tracking amplio.
-- Arriba derecha: firma **Brieffy** en script blanco.
 - Derecha: retrato de Arturo Salazar (blazer navy, camisa azul clara, pañuelo verde).
+- Sin firma / logo de Brieffy en el asset.
 
 # Usage rules
 

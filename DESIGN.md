@@ -20,18 +20,17 @@ brand_attributes:
 cover_asset: "elbrieff-cover.png"
 cover_composition:
   format: "1:1"
-  layout: "Tipografía apilada EL / BRI / EFF a la izquierda; retrato del conductor a la derecha; firma Brieffy en script arriba a la derecha"
+  layout: "Tipografía apilada EL / BRI / EFF a la izquierda; retrato del conductor a la derecha"
   background: "Carbón verdoso profundo (#121C16), no negro puro"
   wordmark: "Sans geométrica extrabold, blanca, tracking amplio, tres líneas"
-  producer_mark: "Brieffy en script/cursive blanco"
 approved_variants:
   media_kit_cover:
     status: "approved"
     source: "src/print/media-kit.html"
     purpose: "Portada vertical A4 para el kit de prensa"
-    composition: "Lockup EL / BRI / EFF a la izquierda, firma Brieffy arriba y retrato editorial de Arturo a la derecha sobre carbón verdoso"
+    composition: "Lockup EL / BRI / EFF a la izquierda y retrato editorial de Arturo a la derecha sobre carbón verdoso"
     constraints:
-      - "Mantener la paleta, el wordmark apilado y la firma de la portada canónica"
+      - "Mantener la paleta y el wordmark apilado de la portada canónica"
       - "Usar únicamente retratos editoriales aprobados de Arturo Salazar"
       - "No reemplaza el asset canónico en plataformas, OG ni hero web"
 
@@ -59,11 +58,6 @@ typography:
     letterSpacing: "0.06em"
     textTransform: uppercase
     notes: "Composición EL / BRI / EFF en tres líneas; no aplastar el tracking"
-  producer-script:
-    fontFamily: "Caveat"       # proxy del script Brieffy en portada; sustituir si hay font propietaria
-    fontSize: "1.25rem"
-    fontWeight: 500
-    notes: "Solo para la marca Brieffy / firma productora; no usar en body"
   h1:
     fontFamily: "Montserrat"
     fontSize: "3rem"

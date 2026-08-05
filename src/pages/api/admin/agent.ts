@@ -6,7 +6,6 @@ import {
   resolveAccessIdentity,
 } from '../../../lib/editorial/validation.ts';
 import type { SideEffectTool } from '../../../lib/agents/workflows.ts';
-import type { RetrievalResult } from '../../../lib/knowledge/retrieval.ts';
 
 export const prerender = false;
 
@@ -14,8 +13,8 @@ type AgentStub = {
   runBrief: (input: {
     brief: string;
     actorEmail: string;
-    retrieval?: RetrievalResult;
     sessionId?: string;
+    allowExternalModel?: boolean;
   }) => Promise<unknown>;
   requestTool: (input: {
     actorEmail: string;
@@ -52,7 +51,7 @@ export const POST: APIRoute = async ({ request }) => {
     sessionId?: unknown;
     brief?: unknown;
     tool?: unknown;
-    retrieval?: unknown;
+    allowExternalModel?: unknown;
   };
   try {
     payload = (await request.json()) as typeof payload;
@@ -120,10 +119,7 @@ export const POST: APIRoute = async ({ request }) => {
       brief: payload.brief,
       actorEmail: identity.email,
       sessionId,
-      retrieval:
-        payload.retrieval && typeof payload.retrieval === 'object'
-          ? (payload.retrieval as RetrievalResult)
-          : undefined,
+      allowExternalModel: payload.allowExternalModel === true,
     });
     return json(result, 200);
   } catch (error) {

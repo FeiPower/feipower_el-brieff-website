@@ -1,0 +1,72 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "el-brieff-editorial-local",
+  "main": "src/lib/agents/editorial-agent.ts",
+  "compatibility_date": "2026-08-03",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": ["/api/*", "/agents/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "EDITORIAL_DB",
+      "database_name": "el-brieff-editorial",
+      "database_id": "00000000-0000-4000-8000-000000000001",
+      "preview_database_id": "el-brieff-editorial-local"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "EDITORIAL_DOCUMENTS",
+      "bucket_name": "el-brieff-editorial-documents-local",
+      "preview_bucket_name": "el-brieff-editorial-documents-preview"
+    }
+  ],
+  "vectorize": [
+    {
+      "binding": "KNOWLEDGE_INDEX",
+      "index_name": "el-brieff-knowledge-local"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "vars": {
+    "AI_GATEWAY_ID": "local-editorial-gateway",
+    "ACCESS_ALLOWED_EMAILS": "arturo@strtgy.ai",
+    "EDITORIAL_DEV_ACTOR_EMAIL": "arturo@strtgy.ai"
+  },
+  "queues": {
+    "producers": [
+      {
+        "binding": "EDITORIAL_QUEUE",
+        "queue": "el-brieff-editorial-delivery-local"
+      }
+    ]
+  },
+  "workflows": [
+    {
+      "binding": "EDITORIAL_WORKFLOW",
+      "name": "el-brieff-editorial-publish-local",
+      "class_name": "EditorialPublishWorkflow"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "EDITORIAL_AGENT",
+        "class_name": "EditorialAgent"
+      }
+    ]
+  },
+  "exports": {
+    "EditorialAgent": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    }
+  }
+}

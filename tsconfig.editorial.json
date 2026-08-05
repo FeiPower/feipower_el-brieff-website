@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    ".astro/types.d.ts",
+    "src/**/*",
+    "migrations/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "tests",
+    "node_modules",
+    "src/lib/analytics/**/*",
+    "src/scripts/**/*"
+  ]
+}
