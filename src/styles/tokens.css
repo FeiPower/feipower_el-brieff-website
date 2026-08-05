@@ -9,7 +9,7 @@
   /* Cover-derived accents — tertiary allowed for hero primary listen CTA only */
   /* --secondary: #566899; blazer navy */
   --tertiary: #78a08a; /* pañuelo — sage primary CTA */
-  /* --accent: #a0bfe5; camisa / soft highlight */
+  --accent: #a0bfe5;   /* camisa / soft highlight — links, admin focus */
 
   --surface: var(--primary);
   --surface-light: #f5f6f7;

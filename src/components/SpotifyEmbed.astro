@@ -26,6 +26,7 @@ const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm
       {' '}
       <a
         href={site.spotify.showUrl}
+        target="_blank"
         rel="noopener noreferrer"
         data-analytics-event="listen_cta"
         data-analytics-cta-id="abrir_spotify_fallback"
@@ -34,21 +35,6 @@ const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm
         {FALLBACK_LINK_LABEL}
       </a>
     </p>
-    <noscript>
-      <p class="spotify-embed__fallback">
-        {FALLBACK_HELPER}
-        {' '}
-        <a
-          href={site.spotify.showUrl}
-          rel="noopener noreferrer"
-          data-analytics-event="listen_cta"
-          data-analytics-cta-id="abrir_spotify_fallback"
-          data-analytics-cta-location="listen_zone"
-        >
-          {FALLBACK_LINK_LABEL}
-        </a>
-      </p>
-    </noscript>
   </div>
 </section>
 

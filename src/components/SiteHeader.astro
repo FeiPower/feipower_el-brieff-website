@@ -1,5 +1,10 @@
 ---
 import { site } from '../config/site';
+
+const pathname = Astro.url.pathname;
+const isHome = pathname === '/';
+const isAbout = pathname.startsWith('/about');
+const isPress = pathname.startsWith('/media-kit');
 ---
 
 <header class="site-header">
@@ -8,7 +13,11 @@ import { site } from '../config/site';
       {site.name}
     </a>
     <nav class="site-header__nav" aria-label="Principal">
-      <a class="site-header__link" href="/">Inicio</a>
+      <a
+        class="site-header__link"
+        href="/"
+        aria-current={isHome ? 'page' : undefined}
+      >Inicio</a>
       <a
         class="site-header__link"
         href="/#escuchar"
@@ -18,8 +27,16 @@ import { site } from '../config/site';
       >
         Escuchar
       </a>
-      <a class="site-header__link" href="/about">Acerca</a>
-      <a class="site-header__link" href="/media-kit">Prensa</a>
+      <a
+        class="site-header__link"
+        href="/about"
+        aria-current={isAbout ? 'page' : undefined}
+      >Acerca</a>
+      <a
+        class="site-header__link"
+        href="/media-kit"
+        aria-current={isPress ? 'page' : undefined}
+      >Prensa</a>
     </nav>
   </div>
 </header>
