@@ -48,13 +48,6 @@ const showHeaderBrand = !isHome && !isAbout;
       >
         Acerca
       </a>
-      <a
-        class="site-header__link"
-        href="/media-kit"
-        aria-current={pathname.startsWith('/media-kit') ? 'page' : undefined}
-      >
-        Prensa
-      </a>
     </nav>
   </div>
 </header>
@@ -119,7 +112,7 @@ const showHeaderBrand = !isHome && !isAbout;
     }
   }
 
-  /* Brand plus four links needs ~476px of rail, so it only earns its place
+  /* Brand plus three links needs ~400px of rail, so it only earns its place
      from 560px up. Below that the page's own heading carries identity and
      "Inicio" stays the home link. */
   @media (max-width: 559px) {
