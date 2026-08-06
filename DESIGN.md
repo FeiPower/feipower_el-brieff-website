@@ -20,10 +20,24 @@ brand_attributes:
 cover_asset: "elbrieff-cover.png"
 cover_composition:
   format: "1:1"
-  layout: "Tipografía apilada EL / BRI / EFF a la izquierda; retrato del conductor a la derecha; firma Brieffy en script arriba a la derecha"
+  layout: "Tipografía apilada EL / BRI / EFF a la izquierda; retrato del conductor a la derecha; firma Brieffy (SVG) arriba a la derecha"
   background: "Carbón verdoso profundo (#121C16), no negro puro"
   wordmark: "Sans geométrica extrabold, blanca, tracking amplio, tres líneas"
-  producer_mark: "Brieffy en script/cursive blanco"
+  producer_mark: "public/brieffy-logo.svg — wordmark Brieffy (firma productora)"
+  producer_logo:
+    source: "public/brieffy-logo.svg"
+    purpose: "Marca productora Brieffy; sustituye cualquier proxy tipográfico (Caveat)"
+    config_key: "site.producer.logo → /brieffy-logo.svg"
+    usage:
+      - "Sello de crédito en SiteFooter (Producción por + mark)"
+      - "Fila Producción en /about Hechos"
+      - "Firma en portada y datos del media kit PDF"
+    do:
+      - "Usar el SVG real; no aproximar con Caveat ni otra script"
+      - "Mantener el mark en blanco sobre superficies oscuras"
+    dont:
+      - "Usar Caveat u otra cursiva como sustituto de la marca Brieffy"
+      - "Escalar el mark por encima del wordmark El Brieff en el mismo viewport"
 
 # Logo canónico del podcast (UI / favicon / schema)
 logo_asset: "public/el-brieff-logo-compact.svg"
@@ -75,7 +89,7 @@ colors:
   # Extraídos / alineados a elbrieff-cover.png
   primary: "#121C16"      # fondo de portada (carbón verdoso)
   secondary: "#566899"    # navy del blazer (acento de vestimenta / UI secundaria)
-  tertiary: "#78A08A"     # verde del pañuelo (acento de marca puntual)
+  tertiary: "#8BB09A"     # verde del pañuelo (CTA fill; ≥7:1 vs ink-on-light)
   accent: "#A0BFE5"       # azul camisa (links / highlights suaves)
   ink: "#FFFFFF"          # tipografía principal sobre primary
   muted: "#A3ACA8"        # metadatos sobre dark (≥7:1 AAA vs primary)
@@ -95,11 +109,10 @@ typography:
     letterSpacing: "0.06em"
     textTransform: uppercase
     notes: "Composición EL / BRI / EFF en tres líneas; no aplastar el tracking"
-  producer-script:
-    fontFamily: "Caveat"       # proxy del script Brieffy en portada; sustituir si hay font propietaria
-    fontSize: "1.25rem"
-    fontWeight: 500
-    notes: "Solo para la marca Brieffy / firma productora; no usar en body"
+  producer-mark:
+    asset: "public/brieffy-logo.svg"
+    height: "1.25rem (meta/footer); ~14pt en media kit facts; ~42mm en cover PDF"
+    notes: "Solo para la marca Brieffy / firma productora; no usar tipografía script como proxy"
   h1:
     fontFamily: "Montserrat"
     fontSize: "3rem"

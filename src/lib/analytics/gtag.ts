@@ -27,6 +27,7 @@ export type CtaLocation =
 export type CtaId =
   | 'escuchar_ahora'
   | 'abrir_spotify_fallback'
+  | 'cargar_spotify_embed'
   | 'nav_escuchar';
 
 export type PlatformId = 'spotify' | 'apple' | 'deezer' | 'iheart' | 'radionet';

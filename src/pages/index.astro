@@ -28,7 +28,8 @@ const description =
   <main id="contenido">
     <Hero />
     <SpotifyEmbed />
-    <PlatformLinks />
+    {/* Spotify lives in #escuchar — keep this list to alternate platforms only. */}
+    <PlatformLinks exclude={['spotify']} />
     <p class="home-opinion-link">
       <a href="/opinion/">Leer columnas de opinión</a>
     </p>

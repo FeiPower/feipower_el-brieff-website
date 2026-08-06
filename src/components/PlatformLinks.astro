@@ -1,17 +1,26 @@
 ---
 import { site } from '../config/site';
-import type { CtaLocation } from '../lib/analytics/gtag.ts';
+import type { CtaLocation, PlatformId } from '../lib/analytics/gtag.ts';
 
 type Props = {
   heading?: string;
   ctaLocation?: CtaLocation;
+  /** Omit platforms already owned by an adjacent primary surface (e.g. Spotify embed). */
+  exclude?: PlatformId[];
 };
 
-const { heading = 'También en', ctaLocation = 'platform_links' } = Astro.props;
+const {
+  heading = 'También en',
+  ctaLocation = 'platform_links',
+  exclude = [],
+} = Astro.props;
+
+const excludeSet = new Set(exclude);
+const platforms = site.platforms.filter((platform) => !excludeSet.has(platform.id));
 ---
 
 {
-  site.platforms.length > 0 && (
+  platforms.length > 0 && (
     <section class="platform-links" aria-labelledby="platform-links-heading">
       <div class="platform-links__inner">
         <h2 class="platform-links__heading" id="platform-links-heading">
@@ -19,7 +28,7 @@ const { heading = 'También en', ctaLocation = 'platform_links' } = Astro.props;
         </h2>
         <ul class="platform-links__list">
           {
-            site.platforms.map((platform, index) => (
+            platforms.map((platform, index) => (
               <li class="platform-links__item">
                 {index > 0 && (
                   <span class="platform-links__sep" aria-hidden="true">

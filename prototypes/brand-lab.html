@@ -7,7 +7,7 @@
   <meta name="description" content="Sistema visual editorial de El Brieff: podcast diario de noticias y análisis breve conducido por Arturo Salazar." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Montserrat:wght@600;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       /* Eje de marca: portada bitono */
@@ -36,7 +36,6 @@
 
       --font-display: "Montserrat", sans-serif;
       --font-body: "Source Sans 3", sans-serif;
-      --font-script: "Caveat", cursive;
 
       --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
       --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -390,12 +389,10 @@
       display: block;
     }
 
-    .type-sample--script {
+    .type-sample--producer {
       margin: 0;
-      font-family: var(--font-script);
-      font-size: 2rem;
-      font-weight: 500;
-      line-height: 1.2;
+      height: 2rem;
+      width: auto;
     }
 
     .type-sample--h1 {
@@ -796,7 +793,7 @@
         <div class="section__head">
           <h2 class="section__title" id="type-title">Tipografía</h2>
           <p class="section__copy">
-            Montserrat para wordmark y titulares. Source Sans 3 para cuerpo. Caveat solo para la firma Brieffy.
+            Montserrat para wordmark y titulares. Source Sans 3 para cuerpo. Marca productora: SVG Brieffy (`public/brieffy-logo.svg`).
           </p>
         </div>
         <div class="type-stack">
@@ -814,11 +811,17 @@
           </div>
           <div class="type-row">
             <div class="type-row__meta">
-              <span>Producer script</span>
-              <span>Caveat 500</span>
+              <span>Producer mark</span>
+              <span>brieffy-logo.svg</span>
               <span>solo Brieffy</span>
             </div>
-            <p class="type-sample--script">Brieffy</p>
+            <img
+              class="type-sample--producer"
+              src="../public/brieffy-logo.svg"
+              alt="Brieffy"
+              width="1119"
+              height="499"
+            />
           </div>
           <div class="type-row">
             <div class="type-row__meta">
@@ -882,7 +885,7 @@
               <ul>
                 <li>Fondo carbón verdoso (#121C16), no negro puro.</li>
                 <li>Wordmark EL / BRI / EFF en sans extrabold blanca a la izquierda.</li>
-                <li>Firma script Brieffy arriba a la derecha.</li>
+                <li>Firma Brieffy (SVG) arriba a la derecha.</li>
                 <li>Retrato de Arturo Salazar a la derecha, solapando el wordmark.</li>
               </ul>
             </div>

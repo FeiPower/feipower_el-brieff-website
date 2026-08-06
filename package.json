@@ -16,12 +16,12 @@
     "media-kit:pdf": "node scripts/media-kit-pdf.mjs",
     "optimize:hero": "node scripts/optimize-hero-image.mjs",
     "optimize:about": "node scripts/optimize-about-image.mjs",
+    "optimize:cover": "node scripts/optimize-cover-image.mjs",
     "editorial:typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test tests/**/*.test.ts"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.1.7",
-    "@fontsource/caveat": "^5.3.0",
     "@fontsource/montserrat": "^5.3.0",
     "@fontsource/source-sans-3": "^5.3.0",
     "agents": "^0.20.1",

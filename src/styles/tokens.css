@@ -8,7 +8,7 @@
 
   /* Cover-derived accents — tertiary allowed for hero primary listen CTA only */
   /* --secondary: #566899; blazer navy */
-  --tertiary: #78a08a; /* pañuelo — sage primary CTA */
+  --tertiary: #8bb09a; /* pañuelo sage — CTA fill; ≥7:1 with --ink-on-light (AAA) */
   --accent: #a0bfe5; /* camisa / soft highlight for links */
 
   --surface: var(--primary);
@@ -17,7 +17,23 @@
 
   --font-display: 'Montserrat', sans-serif;
   --font-body: 'Source Sans 3', sans-serif;
-  --font-script: 'Caveat', cursive;
+
+  /* Type roles — purpose names; sizes align to DESIGN.md + chrome meta */
+  --text-body: 1rem;
+  --text-meta: 0.9375rem;
+  --text-label: 0.75rem;
+  /* Height of the Brieffy SVG mark when inlined next to meta copy */
+  --text-producer: 1.25rem;
+
+  --leading-body: 1.5;
+  /* Meta lines that may include the producer mark need a bit of vertical room */
+  --leading-meta: 1.4;
+
+  --tracking-meta: 0.015em;
+  --tracking-label: 0.08em;
+
+  --weight-body: 400;
+  --weight-label: 600;
 
   --radius-sm: 4px;
   --radius-md: 10px;

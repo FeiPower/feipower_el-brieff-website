@@ -149,7 +149,7 @@ Sistema visual editorial para un podcast de noticias y análisis breve conducido
   - Wordmark stack: EL / BRI / EFF (3 líneas), tracking 0.06em, Extrabold.
 - **Titulares (H1, H2):** Montserrat, Bold/Extrabold, High contrast.
 - **Cuerpo (Body):** Source Sans 3 (o Humanist Sans), legible, 16px base.
-- **Firma "Brieffy":** Caveat (o Script elegante), solo para marca productora.
+- **Firma Brieffy:** `public/brieffy-logo.svg` (wordmark SVG), solo para marca productora.
 
 ## Componentes y Estilo
 - **Radios:** 4px (sm), 10px (md), 16px (lg).

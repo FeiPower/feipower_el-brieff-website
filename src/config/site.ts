@@ -15,12 +15,15 @@ export type SiteConfig = {
     bioShort: string;
     bioLong: string;
   };
-  producer: { name: 'Brieffy' };
+  producer: { name: 'Brieffy'; logo: '/brieffy-logo.svg' };
   spotify: {
     showId: '20HgvkIWtkxDP44PguN1Wi';
     showUrl: 'https://open.spotify.com/show/20HgvkIWtkxDP44PguN1Wi';
     embedTheme: '0';
-    embedHeight: 352;
+    /** Idle 1:1 cover plane (px) — matches podcast art, no landscape crop. */
+    embedFacadeHeight: number;
+    /** Loaded Spotify chrome — compact so the frame isn’t a hollow void. */
+    embedPlayerHeight: number;
   };
   platforms: PlatformLink[];
   social: { instagram: 'https://www.instagram.com/elbrieff/' };
@@ -57,7 +60,7 @@ export const site: SiteConfig = {
   locale: 'es-MX',
   name: 'El Brieff',
   /* One benefit line. Host, handle and schedule live on /about — repeating
-     them here only slows the scan that should end at Escuchar ahora. */
+     them here only slows the scan that should end at Ir a Escuchar → Escuchar ahora. */
   pitch: 'Lo importante de México y el mundo, en 15 minutos.',
   host: {
     name: 'Arturo Salazar Bazúa',
@@ -67,12 +70,14 @@ export const site: SiteConfig = {
   },
   producer: {
     name: 'Brieffy',
+    logo: '/brieffy-logo.svg',
   },
   spotify: {
     showId: '20HgvkIWtkxDP44PguN1Wi',
     showUrl: 'https://open.spotify.com/show/20HgvkIWtkxDP44PguN1Wi',
     embedTheme: '0',
-    embedHeight: 352,
+    embedFacadeHeight: 352,
+    embedPlayerHeight: 152,
   },
   platforms: [
     {

@@ -3,7 +3,6 @@
 @import '@fontsource/montserrat/800.css';
 @import '@fontsource/source-sans-3/400.css';
 @import '@fontsource/source-sans-3/600.css';
-@import '@fontsource/caveat/500.css';
 @import './tokens.css';
 
 *,
@@ -40,9 +39,9 @@ body {
   background-color: var(--primary);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
+  font-size: var(--text-body);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
 }
 

@@ -4,6 +4,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import PlatformLinks from '../components/PlatformLinks.astro';
 import JsonLd from '../components/JsonLd.astro';
+import BrieffyMark from '../components/BrieffyMark.astro';
 import { site } from '../config/site';
 import { ABOUT_IMAGE } from '../lib/about-image';
 
@@ -18,7 +19,6 @@ const description =
   <main id="contenido">
     <section class="about-hero" aria-labelledby="about-brand">
       <div class="about-hero__inner">
-        <p class="about-hero__eyebrow">Acerca de</p>
         <h1 class="about-hero__wordmark" id="about-brand">
           <img
             class="about-hero__logo"
@@ -87,7 +87,9 @@ const description =
           </div>
           <div class="about-facts__row">
             <dt>Producción</dt>
-            <dd>{site.producer.name}</dd>
+            <dd>
+              <BrieffyMark class="about-facts__producer" />
+            </dd>
           </div>
           <div class="about-facts__row">
             <dt>Instagram</dt>
@@ -106,9 +108,6 @@ const description =
             </dd>
           </div>
         </dl>
-        <p class="about-facts__producer">
-          Producción por <span class="about-facts__producer-name">{site.producer.name}</span>
-        </p>
       </div>
     </section>
 
@@ -146,7 +145,7 @@ const description =
         transparent 55%
       ),
       var(--primary);
-    border-bottom: 1px solid var(--border);
+    border-block-end: 1px solid var(--border);
   }
 
   @media (min-width: 768px) {
@@ -159,16 +158,6 @@ const description =
   .about-hero__inner {
     max-width: 40rem;
     margin: 0 auto;
-  }
-
-  .about-hero__eyebrow {
-    margin: 0 0 var(--space-sm);
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
   }
 
   .about-hero__wordmark {
@@ -188,12 +177,13 @@ const description =
     margin: 0;
     font-size: 1.0625rem;
     line-height: 1.55;
+    letter-spacing: var(--tracking-meta);
     color: var(--muted);
   }
 
   .about-host {
     padding: var(--space-xl) var(--space-md);
-    border-bottom: 1px solid var(--border);
+    border-block-end: 1px solid var(--border);
   }
 
   @media (min-width: 768px) {
@@ -255,8 +245,8 @@ const description =
   .about-host__handle {
     margin: 0 0 var(--space-lg);
     font-family: var(--font-display);
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: var(--text-meta);
+    font-weight: var(--weight-label);
     letter-spacing: 0.04em;
     color: var(--muted);
   }
@@ -270,7 +260,7 @@ const description =
 
   .about-facts {
     padding: var(--space-xl) var(--space-md);
-    border-bottom: 1px solid var(--border);
+    border-block-end: 1px solid var(--border);
   }
 
   @media (min-width: 768px) {
@@ -287,7 +277,7 @@ const description =
   .about-facts__heading {
     margin: 0 0 var(--space-lg);
     padding-bottom: var(--space-sm);
-    border-bottom: 1px solid var(--border);
+    border-block-end: 1px solid var(--border);
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 4vw, 2rem);
     font-weight: 600;
@@ -304,14 +294,14 @@ const description =
     grid-template-columns: 7rem 1fr;
     gap: var(--space-md);
     padding: var(--space-sm) 0;
-    border-bottom: 1px solid var(--border);
+    border-block-end: 1px solid var(--border);
   }
 
   .about-facts__row dt {
     font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
+    font-size: var(--text-label);
+    font-weight: var(--weight-label);
+    letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     color: var(--muted);
   }
@@ -321,25 +311,18 @@ const description =
     color: var(--ink);
   }
 
+  .about-facts__row dd :global(.about-facts__producer) {
+    --producer-mark-h: 1.125rem;
+  }
+
   .about-facts__row a {
     color: var(--ink);
   }
 
-  .about-facts__producer {
-    margin: var(--space-lg) 0 0;
-    font-size: 0.9375rem;
-    color: var(--muted);
-  }
-
-  .about-facts__producer-name {
-    font-family: var(--font-script);
-    font-size: 1.25rem;
-    color: var(--ink);
-  }
-
   .about-cta {
-    padding: var(--space-xl) var(--space-md) calc(var(--space-xl) * 1.5);
-    border-top: 1px solid var(--border);
+    padding-block: var(--space-xl);
+    padding-inline: var(--space-md);
+    border-block-start: 1px solid var(--border);
   }
 
   .about-cta__inner {
@@ -368,9 +351,9 @@ const description =
     min-height: 2.75rem;
     padding: var(--space-sm) var(--space-lg);
     font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-size: var(--text-label);
+    font-weight: var(--weight-label);
+    letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     text-decoration: none;
     border-radius: var(--radius-sm);
@@ -383,5 +366,10 @@ const description =
     background: transparent;
     color: var(--ink);
     text-decoration: none;
+  }
+
+  .about-cta__link:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
   }
 </style>

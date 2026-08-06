@@ -1,0 +1,28 @@
+---
+import { site } from '../config/site';
+
+type Props = {
+  class?: string;
+};
+
+const { class: className } = Astro.props as Props;
+const producerName = site.producer.name.trim() || 'Brieffy';
+---
+
+<img
+  class:list={['brieffy-mark', className]}
+  src={site.producer.logo}
+  alt={producerName}
+  width="1119"
+  height="499"
+  decoding="async"
+/>
+
+<style>
+  .brieffy-mark {
+    display: inline-block;
+    height: var(--producer-mark-h, 1.25rem);
+    width: auto;
+    vertical-align: -0.2em;
+  }
+</style>

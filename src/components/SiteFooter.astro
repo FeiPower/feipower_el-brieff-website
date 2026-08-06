@@ -1,38 +1,54 @@
 ---
 import { site } from '../config/site';
+import BrieffyMark from './BrieffyMark.astro';
+
+const producerName = site.producer.name.trim();
 ---
 
-<footer class="site-footer">
-  <div class="site-footer__inner">
-    <p class="site-footer__credit">
-      Producción por
-      <span class="site-footer__producer">{site.producer.name}</span>
-    </p>
-  </div>
-</footer>
+{
+  producerName ? (
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <p class="site-footer__credit">
+          Producción por{' '}
+          <BrieffyMark class="site-footer__producer" />
+        </p>
+      </div>
+    </footer>
+  ) : null
+}
 
 <style>
   .site-footer {
-    border-top: 1px solid var(--border);
-    padding: var(--space-xl) var(--space-md);
+    border-block-start: 1px solid var(--border);
+    padding-top: var(--space-xl);
+    padding-bottom: max(var(--space-xl), env(safe-area-inset-bottom, 0px));
+    padding-left: max(var(--space-md), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--space-md), env(safe-area-inset-right, 0px));
   }
 
   .site-footer__inner {
     max-width: 72rem;
-    margin: 0 auto;
+    margin-inline: auto;
     text-align: center;
   }
 
   .site-footer__credit {
-    margin: 0;
+    margin-block: 0;
+    margin-inline: auto;
+    max-width: 40rem;
     font-family: var(--font-body);
-    font-size: 0.875rem;
+    font-size: var(--text-meta);
+    font-weight: var(--weight-body);
+    line-height: var(--leading-meta);
+    letter-spacing: var(--tracking-meta);
     color: var(--muted);
+    overflow-wrap: break-word;
   }
 
-  .site-footer__producer {
-    font-family: var(--font-script);
-    font-size: 1.25rem;
-    color: var(--ink);
+  .site-footer__credit :global(.site-footer__producer) {
+    --producer-mark-h: 1.35rem;
+    margin-inline-start: 0.2em;
+    vertical-align: -0.28em;
   }
 </style>
