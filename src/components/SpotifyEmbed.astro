@@ -11,7 +11,7 @@ const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm
   <div class="spotify-embed__inner">
     <h2 class="spotify-embed__heading" id="escuchar-heading">{LISTEN_HEADING}</h2>
     <iframe
-      style="border-radius:12px"
+      class="spotify-embed__frame"
       src={embedSrc}
       width="100%"
       height={site.spotify.embedHeight}
@@ -26,12 +26,14 @@ const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm
       {' '}
       <a
         href={site.spotify.showUrl}
+        target="_blank"
         rel="noopener noreferrer"
         data-analytics-event="listen_cta"
         data-analytics-cta-id="abrir_spotify_fallback"
         data-analytics-cta-location="listen_zone"
       >
         {FALLBACK_LINK_LABEL}
+        <span class="visually-hidden"> (se abre en una pestaña nueva)</span>
       </a>
     </p>
     <noscript>
@@ -40,12 +42,14 @@ const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm
         {' '}
         <a
           href={site.spotify.showUrl}
+          target="_blank"
           rel="noopener noreferrer"
           data-analytics-event="listen_cta"
           data-analytics-cta-id="abrir_spotify_fallback"
           data-analytics-cta-location="listen_zone"
         >
           {FALLBACK_LINK_LABEL}
+          <span class="visually-hidden"> (se abre en una pestaña nueva)</span>
         </a>
       </p>
     </noscript>
@@ -54,7 +58,7 @@ const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm
 
 <style>
   .spotify-embed {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: calc(var(--header-h) + var(--space-md));
     padding: var(--space-xl) var(--space-md) calc(var(--space-xl) * 1.5);
     border-top: 1px solid var(--border);
   }
@@ -75,6 +79,14 @@ const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm
     color: var(--ink);
   }
 
+  .spotify-embed__frame {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: var(--surface-elevated);
+  }
+
   .spotify-embed__fallback {
     margin: var(--space-md) 0 0;
     font-size: 0.9375rem;
@@ -82,6 +94,10 @@ const embedSrc = `https://open.spotify.com/embed/show/${site.spotify.showId}?utm
   }
 
   .spotify-embed__fallback a {
+    color: var(--accent);
+  }
+
+  .spotify-embed__fallback a:hover {
     color: var(--ink);
   }
 </style>

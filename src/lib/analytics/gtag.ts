@@ -26,7 +26,6 @@ export type CtaLocation =
 
 export type CtaId =
   | 'escuchar_ahora'
-  | 'abrir_spotify'
   | 'abrir_spotify_fallback'
   | 'nav_escuchar';
 

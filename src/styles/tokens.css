@@ -2,14 +2,14 @@
   /* Bitono UI surface; hero primary listen CTA uses --tertiary (Phase 2) */
   --primary: #121c16;
   --ink: #ffffff;
-  --muted: #9aa3a0;
+  --muted: #a3aca8;
   --surface-elevated: #1a2420;
   --border: #2a3530;
 
   /* Cover-derived accents — tertiary allowed for hero primary listen CTA only */
   /* --secondary: #566899; blazer navy */
   --tertiary: #78a08a; /* pañuelo — sage primary CTA */
-  /* --accent: #a0bfe5; camisa / soft highlight */
+  --accent: #a0bfe5; /* camisa / soft highlight for links */
 
   --surface: var(--primary);
   --surface-light: #f5f6f7;
@@ -29,6 +29,22 @@
   --space-lg: 24px;
   --space-xl: 32px;
 
+  /* Single row of 2.75rem links plus --space-md of padding above and below.
+     Every page offsets its first block by this instead of guessing. */
+  --header-h: 4.75rem;
+
+  /* Semantic stacking order; never write raw z-index values */
+  --z-raised: 1;
+  --z-header: 20;
+  --z-skip-link: 100;
+
   --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-fade: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 768px) {
+  :root {
+    /* Header padding opens up to --space-lg from this breakpoint */
+    --header-h: 5.75rem;
+  }
 }

@@ -23,24 +23,27 @@ const description =
 
 <BaseLayout title={title} description={description} canonicalPath="/opinion/">
   <SiteHeader />
-  <main id="contenido" class="admin-shell">
-    <header class="admin-header">
-      <p class="admin-kicker">Archivo editorial</p>
+  <main id="contenido" class="editorial-shell">
+    <header class="editorial-header">
+      <p class="editorial-kicker">Archivo editorial</p>
       <h1>Opinión</h1>
-      <p class="admin-meta">{site.host.name}</p>
+      <p class="editorial-meta">{site.host.name}</p>
     </header>
 
     {
       published.length === 0 ? (
-        <p class="admin-empty">Aún no hay columnas publicadas.</p>
+        <p class="editorial-empty">
+          Aún no hay columnas publicadas. Vuelve pronto o{' '}
+          <a href="/#escuchar">escucha el podcast</a>.
+        </p>
       ) : (
         <ul class="opinion-list">
           {published.map((item) => (
-            <li>
-              <a href={articleCanonicalPath(item.slug)}>
+            <li class="opinion-list__item">
+              <a class="opinion-list__title" href={articleCanonicalPath(item.slug)}>
                 <h2>{item.title}</h2>
               </a>
-              <p class="admin-meta">
+              <p class="editorial-meta">
                 <time datetime={item.publishedAt ?? undefined}>
                   {item.publishedAt
                     ? new Date(item.publishedAt).toLocaleDateString('es-MX', {
@@ -51,7 +54,7 @@ const description =
                     : ''}
                 </time>
               </p>
-              <p>{item.summary}</p>
+              <p class="opinion-list__summary">{item.summary}</p>
             </li>
           ))}
         </ul>
@@ -67,20 +70,43 @@ const description =
     margin: 0;
     padding: 0;
     display: grid;
-    gap: var(--space-xl);
+    /* Generous separation between entries; tight cluster inside each item */
+    gap: calc(var(--space-xl) + var(--space-md));
   }
 
-  .opinion-list h2 {
-    margin: 0 0 var(--space-sm);
-    font-family: var(--font-display);
-    font-size: 1.5rem;
+  .opinion-list__item {
+    display: grid;
+    gap: var(--space-sm);
   }
 
-  .opinion-list a {
+  .opinion-list__title {
     text-decoration: none;
   }
 
-  .opinion-list a:hover h2 {
+  .opinion-list__title h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+
+  .opinion-list__title:hover h2 {
     color: var(--accent);
+  }
+
+  .opinion-list__title:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  .opinion-list__summary {
+    margin: 0;
+    max-width: 65ch;
+    color: var(--ink);
+    line-height: 1.55;
+    text-wrap: pretty;
   }
 </style>

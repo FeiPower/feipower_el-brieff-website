@@ -24,7 +24,43 @@ cover_composition:
   background: "Carbón verdoso profundo (#121C16), no negro puro"
   wordmark: "Sans geométrica extrabold, blanca, tracking amplio, tres líneas"
   producer_mark: "Brieffy en script/cursive blanco"
+
+# Logo canónico del podcast (UI / favicon / schema)
+logo_asset: "public/el-brieff-logo-compact.svg"
+logo:
+  status: "approved"
+  source: "public/el-brieff-logo-compact.svg"
+  purpose: "Marca tipográfica oficial EL / BRI / EFF para hero, chrome, favicon y logo de schema.org"
+  format: "SVG vectorial"
+  composition: "Wordmark apilado EL / BRI / EFF en blanco (#FEFEFE) sobre fondo transparente; lockup compacto sin letterbox"
+  config_key: "site.logo → /el-brieff-logo-compact.svg"
+  related:
+    stacked_export: "public/el-brieff-logo.svg — exportación apilada alternativa; no es el logo de UI"
+  usage:
+    - "Señal de marca del hero web y del hero de /about (img SVG; no tipografía HTML seleccionable)"
+    - "Favicon del sitio (image/svg+xml) — glifos claros; se lee sobre chrome oscuro / tema del navegador"
+    - "Brand mark en SiteHeader fuera de home y /about (esas páginas ya llevan el logo en su hero)"
+    - "publisher.logo en JSON-LD de artículos"
+  constraints:
+    - "Usar el-brieff-logo-compact.svg en todos los aplicativos del sitio (no el-brieff-logo.svg)"
+    - "Fondo transparente: solo tinta clara; el color de superficie lo aporta el layout (primary)"
+    - "No duplicar el logo en header + hero en home ni /about"
+    - "No sustituir el logo SVG por tipografía HTML EL/BRI/EFF seleccionable en hero ni /about"
+    - "No sustituye elbrieff-cover.png en plataformas de podcast, OG ni share cards"
+    - "No añadir plate/fondo al SVG maestro; no recolorear a tinta oscura sin variante aprobada"
+    - "Escalar preservando aspect ratio; no aplastar el stacking EL/BRI/EFF"
+
 approved_variants:
+  web_hero_cutout:
+    status: "approved"
+    source: "public/arturo-cover-cut-out.png"
+    purpose: "Retrato cut-out para el hero web (logo SVG + presencia humana)"
+    composition: "Retrato de Arturo sobre negro, sin wordmark ni firma Brieffy en el raster; el lockup tipográfico es public/el-brieff-logo-compact.svg"
+    constraints:
+      - "Usar solo en el hero web junto a el-brieff-logo-compact.svg; no sustituye elbrieff-cover.png en plataformas/OG"
+      - "Mantener un solo plano de fondo (primary); evitar cajas o fills que dupliquen el carbón verdoso"
+      - "Servir variantes responsivas AVIF/WebP desde public/hero/ (npm run optimize:hero); PNG solo como fallback"
+      - "No reemplaza el asset canónico en plataformas, OG ni share cards"
   media_kit_cover:
     status: "approved"
     source: "src/print/media-kit.html"
@@ -33,7 +69,7 @@ approved_variants:
     constraints:
       - "Mantener la paleta, el wordmark apilado y la firma de la portada canónica"
       - "Usar únicamente retratos editoriales aprobados de Arturo Salazar"
-      - "No reemplaza el asset canónico en plataformas, OG ni hero web"
+      - "No reemplaza el asset canónico en plataformas, OG ni share cards"
 
 colors:
   # Extraídos / alineados a elbrieff-cover.png
@@ -42,7 +78,7 @@ colors:
   tertiary: "#78A08A"     # verde del pañuelo (acento de marca puntual)
   accent: "#A0BFE5"       # azul camisa (links / highlights suaves)
   ink: "#FFFFFF"          # tipografía principal sobre primary
-  muted: "#9AA3A0"        # metadatos sobre dark
+  muted: "#A3ACA8"        # metadatos sobre dark (≥7:1 AAA vs primary)
   surface: "#121C16"      # superficie base del sitio (cover-first)
   surface-elevated: "#1A2420"
   border: "#2A3530"
@@ -100,16 +136,21 @@ spacing:
 
 visual_system:
   style: "Editorial digital cover-first"
-  imagery: "Portada canónica elbrieff-cover.png; retratos sobrios del conductor; tipografía apilada como señal de marca; evitar collages que compitan con el wordmark"
-  composition: "Alto contraste tipográfico sobre fondo oscuro; wordmark como ancla; retrato como presencia humana; módulos limpios debajo del hero"
+  imagery: "Logo canónico el-brieff-logo-compact.svg; portada elbrieff-cover.png; retratos sobrios del conductor; tipografía apilada como señal de marca; evitar collages que compitan con el wordmark"
+  composition: "Alto contraste tipográfico sobre fondo oscuro; logo o wordmark como ancla; retrato como presencia humana; módulos limpios debajo del hero"
   mood: "Inteligente, directo, confiable, contemporáneo"
   do:
-    - "Tratar elbrieff-cover.png como asset de marca canónico (plataformas, OG, hero)"
+    - "Tratar public/el-brieff-logo-compact.svg como logo canónico (header, favicon, schema logo)"
+    - "Tratar elbrieff-cover.png como asset de marca canónico para plataformas, OG y share cards"
+    - "En el hero web, usar arturo-cover-cut-out.png + el-brieff-logo-compact.svg (composición cover-first)"
     - "Priorizar legibilidad y contraste blanco-sobre-primary"
-    - "Usar titulares cortos y contundentes; respetar el stacking EL/BRI/EFF cuando se cite el wordmark"
+    - "Usar titulares cortos y contundentes; respetar el stacking EL/BRI/EFF del logo"
     - "Mantener consistencia en formatos de portada y assets sociales"
   dont:
-    - "Sustituir la portada por mockups genéricos o stock"
+    - "Sustituir la portada canónica en plataformas/OG por mockups genéricos o stock"
+    - "Duplicar el logo (header + hero) en el mismo viewport"
+    - "Reemplazar el logo SVG del hero con tipografía HTML seleccionable EL/BRI/EFF"
+    - "Usar el logo SVG como og:image o portada de plataformas"
     - "Fondos claros como default de marca (solo superficies light auxiliares)"
     - "Acentos rojo/azul genéricos ajenos a la portada"
     - "Exceso de textura, grunge o paletas cálidas/nostálgicas"

@@ -40,6 +40,9 @@ export type SiteConfig = {
     syndicationPath: '/syndication.xml';
     agentApiPath: '/api/admin/agent';
   };
+  /** Stacked EL/BRI/EFF mark — chrome, favicon, schema logo */
+  logo: '/el-brieff-logo-compact.svg';
+  /** Cover art for OG / platforms / share cards (not the UI logo) */
   ogImage: '/elbrieff-cover.png';
 };
 
@@ -53,8 +56,9 @@ export const site: SiteConfig = {
   siteUrl: 'https://el-brieff.strtgy.ai',
   locale: 'es-MX',
   name: 'El Brieff',
-  pitch:
-    'Somos el podcast que te ayuda a informarte en 15 minutos al día con los temas de conversación más importantes de México y el mundo, conducido por Arturo Salazar (@elchearturo) y publicado de lunes a viernes.',
+  /* One benefit line. Host, handle and schedule live on /about — repeating
+     them here only slows the scan that should end at Escuchar ahora. */
+  pitch: 'Lo importante de México y el mundo, en 15 minutos.',
   host: {
     name: 'Arturo Salazar Bazúa',
     alternateName: '@elchearturo',
@@ -115,5 +119,6 @@ export const site: SiteConfig = {
     syndicationPath: '/syndication.xml',
     agentApiPath: '/api/admin/agent',
   },
+  logo: '/el-brieff-logo-compact.svg',
   ogImage: '/elbrieff-cover.png',
 };

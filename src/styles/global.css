@@ -16,6 +16,24 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -53,7 +71,7 @@ a:hover {
   position: absolute;
   left: var(--space-md);
   top: -100%;
-  z-index: 100;
+  z-index: var(--z-skip-link);
   padding: var(--space-sm) var(--space-md);
   background: var(--ink);
   color: var(--primary);
@@ -70,7 +88,67 @@ a:hover {
   top: var(--space-md);
 }
 
-/* Admin console — desktop-first editorial shell (Task 3) */
+/* Public editorial reading column (opinión archive + article) */
+.editorial-shell {
+  width: min(40rem, calc(100% - 2 * var(--space-md)));
+  margin: 0 auto;
+  padding: calc(var(--header-h) + var(--space-lg)) var(--space-md)
+    calc(var(--space-xl) * 2);
+}
+
+@media (min-width: 768px) {
+  .editorial-shell {
+    width: min(40rem, calc(100% - 2 * var(--space-xl)));
+    padding-inline: var(--space-xl);
+  }
+}
+
+.editorial-header {
+  margin-bottom: calc(var(--space-xl) + var(--space-md));
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--border);
+}
+
+.editorial-kicker {
+  margin: 0 0 var(--space-sm);
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.editorial-header h1 {
+  margin: 0 0 var(--space-md);
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.editorial-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.editorial-meta a {
+  color: var(--accent);
+}
+
+.editorial-empty {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.editorial-empty a {
+  color: var(--accent);
+}
+
+/* Admin console — desktop-first shell (Task 3); not for public pages */
 .admin-shell {
   width: min(1120px, calc(100% - 2 * var(--space-lg)));
   margin: 0 auto;

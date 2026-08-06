@@ -1,14 +1,37 @@
 ---
 import { site } from '../config/site';
+
+const pathname = Astro.url.pathname;
+const isHome = pathname === '/' || pathname === '';
+const isAbout = pathname.startsWith('/about');
+/* Home and /about already lead with the logo mark; skip a second copy in-header. */
+const showHeaderBrand = !isHome && !isAbout;
 ---
 
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="site-header__brand" href="/" aria-label={`${site.name} — inicio`}>
-      {site.name}
-    </a>
+    {
+      showHeaderBrand && (
+        <a class="site-header__brand" href="/" aria-label={`${site.name} — inicio`}>
+          <img
+            class="site-header__logo"
+            src={site.logo}
+            alt=""
+            width="47"
+            height="50"
+            decoding="async"
+          />
+        </a>
+      )
+    }
     <nav class="site-header__nav" aria-label="Principal">
-      <a class="site-header__link" href="/">Inicio</a>
+      <a
+        class="site-header__link"
+        href="/"
+        aria-current={isHome ? 'page' : undefined}
+      >
+        Inicio
+      </a>
       <a
         class="site-header__link"
         href="/#escuchar"
@@ -18,8 +41,20 @@ import { site } from '../config/site';
       >
         Escuchar
       </a>
-      <a class="site-header__link" href="/about">Acerca</a>
-      <a class="site-header__link" href="/media-kit">Prensa</a>
+      <a
+        class="site-header__link"
+        href="/about"
+        aria-current={pathname.startsWith('/about') ? 'page' : undefined}
+      >
+        Acerca
+      </a>
+      <a
+        class="site-header__link"
+        href="/media-kit"
+        aria-current={pathname.startsWith('/media-kit') ? 'page' : undefined}
+      >
+        Prensa
+      </a>
     </nav>
   </div>
 </header>
@@ -28,59 +63,120 @@ import { site } from '../config/site';
   .site-header {
     position: absolute;
     inset: 0 0 auto;
-    z-index: 20;
+    z-index: var(--z-header);
     background: transparent;
   }
 
+  /*
+   * Masthead, not a split bar: brand and nav read left-to-right on the same
+   * rail as the page content, which keeps them out of the hero's media half.
+   */
   .site-header__inner {
+    --nav-link-pad: var(--space-sm);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: var(--space-md);
     max-width: 72rem;
     margin: 0 auto;
-    padding: var(--space-md) var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  @media (max-width: 479px) {
+    .site-header__inner {
+      --nav-link-pad: var(--space-xs);
+    }
   }
 
   @media (min-width: 768px) {
     .site-header__inner {
+      --nav-link-pad: var(--space-md);
       padding: var(--space-lg) var(--space-xl);
     }
   }
 
   .site-header__brand {
-    font-family: var(--font-display);
-    font-size: 0.875rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    min-height: 2.75rem;
+    margin-inline-start: calc(-1 * var(--space-xs));
+    padding-inline: var(--space-xs);
     text-decoration: none;
     color: var(--ink);
-    opacity: 0.85;
+    opacity: 0.9;
   }
 
-  .site-header__brand:hover {
-    opacity: 1;
-    text-decoration: none;
+  .site-header__logo {
+    display: block;
+    width: auto;
+    height: 2.25rem;
+  }
+
+  @media (hover: hover) {
+    .site-header__brand:hover {
+      opacity: 1;
+      text-decoration: none;
+    }
+  }
+
+  /* Brand plus four links needs ~476px of rail, so it only earns its place
+     from 560px up. Below that the page's own heading carries identity and
+     "Inicio" stays the home link. */
+  @media (max-width: 559px) {
+    .site-header__brand {
+      display: none;
+    }
   }
 
   .site-header__nav {
     display: flex;
-    gap: var(--space-lg);
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  /* Optically align the first link's text with the content rail below it */
+  .site-header__nav:first-child {
+    margin-inline-start: calc(-1 * var(--nav-link-pad));
+  }
+
+  @media (min-width: 768px) {
+    .site-header__nav {
+      gap: var(--space-sm);
+    }
   }
 
   .site-header__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    padding-inline: var(--nav-link-pad);
     font-family: var(--font-display);
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
+    white-space: nowrap;
     color: var(--muted);
   }
 
-  .site-header__link:hover,
   .site-header__link[aria-current='page'] {
     color: var(--ink);
-    text-decoration: none;
+  }
+
+  @media (hover: hover) {
+    .site-header__link:hover {
+      color: var(--ink);
+      text-decoration: none;
+    }
+  }
+
+  .site-header__link:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
   }
 </style>

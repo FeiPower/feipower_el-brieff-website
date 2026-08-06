@@ -65,10 +65,10 @@ const publishedLabel = content.publishedAt
 >
   <JsonLd slot="head" graph={jsonLd} />
   <SiteHeader />
-  <main id="contenido" class="admin-shell article">
+  <main id="contenido" class="editorial-shell">
     <article>
-      <header class="admin-header">
-        <p class="admin-kicker">Opinión</p>
+      <header class="editorial-header">
+        <p class="editorial-kicker">Opinión</p>
         <h1>{content.title}</h1>
         <p class="byline">
           Por <span>{site.host.name}</span>
@@ -90,13 +90,19 @@ const publishedLabel = content.publishedAt
         citations.length > 0 && (
           <section class="article-sources" aria-labelledby="fuentes">
             <h2 id="fuentes">Fuentes</h2>
-            <ul>
+            <ul class="article-sources__list">
               {citations.map((citation) => (
-                <li>
-                  <p>{citation.claim}</p>
-                  <p class="admin-meta">{citation.excerpt}</p>
-                  <a href={citation.sourceUrl} rel="noopener noreferrer">
+                <li class="article-sources__item">
+                  <p class="article-sources__claim">{citation.claim}</p>
+                  <p class="editorial-meta">{citation.excerpt}</p>
+                  <a
+                    class="article-sources__link"
+                    href={citation.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {citation.sourceUrl}
+                    <span class="visually-hidden"> (se abre en una pestaña nueva)</span>
                   </a>
                 </li>
               ))}
@@ -110,32 +116,69 @@ const publishedLabel = content.publishedAt
 </BaseLayout>
 
 <style>
-  .byline,
-  .lede {
+  .byline {
+    margin: 0 0 var(--space-md);
     color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  .lede {
+    margin: 0;
+    max-width: 65ch;
+    color: var(--muted);
+    font-size: 1.125rem;
+    line-height: 1.55;
+    text-wrap: pretty;
   }
 
   .article-body {
-    margin-top: var(--space-xl);
     display: grid;
     gap: var(--space-md);
+    max-width: 65ch;
     font-size: 1.0625rem;
     line-height: 1.65;
   }
 
+  .article-body :global(p) {
+    margin: 0;
+  }
+
   .article-sources {
-    margin-top: var(--space-xl);
+    margin-top: calc(var(--space-xl) + var(--space-md));
     padding-top: var(--space-lg);
     border-top: 1px solid var(--border);
   }
 
   .article-sources h2 {
+    margin: 0 0 var(--space-lg);
     font-family: var(--font-display);
     font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.2;
   }
 
-  .article-sources ul {
-    padding-left: 1.1rem;
-    color: var(--muted);
+  .article-sources__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .article-sources__item {
+    display: grid;
+    gap: var(--space-sm);
+  }
+
+  .article-sources__claim {
+    margin: 0;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .article-sources__link {
+    color: var(--accent);
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 </style>

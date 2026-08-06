@@ -92,7 +92,7 @@ export function buildArticleJsonLd(input: ArticleSeoInput): ArticleJsonLd {
       name: site.producer.name,
       logo: {
         '@type': 'ImageObject',
-        url: new URL(site.ogImage, site.siteUrl).href,
+        url: new URL(site.logo, site.siteUrl).href,
       },
     },
     image: [imageUrl],
