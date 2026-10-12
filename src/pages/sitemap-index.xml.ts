@@ -15,7 +15,7 @@ export const GET: APIRoute = async () => {
     ? (await repository.listPublishedByKind('column')).filter(isValidArticleForSeo)
     : [];
 
-  const staticPaths = ['/', '/about/', '/opinion/'];
+  const staticPaths = ['/', '/about/', '/media-kit/', '/opinion/'];
   const urls = [
     ...staticPaths.map((path) => new URL(path, site.siteUrl).href),
     ...articles.map((item) => articleCanonicalUrl(item.slug)),

@@ -2,471 +2,952 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
-import PlatformLinks from '../components/PlatformLinks.astro';
+import { COVER_IMAGE } from '../lib/cover-image';
 import { site } from '../config/site';
 
-const title = `Media kit — ${site.name} | Prensa`;
+const title = `Media kit — ${site.name}`;
 const description =
-  'Solicita el media kit PDF de El Brieff: pitch, bio del conductor, plataformas y contacto de prensa.';
-const emailEnabled = site.features.mediaKitEmailEnabled;
+  'Patrocinio en El Brieff: audiencia de directivos y empresarios en México, menciones puntuales y paquetes mensuales. Tarifas de referencia de agosto de 2026.';
+
+const contactMailto = `mailto:${site.press.to}?subject=${encodeURIComponent('Publicidad en El Brieff')}`;
+const coverSizes = '(max-width: 899px) min(100vw - 3rem, 24rem), 24rem';
+
+const listenPlatforms = site.platforms.filter(
+  (platform) => platform.id === 'spotify' || platform.id === 'apple',
+);
+
+const facts = [
+  {
+    value: '1.8K+',
+    label: 'episodios publicados desde 2018',
+  },
+  {
+    value: '15 min',
+    label: 'para entender lo que mueve la conversación',
+  },
+  {
+    value: 'B2B',
+    label: 'directivos, dueños y tomadores de decisión',
+  },
+] as const;
+
+const personas = [
+  {
+    index: '01',
+    title: 'Dueños y fundadores',
+    copy: 'Empresarios que deciden sobre proveedores, inversión, crecimiento, talento y nuevas soluciones.',
+  },
+  {
+    index: '02',
+    title: 'Alta dirección',
+    copy: 'CEOs, directores generales y líderes de unidad con responsabilidad sobre estrategia y P&L.',
+  },
+  {
+    index: '03',
+    title: 'Líderes funcionales',
+    copy: 'Dirección comercial, finanzas, operaciones, marketing, tecnología, expansión y capital humano.',
+  },
+  {
+    index: '04',
+    title: 'Profesionales e inversionistas',
+    copy: 'Perfiles que siguen negocios, economía, política y mercados porque esa información afecta sus decisiones.',
+  },
+] as const;
+
+const decisions = [
+  'Software y tecnología',
+  'Servicios financieros',
+  'Consultoría',
+  'Proveedores empresariales',
+  'Talento',
+  'Educación ejecutiva',
+  'Movilidad',
+  'Viajes',
+  'Seguros',
+  'Inversión',
+] as const;
+
+const reasons = [
+  {
+    index: '01',
+    title: 'Confianza',
+    copy: 'El mensaje se entrega dentro de una relación editorial ya construida con la audiencia.',
+  },
+  {
+    index: '02',
+    title: 'Frecuencia',
+    copy: 'La naturaleza recurrente del podcast permite construir recordación sin depender de una sola impresión.',
+  },
+  {
+    index: '03',
+    title: 'Relevancia',
+    copy: 'Las marcas pueden hablarle a una audiencia profesional en el contexto de negocios, economía y actualidad.',
+  },
+] as const;
+
+const rates = [
+  {
+    name: 'Mención individual',
+    detail:
+      'Mención host-read de 45–60 segundos dentro de un episodio, con mensaje y CTA de la marca.',
+    price: '$4,000 MXN + IVA',
+  },
+  {
+    name: 'Mención premium',
+    detail:
+      'Integración host-read de 60–90 segundos, más natural y contextualizada para la audiencia de El Brieff.',
+    price: '$6,000 MXN + IVA',
+  },
+  {
+    name: 'Sponsor semanal',
+    detail:
+      'Presencia en 5 episodios durante una semana, con mención host-read de 45–60 segundos y CTA.',
+    price: '$20,000 MXN + IVA',
+  },
+] as const;
+
+const packages = [
+  {
+    name: 'Presencia',
+    price: '$45,000',
+    period: 'MXN + IVA / mes',
+    summary:
+      'Para marcas que quieren entrar a la rutina de El Brieff y medir afinidad con la audiencia.',
+    groups: [
+      {
+        title: 'Podcast',
+        items: [
+          '12 menciones host-read al mes',
+          '45–60 segundos por integración',
+          'CTA verbal de la marca',
+          'Liga en la descripción de cada episodio patrocinado',
+        ],
+      },
+      {
+        title: 'Producción',
+        items: [
+          'Adaptación del mensaje al tono de El Brieff',
+          'Una actualización de copy durante el mes',
+        ],
+      },
+    ],
+    note: 'Ideal para campañas de prueba, generación de leads o lanzamientos B2B.',
+    tag: 'Para probar afinidad',
+    featured: false,
+  },
+  {
+    name: 'Partner',
+    price: '$75,000',
+    period: 'MXN + IVA / mes',
+    summary:
+      'Presencia multicanal para construir frecuencia y recordación entre directivos y dueños de empresas.',
+    groups: [
+      {
+        title: 'Podcast',
+        items: [
+          '20 menciones host-read al mes',
+          '60–90 segundos por integración',
+          'CTA y liga en descripción',
+          'Posición preferencial dentro del episodio',
+        ],
+      },
+      {
+        title: 'Newsletter',
+        items: [
+          '2 integraciones patrocinadas al mes',
+          'Texto breve + CTA + enlace',
+        ],
+      },
+      {
+        title: 'Redes',
+        items: [
+          '2 menciones de marca al mes',
+          'Adaptación creativa al formato de El Brieff',
+        ],
+      },
+    ],
+    note: 'El mejor balance entre frecuencia, alcance multicanal y costo mensual.',
+    tag: 'Recomendado',
+    featured: true,
+  },
+  {
+    name: 'Presenting Sponsor',
+    price: '$120,000',
+    period: 'MXN + IVA / mes',
+    summary:
+      'Máxima asociación con El Brieff para una marca que quiere dominar su categoría frente a la audiencia.',
+    groups: [
+      {
+        title: 'Podcast',
+        items: [
+          'Presencia en todos los episodios del mes',
+          '“El Brieff es presentado por [Marca]”',
+          'Mención premium host-read de 60–90 segundos',
+          'CTA y liga en descripción',
+        ],
+      },
+      {
+        title: 'Newsletter y redes',
+        items: [
+          '4 integraciones en newsletter al mes',
+          '4 menciones de marca en redes al mes',
+          'Presencia visual preferencial',
+        ],
+      },
+      {
+        title: 'Exclusividad',
+        items: [
+          'Exclusividad de categoría durante la vigencia',
+          'Prioridad para extensiones o contenidos especiales',
+        ],
+      },
+    ],
+    note: 'Pensado para banca, SaaS, consultoría, seguros, educación ejecutiva y otras categorías de alto valor.',
+    tag: 'Máxima asociación',
+    featured: false,
+  },
+] as const;
+
+const categories = [
+  'Banca y fintech',
+  'SaaS y tecnología',
+  'Consultoría y servicios B2B',
+  'Educación ejecutiva',
+  'Seguros',
+  'Automotriz premium',
+  'Real estate',
+  'Viajes y hospitalidad',
+] as const;
 ---
 
 <BaseLayout title={title} description={description} canonicalPath="/media-kit">
   <SiteHeader />
   <main id="contenido">
-    <section class="media-kit" aria-labelledby="media-kit-heading">
-      <div class="media-kit__inner">
-        <p class="media-kit__brand">{site.name}</p>
-        <h1 class="media-kit__heading" id="media-kit-heading">Media kit</h1>
-        <p class="media-kit__lede">
-          PDF con pitch, bio del conductor, hechos del programa, plataformas y
-          contacto de prensa.
-        </p>
-
-        {
-          !emailEnabled && (
-            <p class="media-kit__notice" role="status">
-              Las solicitudes por formulario aún no están posibles. Para recibir
-              el PDF, escribe a{' '}
-              <a href={`mailto:${site.press.to}`}>{site.press.to}</a>.
-            </p>
-          )
-        }
-
-        <form
-          class="media-kit__form"
-          id="media-kit-form"
-          novalidate
-          aria-describedby={!emailEnabled ? 'media-kit-disabled-hint' : undefined}
-        >
-          {
-            !emailEnabled && (
-              <p id="media-kit-disabled-hint" class="visually-hidden">
-                Formulario deshabilitado hasta que el servicio de correo esté
-                listo.
-              </p>
-            )
-          }
-
-          <div class="media-kit__field">
-            <label for="mk-name">Nombre</label>
-            <input
-              id="mk-name"
-              name="name"
-              type="text"
-              autocomplete="name"
-              required
-              minlength="2"
-              maxlength="120"
-              aria-describedby="mk-name-error"
-              disabled={!emailEnabled}
+    <section class="media-kit-hero" aria-labelledby="media-kit-heading">
+      <div class="media-kit-hero__inner">
+        <div class="media-kit-hero__copy">
+          <p class="media-kit-kicker">Media kit</p>
+          <h1 class="media-kit-hero__title" id="media-kit-heading">
+            La atención de quienes deciden.
+          </h1>
+          <p class="media-kit-lede">
+            El Brieff pone a empresarios, directivos y tomadores de decisión al
+            día con las noticias más importantes de México y el mundo, en
+            aproximadamente 15 minutos.
+          </p>
+          <div class="media-kit-actions">
+            <a class="media-kit-btn media-kit-btn--primary" href="#paquetes">
+              Ver paquetes
+            </a>
+            <a class="media-kit-btn" href={contactMailto}>
+              {site.press.to}
+            </a>
+          </div>
+        </div>
+        <div class="media-kit-hero__media">
+          <picture>
+            <source
+              type="image/avif"
+              srcset={COVER_IMAGE.avifSrcSet}
+              sizes={coverSizes}
             />
-            <p class="media-kit__field-error" id="mk-name-error" hidden></p>
-          </div>
-
-          <div class="media-kit__field">
-            <label for="mk-email">Correo</label>
-            <input
-              id="mk-email"
-              name="email"
-              type="email"
-              inputmode="email"
-              autocomplete="email"
-              required
-              maxlength="200"
-              aria-describedby="mk-email-error"
-              disabled={!emailEnabled}
+            <source
+              type="image/webp"
+              srcset={COVER_IMAGE.webpSrcSet}
+              sizes={coverSizes}
             />
-            <p class="media-kit__field-error" id="mk-email-error" hidden></p>
-          </div>
-
-          <div class="media-kit__field">
-            <label for="mk-org">Organización (opcional)</label>
-            <input
-              id="mk-org"
-              name="organization"
-              type="text"
-              autocomplete="organization"
-              maxlength="200"
-              disabled={!emailEnabled}
+            <img
+              class="media-kit-hero__cover"
+              src={COVER_IMAGE.src}
+              alt="Carátula oficial de El Brieff"
+              width={COVER_IMAGE.width}
+              height={COVER_IMAGE.height}
+              sizes={coverSizes}
+              decoding="async"
+              fetchpriority="high"
             />
-          </div>
-
-          <div class="media-kit__field">
-            <label for="mk-reason">Motivo (opcional)</label>
-            <select id="mk-reason" name="reason" disabled={!emailEnabled}>
-              <option value="">Selecciona un motivo…</option>
-              <option value="prensa">Prensa</option>
-              <option value="partnership">Alianza</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-
-          {
-            emailEnabled && (
-              <div class="visually-hidden" aria-hidden="true" inert>
-                <label for="mk-website">Website</label>
-                <input
-                  id="mk-website"
-                  name="website"
-                  type="text"
-                  tabindex="-1"
-                  autocomplete="off"
-                />
-              </div>
-            )
-          }
-
-          <p
-            class="media-kit__status"
-            id="media-kit-status"
-            role="status"
-            aria-live="polite"
-            hidden></p>
-
-          <button
-            class="media-kit__submit"
-            type="submit"
-            disabled={!emailEnabled}
-          >
-            Solicitar media kit
-          </button>
-        </form>
+          </picture>
+        </div>
       </div>
     </section>
 
-    <PlatformLinks heading="Plataformas" ctaLocation="media_kit" />
+    <section class="media-kit-section" aria-labelledby="hechos-heading">
+      <div class="media-kit-section__inner">
+        <h2 class="media-kit-heading" id="hechos-heading">Hechos</h2>
+        <ul class="media-kit-facts">
+          {
+            facts.map((fact) => (
+              <li class="media-kit-facts__item">
+                <p class="media-kit-facts__value">{fact.value}</p>
+                <p class="media-kit-facts__label">{fact.label}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="media-kit-note" id="nota-alcance">
+          <strong>Alcance.</strong> La cifra de aproximadamente 25,000 oyentes
+          por episodio del kit de agosto es una estimación no verificada con
+          Acast y no es alcance medido ni garantizado.
+        </p>
+      </div>
+    </section>
+
+    <section class="media-kit-section" aria-labelledby="audiencia-heading">
+      <div class="media-kit-section__inner">
+        <p class="media-kit-kicker">Audiencia</p>
+        <h2 class="media-kit-heading" id="audiencia-heading">
+          Una audiencia pequeña en volumen. Grande en capacidad de decisión.
+        </h2>
+        <p class="media-kit-intro">
+          El valor de El Brieff no está solamente en cuántas personas escuchan
+          cada episodio, sino en quiénes están del otro lado. La comunidad está
+          formada principalmente por dueños de empresas, directivos y
+          profesionales que necesitan contexto para tomar mejores decisiones.
+        </p>
+        <blockquote class="media-kit-quote">
+          <p>Una persona que dirige, decide, compra, contrata o invierte.</p>
+        </blockquote>
+        <p class="media-kit-intro">
+          Escucha para llegar informado a conversaciones de negocio, entender
+          qué está moviendo a México y al mundo y detectar temas que pueden
+          impactar a su empresa, industria o patrimonio.
+        </p>
+
+        <h3 class="media-kit-subhead">Quiénes escuchan</h3>
+        <ul class="media-kit-cards media-kit-cards--people">
+          {
+            personas.map((persona) => (
+              <li class="media-kit-card">
+                <p class="media-kit-card__index">{persona.index}</p>
+                <h4 class="media-kit-card__title">{persona.title}</h4>
+                <p class="media-kit-card__copy">{persona.copy}</p>
+              </li>
+            ))
+          }
+        </ul>
+
+        <h3 class="media-kit-subhead">Qué pueden decidir</h3>
+        <p class="media-kit-intro">
+          La audiencia que una marca B2B quiere tener enfrente: personas con
+          responsabilidad real sobre resultados. Más que segmentar por edad, El
+          Brieff se define por seniority, responsabilidad y capacidad de compra.
+        </p>
+        <ul class="media-kit-chips">
+          {
+            decisions.map((decision) => (
+              <li class="media-kit-chip">{decision}</li>
+            ))
+          }
+        </ul>
+
+        <h3 class="media-kit-subhead">México</h3>
+        <p class="media-kit-intro">
+          El mercado natural de El Brieff es México: el programa cubre
+          diariamente los temas de conversación más relevantes del país y del
+          mundo y mantiene presencia en los rankings mexicanos de noticias.
+          Para campañas nacionales, esto permite hablarle a tomadores de
+          decisión en un mercado de alcance nacional, especialmente relevante
+          para marcas que venden a empresas, ejecutivos y consumidores de alto
+          valor en México.
+        </p>
+        <p class="media-kit-note">
+          <strong>Sobre los datos.</strong> El perfil profesional de la
+          audiencia proviene del conocimiento directo de la comunidad de El
+          Brieff. El mercado principal y el posicionamiento en México se apoyan
+          en la distribución y los rankings públicos del podcast. Edad, género,
+          ciudades e ingreso no se presentan como cifras porque requieren
+          validación directa en Acast.
+        </p>
+      </div>
+    </section>
+
+    <section class="media-kit-section" aria-labelledby="por-que-heading">
+      <div class="media-kit-section__inner">
+        <p class="media-kit-kicker">Por qué funciona</p>
+        <h2 class="media-kit-heading" id="por-que-heading">
+          Una mención no interrumpe la conversación. Entra en ella.
+        </h2>
+        <p class="media-kit-intro">
+          La publicidad se integra con voz del conductor y un mensaje diseñado
+          para ser útil, creíble y accionable.
+        </p>
+        <ul class="media-kit-cards">
+          {
+            reasons.map((reason) => (
+              <li class="media-kit-card">
+                <p class="media-kit-card__index">{reason.index}</p>
+                <h3 class="media-kit-card__title">{reason.title}</h3>
+                <p class="media-kit-card__copy">{reason.copy}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="media-kit-section" aria-labelledby="tarifas-heading">
+      <div class="media-kit-section__inner">
+        <p class="media-kit-kicker">Tarifas</p>
+        <h2 class="media-kit-heading" id="tarifas-heading">
+          Desde una mención puntual hasta apropiarte de una categoría.
+        </h2>
+        <p class="media-kit-intro">
+          Tarifas de referencia de agosto de 2026, en pesos mexicanos más IVA.
+          Sujetas a disponibilidad y confirmación antes de cotizar o cerrar.
+        </p>
+        <ul class="media-kit-rates">
+          {
+            rates.map((rate) => (
+              <li class="media-kit-rate">
+                <h3 class="media-kit-rate__name">{rate.name}</h3>
+                <p class="media-kit-rate__detail">{rate.detail}</p>
+                <p class="media-kit-rate__price">{rate.price}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section
+      class="media-kit-section"
+      id="paquetes"
+      aria-labelledby="paquetes-heading"
+    >
+      <div class="media-kit-section__inner">
+        <p class="media-kit-kicker">Paquetes mensuales</p>
+        <h2 class="media-kit-heading" id="paquetes-heading">
+          Tres formas simples de entrar a El Brieff.
+        </h2>
+        <p class="media-kit-intro">
+          Una arquitectura comercial para marcas que buscan repetición,
+          asociación y categoría. Los montos son referencia de agosto de 2026.
+        </p>
+        <ul class="media-kit-packages">
+          {
+            packages.map((offer) => (
+              <li
+                class:list={[
+                  'media-kit-package',
+                  offer.featured && 'media-kit-package--featured',
+                ]}
+              >
+                <p class="media-kit-package__tag">{offer.tag}</p>
+                <h3 class="media-kit-package__name">{offer.name}</h3>
+                <p class="media-kit-package__price">
+                  {offer.price}
+                  <span>{offer.period}</span>
+                </p>
+                <p class="media-kit-package__summary">{offer.summary}</p>
+                {
+                  offer.groups.map((group) => (
+                    <div class="media-kit-package__group">
+                      <h4>{group.title}</h4>
+                      <ul>
+                        {group.items.map((item) => (
+                          <li>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))
+                }
+                <p class="media-kit-package__note">{offer.note}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="media-kit-section" aria-labelledby="afinidad-heading">
+      <div class="media-kit-section__inner">
+        <p class="media-kit-kicker">Afinidad</p>
+        <h2 class="media-kit-heading" id="afinidad-heading">
+          Especialmente valioso para categorías donde una decisión vale mucho.
+        </h2>
+        <ul class="media-kit-chips">
+          {
+            categories.map((category) => (
+              <li class="media-kit-chip">{category}</li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="media-kit-close" aria-labelledby="cierre-heading">
+      <div class="media-kit-section__inner">
+        <p class="media-kit-kicker">Hablemos</p>
+        <h2 class="media-kit-heading" id="cierre-heading">
+          Tu marca, frente a quienes mueven empresas.
+        </h2>
+        <p class="media-kit-intro">
+          Diseñemos una integración que suene natural para El Brieff y sea
+          comercialmente útil para tu marca.
+        </p>
+        <a class="media-kit-btn media-kit-btn--primary" href={contactMailto}>
+          {site.press.to}
+        </a>
+      </div>
+    </section>
+
+    {
+      listenPlatforms.length > 0 && (
+        <section class="media-kit-section" aria-labelledby="escucha-heading">
+          <div class="media-kit-section__inner">
+            <p class="media-kit-kicker">Escucha</p>
+            <h2 class="media-kit-heading" id="escucha-heading">
+              Conoce el podcast antes de anunciarte.
+            </h2>
+            <p class="media-kit-intro">
+              Escucha algunos episodios y conoce el tono, el ritmo y el
+              contexto editorial en el que puede vivir tu marca.
+            </p>
+            <ul class="media-kit-listen">
+              {listenPlatforms.map((platform) => (
+                <li>
+                  <a
+                    class="media-kit-listen__card"
+                    href={platform.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-analytics-event="platform_outbound"
+                    data-analytics-platform-id={platform.id}
+                    data-analytics-cta-location="media_kit"
+                  >
+                    <span class="media-kit-listen__platform">
+                      {platform.label}
+                    </span>
+                    <span class="media-kit-listen__title">
+                      Escuchar {site.name}
+                    </span>
+                    <span class="media-kit-listen__hint">
+                      Abre el podcast en {platform.label}
+                      <span class="visually-hidden">
+                        {' '}
+                        (se abre en una pestaña nueva)
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )
+    }
+
+    <p class="media-kit-colophon">
+      Tarifas de referencia de agosto de 2026, sujetas a disponibilidad y
+      confirmación antes de cotizar o cerrar.
+    </p>
   </main>
   <SiteFooter />
 </BaseLayout>
 
-<script define:vars={{ emailEnabled }}>
-  import {
-    trackMediaKitDownload,
-    trackMediaKitFormStart,
-    trackMediaKitSubmit,
-    trackMediaKitSubmitError,
-  } from '../lib/analytics/media-kit.ts';
-
-  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const REQUEST_TIMEOUT_MS = 15000;
-  const SUBMIT_LABEL = 'Solicitar media kit';
-
-  const form = document.getElementById('media-kit-form');
-  const statusEl = document.getElementById('media-kit-status');
-  const nameField = document.getElementById('mk-name');
-  const emailField = document.getElementById('mk-email');
-  const submitButton =
-    form instanceof HTMLFormElement
-      ? form.querySelector('button[type="submit"]')
-      : null;
-
-  let formStartTracked = false;
-  let submitting = false;
-
-  function showStatus(message, isError = false) {
-    if (!(statusEl instanceof HTMLElement)) return;
-    statusEl.hidden = false;
-    statusEl.textContent = message;
-    statusEl.dataset.state = isError ? 'error' : 'ok';
-    // Errors interrupt; success/progress stay polite.
-    statusEl.setAttribute('aria-live', isError ? 'assertive' : 'polite');
-  }
-
-  function setFieldError(field, message) {
-    if (!(field instanceof HTMLElement)) return;
-    const errorEl = document.getElementById(`${field.id}-error`);
-    const hasError = Boolean(message);
-    field.setAttribute('aria-invalid', hasError ? 'true' : 'false');
-    if (errorEl instanceof HTMLElement) {
-      errorEl.textContent = message ?? '';
-      errorEl.hidden = !hasError;
-    }
-  }
-
-  function validate(payload) {
-    const invalid = [];
-    if (payload.name.length < 2) {
-      invalid.push([nameField, 'Escribe tu nombre (al menos 2 caracteres).']);
-    }
-    if (!EMAIL_RE.test(payload.email)) {
-      invalid.push([
-        emailField,
-        'Escribe un correo válido. Ejemplo: nombre@medio.com',
-      ]);
-    }
-    setFieldError(nameField, null);
-    setFieldError(emailField, null);
-    for (const [field, message] of invalid) {
-      setFieldError(field, message);
-    }
-    return invalid;
-  }
-
-  function setSubmitting(isSubmitting) {
-    submitting = isSubmitting;
-    if (submitButton instanceof HTMLButtonElement) {
-      submitButton.disabled = isSubmitting;
-      submitButton.textContent = isSubmitting ? 'Enviando…' : SUBMIT_LABEL;
-    }
-  }
-
-  if (emailEnabled && form instanceof HTMLFormElement) {
-    form.addEventListener(
-      'focusin',
-      () => {
-        if (formStartTracked) return;
-        formStartTracked = true;
-        trackMediaKitFormStart();
-      },
-      { once: true },
-    );
-
-    // Clear a field's error as soon as the user starts correcting it.
-    for (const field of [nameField, emailField]) {
-      field?.addEventListener('input', () => setFieldError(field, null));
-    }
-  }
-
-  form?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    if (!emailEnabled || !(form instanceof HTMLFormElement)) {
-      showStatus('El formulario no está disponible por ahora.', true);
-      return;
-    }
-    // Guard against rapid re-submission spawning duplicate requests.
-    if (submitting) return;
-
-    const data = new FormData(form);
-    const payload = {
-      name: String(data.get('name') ?? '').trim(),
-      email: String(data.get('email') ?? '').trim(),
-      organization: String(data.get('organization') ?? '').trim() || undefined,
-      reason: String(data.get('reason') ?? '').trim() || undefined,
-      website: String(data.get('website') ?? ''),
-    };
-
-    const invalid = validate(payload);
-    if (invalid.length > 0) {
-      const [firstField] = invalid[0];
-      if (firstField instanceof HTMLElement) firstField.focus();
-      trackMediaKitSubmitError('validation');
-      showStatus('Revisa los campos marcados e inténtalo de nuevo.', true);
-      return;
-    }
-
-    setSubmitting(true);
-    showStatus('Enviando…');
-
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-
-    try {
-      const response = await fetch('/api/media-kit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        signal: controller.signal,
-      });
-
-      let result = null;
-      try {
-        result = await response.json();
-      } catch {
-        result = null;
-      }
-
-      if (!result || !result.ok || !result.downloadUrl) {
-        const messages = {
-          validation: 'Revisa nombre y correo e inténtalo de nuevo.',
-          honeypot: 'No se pudo completar la solicitud.',
-          rate_limit:
-            'Demasiadas solicitudes desde este dispositivo. Espera unos minutos e inténtalo de nuevo.',
-          email_failed:
-            'No pudimos enviar el aviso por correo. Intenta más tarde o escribe a prensa.',
-          disabled: 'Las solicitudes por formulario no están posibles por ahora.',
-        };
-        const errorCode = result && result.error ? result.error : 'network';
-        trackMediaKitSubmitError(errorCode);
-        showStatus(
-          messages[errorCode] ??
-            'No se pudo completar la solicitud. Intenta de nuevo.',
-          true,
-        );
-        setSubmitting(false);
-        return;
-      }
-
-      trackMediaKitSubmit(payload.reason);
-      trackMediaKitDownload();
-      // Leave the button disabled; navigation is imminent.
-      showStatus('Listo. Descargando el media kit…');
-      window.location.assign(result.downloadUrl);
-    } catch (error) {
-      const timedOut = error && error.name === 'AbortError';
-      trackMediaKitSubmitError('network');
-      showStatus(
-        timedOut
-          ? 'La solicitud tardó demasiado. Revisa tu conexión e inténtalo de nuevo.'
-          : 'No pudimos conectar. Revisa tu conexión e inténtalo de nuevo.',
-        true,
-      );
-      setSubmitting(false);
-    } finally {
-      clearTimeout(timeout);
-    }
-  });
-</script>
-
 <style>
-  .media-kit {
+  .media-kit-hero {
     padding: calc(var(--header-h) + var(--space-lg)) var(--space-md)
       var(--space-xl);
-    border-bottom: 1px solid var(--border);
-    background:
-      radial-gradient(
-        ellipse 70% 45% at 80% 10%,
-        var(--surface-elevated) 0%,
-        transparent 55%
-      ),
-      var(--primary);
+    border-block-end: 1px solid var(--border);
+    background: var(--primary);
   }
 
-  @media (min-width: 768px) {
-    .media-kit {
-      padding: calc(var(--header-h) + var(--space-md)) var(--space-xl)
-        var(--space-xl);
-    }
+  .media-kit-hero__inner,
+  .media-kit-section__inner,
+  .media-kit-colophon {
+    max-width: 72rem;
+    margin-inline: auto;
   }
 
-  .media-kit__inner {
-    max-width: 32rem;
-    margin: 0 auto;
+  .media-kit-hero__inner {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: center;
   }
 
-  .media-kit__brand {
+  .media-kit-kicker {
     margin: 0 0 var(--space-sm);
     font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
+    font-size: var(--text-label);
+    font-weight: var(--weight-label);
+    letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     color: var(--muted);
   }
 
-  .media-kit__heading {
-    margin: 0 0 var(--space-md);
-    padding-bottom: var(--space-sm);
-    border-bottom: 1px solid var(--border);
+  .media-kit-hero__title,
+  .media-kit-heading {
+    margin: 0;
     font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .media-kit-hero__title {
+    max-width: 15ch;
+    font-size: clamp(2.25rem, 5vw, 3rem);
+  }
+
+  .media-kit-heading {
+    max-width: 22em;
+    margin-block-end: var(--space-md);
     font-size: clamp(1.75rem, 4vw, 2rem);
     font-weight: 600;
     line-height: 1.1;
-    color: var(--ink);
+    scroll-margin-top: var(--space-lg);
   }
 
-  .media-kit__lede {
-    margin: 0 0 var(--space-lg);
+  .media-kit-lede,
+  .media-kit-intro {
+    max-width: 40rem;
+    margin: var(--space-md) 0 0;
     color: var(--muted);
   }
 
-  .media-kit__notice {
-    margin: 0 0 var(--space-lg);
-    padding: var(--space-md) 0;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    color: var(--ink);
+  .media-kit-lede {
+    font-size: 1.0625rem;
+    line-height: 1.55;
   }
 
-  .media-kit__notice a {
-    color: var(--ink);
-  }
-
-  .media-kit__form {
+  .media-kit-actions {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-lg);
   }
 
-  .media-kit__field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-
-  .media-kit__field label {
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .media-kit__field input,
-  .media-kit__field select {
+  .media-kit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-height: 2.75rem;
-    padding: 0.625rem 0.75rem;
+    padding: var(--space-sm) var(--space-lg);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    background: var(--surface-elevated);
+    background: transparent;
     color: var(--ink);
-    font-family: var(--font-body);
-    font-size: 1rem;
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    font-weight: var(--weight-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    text-decoration: none;
   }
 
-  .media-kit__field input:disabled,
-  .media-kit__field select:disabled,
-  .media-kit__submit:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
+  .media-kit-btn--primary {
+    border-color: var(--tertiary);
+    background: var(--tertiary);
+    color: var(--ink-on-light);
   }
 
-  .media-kit__field input[aria-invalid='true'] {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 1px var(--accent);
+  .media-kit-btn:hover {
+    border-color: var(--ink);
+    background: transparent;
+    color: var(--ink);
+    text-decoration: none;
   }
 
-  .media-kit__field-error {
+  .media-kit-hero__media {
+    justify-self: center;
+    width: min(100%, 24rem);
+  }
+
+  .media-kit-hero__cover {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface-elevated);
+  }
+
+  .media-kit-section,
+  .media-kit-close {
+    padding: var(--space-xl) var(--space-md);
+    border-block-end: 1px solid var(--border);
+  }
+
+  .media-kit-subhead,
+  .media-kit-card__title,
+  .media-kit-rate__name,
+  .media-kit-package__name,
+  .media-kit-package__group h4,
+  .media-kit-facts__value,
+  .media-kit-rate__price,
+  .media-kit-package__price {
+    font-family: var(--font-display);
+    color: var(--ink);
+  }
+
+  .media-kit-subhead {
+    margin: var(--space-xl) 0 var(--space-md);
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .media-kit-quote {
+    max-width: 40rem;
+    margin: var(--space-lg) 0 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .media-kit-quote p {
     margin: 0;
-    font-size: 0.8125rem;
-    line-height: 1.4;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .media-kit-facts,
+  .media-kit-cards,
+  .media-kit-rates,
+  .media-kit-packages,
+  .media-kit-chips,
+  .media-kit-listen,
+  .media-kit-package__group ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .media-kit-facts,
+  .media-kit-cards,
+  .media-kit-rates,
+  .media-kit-packages {
+    display: grid;
+    gap: var(--space-md);
+    margin-block-start: var(--space-lg);
+  }
+
+  .media-kit-facts__item,
+  .media-kit-card,
+  .media-kit-rate,
+  .media-kit-package,
+  .media-kit-listen__card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface-elevated);
+  }
+
+  .media-kit-facts__item,
+  .media-kit-card,
+  .media-kit-rate {
+    padding: var(--space-lg);
+  }
+
+  .media-kit-facts__value {
+    margin: 0;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .media-kit-facts__label,
+  .media-kit-card__copy,
+  .media-kit-rate__detail,
+  .media-kit-package__summary,
+  .media-kit-package__group li,
+  .media-kit-package__note,
+  .media-kit-listen__hint {
+    margin: var(--space-sm) 0 0;
+    color: var(--muted);
+  }
+
+  .media-kit-note,
+  .media-kit-colophon {
+    margin: var(--space-lg) 0 0;
+    max-width: 44rem;
+    font-size: var(--text-meta);
+    line-height: var(--leading-meta);
+    color: var(--muted);
+  }
+
+  .media-kit-note strong,
+  .media-kit-colophon {
+    font-weight: 600;
+  }
+
+  .media-kit-card__index,
+  .media-kit-package__tag,
+  .media-kit-listen__platform {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    font-weight: var(--weight-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
     color: var(--accent);
   }
 
-  .media-kit__status {
-    margin: 0;
-    font-size: 0.9375rem;
+  .media-kit-card__title,
+  .media-kit-rate__name,
+  .media-kit-package__name {
+    margin: var(--space-sm) 0 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .media-kit-rate__price {
+    margin: var(--space-md) 0 0;
+    font-size: 1rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .media-kit-package {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg);
+  }
+
+  .media-kit-package--featured {
+    border-color: var(--tertiary);
+  }
+
+  .media-kit-package--featured .media-kit-package__tag {
+    color: var(--tertiary);
+  }
+
+  .media-kit-package__price {
+    margin: var(--space-md) 0 0;
+    font-size: clamp(1.75rem, 3vw, 2rem);
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .media-kit-package__price span {
+    display: block;
+    margin-block-start: var(--space-xs);
+    font-family: var(--font-body);
+    font-size: var(--text-meta);
+    font-weight: 400;
+    line-height: var(--leading-meta);
     color: var(--muted);
   }
 
-  .media-kit__status[data-state='error'] {
-    color: var(--ink);
+  .media-kit-package__group {
+    margin-block-start: var(--space-md);
+    padding-block-start: var(--space-md);
+    border-block-start: 1px solid var(--border);
   }
 
-  .media-kit__submit {
-    align-self: flex-start;
-    min-height: 2.75rem;
-    padding: var(--space-sm) var(--space-lg);
-    font-family: var(--font-display);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+  .media-kit-package__group h4 {
+    margin: 0;
+    font-size: var(--text-label);
+    font-weight: var(--weight-label);
+    letter-spacing: var(--tracking-label);
     text-transform: uppercase;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--tertiary);
-    background: var(--tertiary);
-    color: var(--ink-on-light);
-    cursor: pointer;
   }
 
-  .media-kit__submit:hover:not(:disabled) {
-    background: transparent;
+  .media-kit-package__group li {
+    margin: var(--space-xs) 0 0;
+  }
+
+  .media-kit-package__note {
+    margin-block-start: auto;
+    padding-block-start: var(--space-md);
+  }
+
+  .media-kit-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-block-start: var(--space-md);
+    max-width: 48rem;
+  }
+
+  .media-kit-chip {
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     color: var(--ink);
   }
 
-  .media-kit__submit:focus-visible {
-    outline: 2px solid var(--ink);
-    outline-offset: 3px;
+  .media-kit-listen {
+    display: grid;
+    gap: var(--space-md);
+    margin-block-start: var(--space-lg);
+  }
+
+  .media-kit-listen li {
+    display: flex;
+  }
+
+  .media-kit-listen__card {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 8.5rem;
+    padding: var(--space-lg);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .media-kit-listen__title {
+    margin-block-start: var(--space-md);
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  .media-kit-listen__card:hover {
+    border-color: var(--muted);
+    text-decoration: none;
+  }
+
+  .media-kit-colophon {
+    padding: var(--space-lg) var(--space-md) var(--space-xl);
+  }
+
+  @media (min-width: 720px) {
+    .media-kit-facts,
+    .media-kit-rates,
+    .media-kit-cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .media-kit-cards--people {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .media-kit-listen {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 768px) {
+    .media-kit-hero,
+    .media-kit-section,
+    .media-kit-close,
+    .media-kit-colophon {
+      padding-inline: var(--space-xl);
+    }
+  }
+
+  @media (min-width: 960px) {
+    .media-kit-hero__inner {
+      grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+    }
+
+    .media-kit-hero__media {
+      justify-self: end;
+    }
+
+    .media-kit-packages {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+    }
   }
 </style>
